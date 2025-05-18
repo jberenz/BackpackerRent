@@ -1,20 +1,30 @@
 <!doctype html>
-<html lang=en>
-
+<html lang="de">
 <head>
-    <title>{% block TITLE %}{% endblock %} - To-Do App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <title>{% block title %}Backpacker Rent{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-<nav>
-    <h1>To-Do App</h1>
-    <a href="{{ url_for('lists') }}">Lists</a>
-</nav>
-<section class="content">
-    <header>{% block HEADER %}{% endblock %}</header>
-    {% block CONTENT %}{% endblock %}
-</section>
-</body>
+  <nav class="top-nav">
+    <div class="logo">
+      <!-- später dein SVG/PNG-Logo -->
+      🏔️
+    </div>
+       <ul class="nav-links">
+-    <li><a href="{{ url_for('lists') }}">Home</a></li>
++    <li><a href="{{ url_for('lists') }}">BackpackerRent</a></li>
+     <li><a href="#">About Us</a></li>
+     <li><a href="#">Sign In</a></li>
+     <li class="language-select"><a href="#">Englisch ⌵</a></li>
+   </ul>
 
+  </nav>
+
+  {% block hero %}{% endblock %}
+
+  <section class="content">
+    {% block content %}{% endblock %}
+  </section>
+</body>
 </html>

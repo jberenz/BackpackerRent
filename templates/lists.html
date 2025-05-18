@@ -1,20 +1,46 @@
-{% extends 'base.html' %}
+ {% extends "base.html" %}
 
-{% block HEADER %}
-    <h2>{% block TITLE %}Lists{% endblock %}</h2>
+-{% block title %}Home{% endblock %}
++{% block title %}BackpackerRent{% endblock %}
+
+
+{% block hero %}
+<header class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Backpacker<br>Rent</h1>
+  </div>
+</header>
+
+<section class="search-section">
+  <div class="brand">
+    <!-- noch mal Logo + Name -->
+    🏔️ <span>Backpacker Rent</span>
+  </div>
+
+  <div class="tour-tabs">
+    <button class="tab">Roadtrip</button>
+    <button class="tab active">Wandertour</button>
+    <button class="tab">Biketour</button>
+  </div>
+
+  <form class="search-bar" action="#" method="get">
+    <div class="input-group">
+      <label for="dest">Wohin</label>
+      <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
+    </div>
+    <div class="input-group">
+      <label for="start">Start Date</label>
+      <input id="start" name="start" type="date">
+    </div>
+    <div class="input-group">
+      <label for="end">End Date</label>
+      <input id="end" name="end" type="date">
+    </div>
+    <button class="search-button" type="submit">🔍</button>
+  </form>
+</section>
 {% endblock %}
 
-{% block CONTENT %}
-<ul>
-{% for list in lists %}
-<li>
-    <input type="checkbox" disabled=disabled id="{{ list.id }}"
-        {% if list.complete %} checked {% endif %}
-    >
-    <label for="{{ list.id }}">
-        <a href="{{ url_for('list', id=list.id) }}">{{ list.name }}</a>
-    </label>
-</li>
-{% endfor %}
-</ul>
+{% block content %}
+  <!-- hier deine To-Do-Listen-Logik -->
 {% endblock %}
