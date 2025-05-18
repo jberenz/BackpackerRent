@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Backpacker Rent – Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .links {
+      margin-top: 1rem;
+    }
+
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Willkommen bei Backpacker Rent</h1>
+    <label>Land/Region</label><br>
+    <select>
+      <option selected>Deutschland (+49)</option>
+    </select><br>
+    <label>Telefonnummer</label><br>
+    <input type="text" placeholder="Telefonnummer"><br>
+    <button>Weiter</button>
+
+    <div class="links">
+      <a href="#">Mit E-Mail-Adresse anmelden</a> |
+      <a href="#">Mit E-Mail-Adresse registrieren</a>
+    </div>
+  </div>
+</body>
+</html>
