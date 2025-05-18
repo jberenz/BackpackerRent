@@ -24,9 +24,8 @@ body {
   background: rgba(0,0,0,0.2);
   z-index: 100;
 }
-.top-nav .logo {
-  font-size: 24px;
-  color: white;
+.top-nav .logo img {
+  height: 32px;
 }
 .nav-links {
   list-style: none;
@@ -49,10 +48,9 @@ body {
 
 /* === 2) Hero-Bereich als CSS-Banner === */
 .hero {
-  /* Hier kommt dein Bergen-Hintergrundbild her: */
-  background: url("/static/css/images/mountains.jpg") no-repeat center/cover;
-  height: 60vh;           /* 60% der Viewport-Höhe */
-  margin-top: 80px;       /* Platz für die fixe Navbar */
+  background: url("../images/mountains.jpg") no-repeat center/cover;
+  height: 60vh;        /* 60% der Viewport-Höhe */
+  margin-top: 80px;    /* Platz für fixe Navbar */
   position: relative;
 }
 .hero-content {
@@ -125,8 +123,7 @@ body {
 .input-group input {
   border: none;
   border-bottom: 1px solid #ccc;
-  padding: 6px 4px;
-  outline: none;
+  padding: 6px;
 }
 .search-button {
   background: #f3d3eb;
@@ -138,7 +135,7 @@ body {
   line-height: 1;
 }
 
-/* === 5) Content-Section (To-Do-Listen) === */
+/* === 5) To-Do-Listen-Sektion === */
 .todo-section {
   padding: 40px;
 }
@@ -156,5 +153,43 @@ body {
 }
 .status {
   margin-left: 8px;
-  color: #10B981; /* grün für erledigt */
+  color: #10B981;
+}
+
+/* === 6) Feature-Section === */
+.features-section {
+  background: #fef3ff;
+  padding: 40px;
+}
+.features-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  justify-content: center;
+  align-items: center;
+}
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #2563EB;
+}
+.feature-item img {
+  width: 48px;
+  height: 48px;
+}
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 2px solid #2563EB;
+  border-radius: 50px;
+  background: white;
+  color: #2563EB;
+}
+.filter-button img {
+  width: 20px;
+  height: 20px;
 }

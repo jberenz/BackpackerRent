@@ -2,26 +2,27 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}BackpackerRent{% endblock %}</title>
+  <title>{% block title %}{% endblock %} – BackpackerRent</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <nav class="top-nav">
     <div class="logo">
-      <!-- Dein Logo als SVG/PNG -->
-      <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" height="32">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
     </div>
     <ul class="nav-links">
       <li><a href="{{ url_for('lists') }}">BackpackerRent</a></li>
       <li><a href="#">About Us</a></li>
       <li><a href="#">Sign In</a></li>
-      <li class="nav-icon">🔍</li>
       <li class="language-select"><a href="#">Englisch ⌵</a></li>
+      <li class="nav-icon">🔍</li>
     </ul>
   </nav>
 
   {% block hero %}{% endblock %}
 
-  {% block content %}{% endblock %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>

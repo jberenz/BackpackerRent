@@ -3,48 +3,75 @@
 {% block title %}BackpackerRent{% endblock %}
 
 {% block hero %}
-<header class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">Backpacker<br>Rent</h1>
-  </div>
-</header>
+<header class="hero"></header>
+<div class="hero-content">
+  <h1 class="hero-title">Backpacker<br>Rent</h1>
+</div>
 {% endblock %}
 
 {% block content %}
-<section class="search-section">
-  <div class="brand">🏔️ <span>Backpacker Rent</span></div>
-  <div class="tour-tabs">
-    <button class="tab">Roadtrip</button>
-    <button class="tab active">Wandertour</button>
-    <button class="tab">Biketour</button>
-  </div>
-  <form class="search-bar" action="#" method="get">
-    <div class="input-group">
-      <label for="dest">Wohin</label>
-      <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
+  <!-- 3) Such-Sektion -->
+  <section class="search-section">
+    <div class="brand">🏔️ <span>Backpacker Rent</span></div>
+    <div class="tour-tabs">
+      <button class="tab">Roadtrip</button>
+      <button class="tab active">Wandertour</button>
+      <button class="tab">Biketour</button>
     </div>
-    <div class="input-group">
-      <label for="start">Start Date</label>
-      <input id="start" name="start" type="date">
-    </div>
-    <div class="input-group">
-      <label for="end">End Date</label>
-      <input id="end" name="end" type="date">
-    </div>
-    <button class="search-button" type="submit">🔍</button>
-  </form>
-</section>
+    <form class="search-bar" action="#" method="get">
+      <div class="input-group">
+        <label for="dest">Wohin</label>
+        <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
+      </div>
+      <div class="input-group">
+        <label for="start">Start Date</label>
+        <input id="start" name="start" type="date">
+      </div>
+      <div class="input-group">
+        <label for="end">End Date</label>
+        <input id="end" name="end" type="date">
+      </div>
+      <button class="search-button" type="submit">🔍</button>
+    </form>
+  </section>
 
-<section class="todo-section">
-  <h2>Deine Listen</h2>
-  <ul>
-    {% for l in lists %}
-      <li>
-        <a href="{{ url_for('list', id=l.id) }}">
-          {{ l.name }} <span class="status">{{ '✔' if l.complete else '❏' }}</span>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</section>
+  <!-- 5) To-Do-Listen-Sektion -->
+  <section class="todo-section">
+    <h2>Deine Listen</h2>
+    <ul>
+      {% for l in lists %}
+        <li>
+          <a href="{{ url_for('list', id=l.id) }}">
+            {{ l.name }} <span class="status">{{ '✔' if l.complete else '❏' }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- 6) Feature-Section -->
+  <section class="features-section">
+    <div class="features-wrapper">
+      <div class="feature-item">
+        <img src="{{ url_for('static', filename='images/cold.png') }}" alt="Kälte">
+        <span>Kälte</span>
+      </div>
+      <div class="feature-item">
+        <img src="{{ url_for('static', filename='images/warmth.png') }}" alt="Wärme">
+        <span>Wärme</span>
+      </div>
+      <div class="feature-item">
+        <img src="{{ url_for('static', filename='images/relax.png') }}" alt="Entspannung">
+        <span>Entspannung</span>
+      </div>
+      <div class="feature-item">
+        <img src="{{ url_for('static', filename='images/extreme.png') }}" alt="Extrem">
+        <span>Extrem</span>
+      </div>
+      <button class="filter-button">
+        <img src="{{ url_for('static', filename='images/filter.png') }}" alt="Filter">
+        Filter
+      </button>
+    </div>
+  </section>
 {% endblock %}
