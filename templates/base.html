@@ -2,29 +2,26 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Backpacker Rent{% endblock %}</title>
+  <title>{% block title %}BackpackerRent{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <nav class="top-nav">
     <div class="logo">
-      <!-- später dein SVG/PNG-Logo -->
-      🏔️
+      <!-- Dein Logo als SVG/PNG -->
+      <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" height="32">
     </div>
-       <ul class="nav-links">
--    <li><a href="{{ url_for('lists') }}">Home</a></li>
-+    <li><a href="{{ url_for('lists') }}">BackpackerRent</a></li>
-     <li><a href="#">About Us</a></li>
-     <li><a href="#">Sign In</a></li>
-     <li class="language-select"><a href="#">Englisch ⌵</a></li>
-   </ul>
-
+    <ul class="nav-links">
+      <li><a href="{{ url_for('lists') }}">BackpackerRent</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Sign In</a></li>
+      <li class="nav-icon">🔍</li>
+      <li class="language-select"><a href="#">Englisch ⌵</a></li>
+    </ul>
   </nav>
 
   {% block hero %}{% endblock %}
 
-  <section class="content">
-    {% block content %}{% endblock %}
-  </section>
+  {% block content %}{% endblock %}
 </body>
 </html>

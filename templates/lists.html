@@ -8,18 +8,16 @@
     <h1 class="hero-title">Backpacker<br>Rent</h1>
   </div>
 </header>
+{% endblock %}
 
+{% block content %}
 <section class="search-section">
-  <div class="brand">
-    🏔️ <span>Backpacker Rent</span>
-  </div>
-
+  <div class="brand">🏔️ <span>Backpacker Rent</span></div>
   <div class="tour-tabs">
     <button class="tab">Roadtrip</button>
     <button class="tab active">Wandertour</button>
     <button class="tab">Biketour</button>
   </div>
-
   <form class="search-bar" action="#" method="get">
     <div class="input-group">
       <label for="dest">Wohin</label>
@@ -36,8 +34,17 @@
     <button class="search-button" type="submit">🔍</button>
   </form>
 </section>
-{% endblock %}
 
-{% block content %}
-  <!-- hier deine To-Do-Listen-Logik -->
+<section class="todo-section">
+  <h2>Deine Listen</h2>
+  <ul>
+    {% for l in lists %}
+      <li>
+        <a href="{{ url_for('list', id=l.id) }}">
+          {{ l.name }} <span class="status">{{ '✔' if l.complete else '❏' }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}
