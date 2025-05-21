@@ -79,7 +79,7 @@ body {
   font-weight: bold;
 }
 
-/* === 3) Such-Sektion mit Tabs === */
+/* === 3) Such-Sektion mit klickbaren Tabs === */
 .search-section {
   background: #fef3ff;
   border-top: 4px solid #A855F7;
@@ -92,17 +92,24 @@ body {
   gap: 32px;
   margin-bottom: 32px;
 }
-.tab {
-  font-size: 18px;
+
+/* Links in den Tabs */
+.tour-tabs .tab a {
+  display: inline-block;
   padding: 8px 16px;
-  cursor: pointer;
+  text-decoration: none;
   color: #3b3b3b;
+  font-size: 18px;
   border-bottom: 2px solid transparent;
 }
-.tab.active {
+.tour-tabs .tab a:hover {
+  color: #1e40af;
+}
+/* Active-Zustand */
+.tour-tabs .tab.active a {
   color: #2563EB;
-  border-color: #2563EB;
   font-weight: bold;
+  border-color: #2563EB;
 }
 
 /* === 4) Such-Leiste === */

@@ -13,11 +13,17 @@
 {% block content %}
 <section class="search-section">
 
-  <!-- 1) Tabs -->
+  <!-- 1) Klickbare Tabs -->
   <ul class="tour-tabs">
-    <li class="tab active">Backpacker</li>
-    <li class="tab">Roadtrip</li>
-    <li class="tab">Radtour</li>
+    <li class="tab active">
+      <a href="#" data-type="backpacker">Backpacker</a>
+    </li>
+    <li class="tab">
+      <a href="#" data-type="roadtrip">Roadtrip</a>
+    </li>
+    <li class="tab">
+      <a href="#" data-type="radtour">Radtour</a>
+    </li>
   </ul>
 
   <!-- 2) Suchleiste -->
@@ -55,7 +61,6 @@
         </svg>
         <span>Kälte</span>
       </div>
-
       <!-- Wärme -->
       <div class="feature-item">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,7 +76,6 @@
         </svg>
         <span>Wärme</span>
       </div>
-
       <!-- Entspannung -->
       <div class="feature-item">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -80,7 +84,6 @@
         </svg>
         <span>Entspannung</span>
       </div>
-
       <!-- Extrem -->
       <div class="feature-item">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -89,7 +92,6 @@
         </svg>
         <span>Extrem</span>
       </div>
-
       <!-- Filter-Button -->
       <button class="filter-button" type="button">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,4 +124,15 @@
     {% endfor %}
   </ul>
 </section>
+
+<!-- JS für Tab-Interaktion -->
+<script>
+  document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.tour-tabs .tab').forEach(li => li.classList.remove('active'));
+      link.parentElement.classList.add('active');
+    });
+  });
+</script>
 {% endblock %}
