@@ -1,77 +1,125 @@
 {% extends "base.html" %}
 
-{% block title %}BackpackerRent{% endblock %}
+{% block title %}Backpacker Rent{% endblock %}
 
 {% block hero %}
-<header class="hero"></header>
-<div class="hero-content">
-  <h1 class="hero-title">Backpacker<br>Rent</h1>
-</div>
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">Backpacker<br>Rent</h1>
+  </div>
+</section>
 {% endblock %}
 
 {% block content %}
-  <!-- 3) Such-Sektion -->
-  <section class="search-section">
-    <div class="brand">🏔️ <span>Backpacker Rent</span></div>
-    <div class="tour-tabs">
-      <button class="tab">Roadtrip</button>
-      <button class="tab active">Wandertour</button>
-      <button class="tab">Biketour</button>
+<section class="search-section">
+
+  <!-- 1) Tabs -->
+  <ul class="tour-tabs">
+    <li class="tab active">Backpacker</li>
+    <li class="tab">Roadtrip</li>
+    <li class="tab">Radtour</li>
+  </ul>
+
+  <!-- 2) Suchleiste -->
+  <form class="search-bar" action="#" method="get">
+    <div class="input-group">
+      <label for="dest">Wohin</label>
+      <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
     </div>
-    <form class="search-bar" action="#" method="get">
-      <div class="input-group">
-        <label for="dest">Wohin</label>
-        <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
-      </div>
-      <div class="input-group">
-        <label for="start">Start Date</label>
-        <input id="start" name="start" type="date">
-      </div>
-      <div class="input-group">
-        <label for="end">End Date</label>
-        <input id="end" name="end" type="date">
-      </div>
-      <button class="search-button" type="submit">🔍</button>
-    </form>
-  </section>
+    <div class="input-group">
+      <label for="start">Start Date</label>
+      <input id="start" name="start" type="date">
+    </div>
+    <div class="input-group">
+      <label for="end">End Date</label>
+      <input id="end" name="end" type="date">
+    </div>
+    <button type="submit" class="search-button" aria-label="Suchen">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+  </form>
 
-  <!-- 5) To-Do-Listen-Sektion -->
-  <section class="todo-section">
-    <h2>Deine Listen</h2>
-    <ul>
-      {% for l in lists %}
-        <li>
-          <a href="{{ url_for('list', id=l.id) }}">
-            {{ l.name }} <span class="status">{{ '✔' if l.complete else '❏' }}</span>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
-
-  <!-- 6) Feature-Section -->
-  <section class="features-section">
+  <!-- 3) Features + Filter -->
+  <div class="features-section">
     <div class="features-wrapper">
+      <!-- Kälte -->
       <div class="feature-item">
-        <img src="{{ url_for('static', filename='images/cold.png') }}" alt="Kälte">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20"/>
+          <path d="M2 12h20"/>
+          <path d="M4.93 4.93l14.14 14.14"/>
+          <path d="M4.93 19.07l14.14 -14.14"/>
+        </svg>
         <span>Kälte</span>
       </div>
+
+      <!-- Wärme -->
       <div class="feature-item">
-        <img src="{{ url_for('static', filename='images/warmth.png') }}" alt="Wärme">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
         <span>Wärme</span>
       </div>
+
+      <!-- Entspannung -->
       <div class="feature-item">
-        <img src="{{ url_for('static', filename='images/relax.png') }}" alt="Entspannung">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21c4.418 0 8-3.582 8-8H4c0 4.418 3.582 8 8 8z"/>
+          <path d="M12 3v4"/>
+        </svg>
         <span>Entspannung</span>
       </div>
+
+      <!-- Extrem -->
       <div class="feature-item">
-        <img src="{{ url_for('static', filename='images/extreme.png') }}" alt="Extrem">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20l16-16"/>
+          <path d="M8 4h8v8"/>
+        </svg>
         <span>Extrem</span>
       </div>
-      <button class="filter-button">
-        <img src="{{ url_for('static', filename='images/filter.png') }}" alt="Filter">
-        Filter
+
+      <!-- Filter-Button -->
+      <button class="filter-button" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="21" x2="4" y2="14"/>
+          <line x1="4" y1="10" x2="4" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12" y2="3"/>
+          <line x1="20" y1="21" x2="20" y2="16"/>
+          <line x1="20" y1="12" x2="20" y2="3"/>
+          <line x1="1" y1="14" x2="7" y2="14"/>
+          <line x1="9" y1="8" x2="15" y2="8"/>
+          <line x1="17" y1="16" x2="23" y2="16"/>
+        </svg>
+        <span>Filter</span>
       </button>
     </div>
-  </section>
+  </div>
+
+</section>
+
+<section class="todo-section">
+  <h2>Deine Listen</h2>
+  <ul>
+    {% for l in lists %}
+      <li>
+        <a href="{{ url_for('list', id=l.id) }}">
+          {{ l.name }} <span class="status">{{ '✔' if l.complete else '❏' }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

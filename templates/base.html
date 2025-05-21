@@ -2,34 +2,45 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}{% endblock %} – BackpackerRent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} – Backpacker Rent</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <nav class="top-nav">
-    <div class="logo">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="{{ url_for('lists') }}" class="logo">
+        <!-- Zelt-Icon als SVG -->
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 21l10-19 10 19H2z"/>
+          <path d="M7 21l5-11 5 11"/>
+        </svg>
+        <span class="visually-hidden">Backpacker Rent</span>
+      </a>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="{{ url_for('lists') }}">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="{{ url_for('login') }}">Sign In</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Suche öffnen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="icon-btn lang-switch">Englisch ⌵</button>
+      </div>
     </div>
-    <ul class="nav-links">
-      <li><a href="{{ url_for('lists') }}">BackpackerRent</a></li>
-      <li><a href="#">About Us</a></li>
-<<<<<<< HEAD
-      <li><a href="#">Sign In</a></li>
-<<<<<<< HEAD
-=======
-      <li class="nav-icon">🔍</li>
-=======
-      <li><a href="{{ url_for('login') }}">Sign In</a></li>
->>>>>>> e9cacb9 (Login Bereich Mittig)
->>>>>>> 316ada3923a1f36644293826c7e96ea5b7da4cb2
-      <li class="language-select"><a href="#">Englisch ⌵</a></li>
-      <li class="nav-icon">🔍</li>
-    </ul>
-  </nav>
+  </header>
 
   {% block hero %}{% endblock %}
 
-  <main>
+  <main class="container">
     {% block content %}{% endblock %}
   </main>
 </body>
