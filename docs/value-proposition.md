@@ -4,7 +4,7 @@ nav_order: 1
 ---
 
 {: .label }
-[Jane Dane]
+Jelena Berenz
 
 {: .no_toc }
 # Value proposition
@@ -18,7 +18,6 @@ nav_order: 1
 
 ## The problem
 
-[Describe which problem your application tackles and why it is relevant.]
 
 ## Our solution
 

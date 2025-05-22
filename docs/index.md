@@ -8,21 +8,21 @@ nav_order: 0
 >
 > You may delete this `attention` box.
 
-# [Project Name]
+# Backpacker Rent
 
 [Project description]
 
 ## Team members
 
-### [Jane Dane]
+### Jelena Berenz
 
 About
 : Some info about Jane
 
 Matr.-Nr.
-: 1234567
+77212023030
 
-### [Joe Doe]
+### Pana 
 
 About
 : Some info about Joe
