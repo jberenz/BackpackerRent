@@ -30,6 +30,14 @@ About
 Matr.-Nr.
 : 77212023098
 
+### Aleyna Nur Özdemir
+
+About
+: Some info about Joe
+
+Matr.-Nr.
+: 77212024903
+
 ## Eidesstattliche Erklärung
 
 Die oben genannten Teammitglieder erklären an Eides statt:
