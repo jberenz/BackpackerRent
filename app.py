@@ -74,16 +74,33 @@ def run_insert_sample():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        country = request.form['country']
-        phone = request.form['phone']
-        # Hier könntest du später z.B. SMS-Code-Login machen
-        return redirect(url_for('lists'))  # Weiterleitung nach "Login"
+        country = request.form.get('region')
+        phone = request.form.get('phone')
+        # hier später SMS-Code o.ä. verarbeiten
+        return redirect(url_for('lists'))
     return render_template('login.html')
 
 @app.route('/login/email')
 def login_email():
+    # später: eigenes E-Mail-Login-Formular
     return 'Hier kommt das E-Mail Login hin (später implementieren)'
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        last_name  = request.form.get('last_name')
+        first_name = request.form.get('first_name')
+        region     = request.form.get('region')
+        phone      = request.form.get('phone')
+        # hier später Registrierungs-Logik (DB, Session, o.ä.)
+        return redirect(url_for('lists'))
+    # dasselbe Template nutzt dein Registrierungs-Formular
+    return render_template('login.html')
 
 @app.route('/register/email')
 def register_email():
+    # später: eigenes E-Mail-Registrierungs-Formular
     return 'Hier kommt die E-Mail Registrierung hin (später implementieren)'
+
+if __name__ == '__main__':
+    app.run(debug=True)
