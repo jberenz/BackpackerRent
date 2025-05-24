@@ -8,31 +8,48 @@
 </head>
 <body>
   <header class="site-header">
-<div class="header-inner">
+    <div class="header-inner">
       <a href="{{ url_for('lists') }}" class="logo">
-        <!-- Zelt-Icon als SVG -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Zelt-Icon -->
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none"
+             stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 21l10-19 10 19H2z"/>
           <path d="M7 21l5-11 5 11"/>
         </svg>
-        <span class="visually-hidden">Backpacker Rent</span>
+        <span class="logo-text">Backpacker Rent</span>
       </a>
 
       <nav class="main-nav">
-        <ul>
-          <li><a href="{{ url_for('lists') }}">Home</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="{{ url_for('login') }}">Sign In</a></li>
-        </ul>
-      </nav>
+  <ul>
+    <li><a href="{{ url_for('lists') }}">Home</a></li>
+    <li><a href="#">About Us</a></li>
+    <li>
+      <a
+        href="{{ url_for('login') }}"
+        class="nav-signin{% if request.endpoint == 'login' %} active{% endif %}"
+      >Sign In</a>
+    </li>
+  </ul>
+</nav>
 
       <div class="header-actions">
         <button class="icon-btn" aria-label="Suche öffnen">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
         </button>
+
+        <!-- Profil-Icon rechts -->
+        <button class="icon-btn profile-btn" aria-label="Konto">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+               stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+          </svg>
+        </button>
+
         <button class="icon-btn lang-switch">Englisch ⌵</button>
       </div>
     </div>

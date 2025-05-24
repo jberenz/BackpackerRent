@@ -24,15 +24,12 @@ body {
   z-index: 100;
 }
 .header-inner {
-  max-width: none;
   width: 100%;
-  margin: 0;
   padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 /* Logo (Icon + Text) */
 .logo {
   display: flex;
@@ -41,11 +38,6 @@ body {
   text-decoration: none !important;
   color: #2563EB !important;
   cursor: default;
-}
-.logo:hover,
-.logo:focus {
-  text-decoration: none;
-  color: #2563EB;
 }
 .logo-icon {
   width: 32px;
@@ -57,7 +49,6 @@ body {
   font-weight: 500;
   color: #2563EB;
 }
-
 /* Navigation rechts */
 .main-nav ul {
   list-style: none;
@@ -69,6 +60,12 @@ body {
   color: #1e1e88;
   font-weight: 500;
 }
+.main-nav a.nav-signin {
+  font-weight: 500;     /* wieder normal */
+}
+.main-nav a.nav-signin.active {
+  font-weight: bold;    /* nur wenn .active gesetzt ist */
+}
 .header-actions {
   display: flex;
   gap: 12px;
@@ -78,6 +75,9 @@ body {
   border: none;
   cursor: pointer;
   padding: 4px;
+}
+.profile-btn svg {
+  stroke: #2563EB;
 }
 .lang-switch {
   background: none;
@@ -156,16 +156,12 @@ body {
   margin-bottom: 6px;
   color: #555;
 }
-
-/* altes Text-Input */
 .input-group input {
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 6px 4px;
   font-size: 16px;
 }
-
-/* klassisches Dropdown-Select */
 .input-group select {
   appearance: none;
   -webkit-appearance: none;
@@ -181,11 +177,6 @@ body {
   background-repeat: no-repeat;
   background-position: right 8px center;
 }
-.input-group select option[disabled] {
-  color: #999;
-}
-
-/* Such-Button rund */
 .search-button {
   width: 56px;
   height: 56px;
@@ -197,7 +188,7 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 0;
+  margin-left: auto;
 }
 .search-button svg {
   width: 28px;
@@ -255,10 +246,18 @@ body {
   margin-left: 8px;
   color: #10B981;
 }
+
 /* === Auth-Seite (Login / Registrieren) === */
 .auth-wrapper {
-  padding: 80px 24px;
+  padding: 120px 24px 40px;
   background-color: #fef3ff;
+}
+.login-welcome {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2563EB;
+  margin-bottom: 24px;
 }
 .auth-container {
   max-width: 600px;
@@ -331,4 +330,3 @@ body {
 .auth-footer a:hover {
   text-decoration: underline;
 }
-
