@@ -6,10 +6,12 @@
 }
 html {
   overflow-x: hidden;
+  background-color: #fef3ff; /* durchgehender Rosé-Hintergrund */
 }
 body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
+  background-color: transparent; /* HTML-Background durchscheinen lassen */
 }
 
 /* === 1) Header === */
@@ -22,17 +24,41 @@ body {
   z-index: 100;
 }
 .header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
 }
+
+/* Logo (Icon + Text) */
 .logo {
   display: flex;
   align-items: center;
+  gap: 8px;
+  text-decoration: none !important;
+  color: #2563EB !important;
+  cursor: default;
 }
+.logo:hover,
+.logo:focus {
+  text-decoration: none;
+  color: #2563EB;
+}
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  color: #2563EB;
+}
+.logo-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #2563EB;
+}
+
+/* Navigation rechts */
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -79,7 +105,7 @@ body {
   font-weight: bold;
 }
 
-/* === 3) Such-Sektion mit klickbaren Tabs === */
+/* === 3) Such-Sektion mit Tabs === */
 .search-section {
   background: #fef3ff;
   border-top: 4px solid #A855F7;
@@ -92,8 +118,6 @@ body {
   gap: 32px;
   margin-bottom: 32px;
 }
-
-/* Links in den Tabs */
 .tour-tabs .tab a {
   display: inline-block;
   padding: 8px 16px;
@@ -105,7 +129,6 @@ body {
 .tour-tabs .tab a:hover {
   color: #1e40af;
 }
-/* Active-Zustand */
 .tour-tabs .tab.active a {
   color: #2563EB;
   font-weight: bold;
@@ -133,57 +156,81 @@ body {
   margin-bottom: 6px;
   color: #555;
 }
+
+/* altes Text-Input */
 .input-group input {
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 6px 4px;
   font-size: 16px;
 }
-.search-button {
-  margin-left: auto;
-  background: #f3d3eb;
-  border: none;
-  border-radius: 50%;
-  padding: 12px;
+
+/* klassisches Dropdown-Select */
+.input-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 32px 6px 8px;
+  font-size: 16px;
+  color: #333;
   cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9' fill='none' stroke='%23999' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.input-group select option[disabled] {
+  color: #999;
 }
 
-/* === 5) Features & Filter === */
-.features-section {
-  padding: 32px 0;
-}
-.features-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
+/* Such-Button rund */
+.search-button {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f3d3eb;
   display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
+  align-items: center;
   justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  margin-left: 0;
 }
-.feature-item {
+.search-button svg {
+  width: 28px;
+  height: 28px;
+  stroke: #1e1e88;
+}
+
+/* === 5) Dynamische Filter === */
+.filters {
+  max-width: 900px;
+  margin: 16px auto;
+  padding: 0 24px;
+}
+.filter-group {
+  display: none;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-bottom: 24px;
+}
+.filter-group.active {
   display: flex;
-  flex-direction: column;
+}
+.filter-group label {
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 16px;
   color: #2563EB;
-  text-align: center;
-}
-.feature-item svg {
-  display: block;
-}
-.filter-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  border: 2px solid #2563EB;
-  border-radius: 50px;
-  background: white;
   cursor: pointer;
 }
-.filter-button svg {
-  display: inline-block;
+.filter-group input {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 /* === 6) To-Do List === */

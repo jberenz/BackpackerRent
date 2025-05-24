@@ -13,13 +13,10 @@
 {% block content %}
 <section class="search-section">
 
-  <!-- 1) Klickbare Tabs -->
+  <!-- 1) Tabs -->
   <ul class="tour-tabs">
     <li class="tab active">
       <a href="#" data-type="backpacker">Backpacker</a>
-    </li>
-    <li class="tab">
-      <a href="#" data-type="roadtrip">Roadtrip</a>
     </li>
     <li class="tab">
       <a href="#" data-type="radtour">Radtour</a>
@@ -30,7 +27,13 @@
   <form class="search-bar" action="#" method="get">
     <div class="input-group">
       <label for="dest">Wohin</label>
-      <input id="dest" name="dest" type="text" placeholder="Wohin geht es">
+      <select id="dest" name="dest">
+        <option value="" disabled selected>Wohin geht es</option>
+        <option value="berlin">Berlin</option>
+        <option value="muenchen">München</option>
+        <option value="hamburg">Hamburg</option>
+        <option value="frankfurt">Frankfurt</option>
+      </select>
     </div>
     <div class="input-group">
       <label for="start">Start Date</label>
@@ -41,72 +44,31 @@
       <input id="end" name="end" type="date">
     </div>
     <button type="submit" class="search-button" aria-label="Suchen">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+           stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/>
         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
     </button>
   </form>
 
-  <!-- 3) Features + Filter -->
-  <div class="features-section">
-    <div class="features-wrapper">
-      <!-- Kälte -->
-      <div class="feature-item">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2v20"/>
-          <path d="M2 12h20"/>
-          <path d="M4.93 4.93l14.14 14.14"/>
-          <path d="M4.93 19.07l14.14 -14.14"/>
-        </svg>
-        <span>Kälte</span>
-      </div>
-      <!-- Wärme -->
-      <div class="feature-item">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/>
-          <line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/>
-          <line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <span>Wärme</span>
-      </div>
-      <!-- Entspannung -->
-      <div class="feature-item">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 21c4.418 0 8-3.582 8-8H4c0 4.418 3.582 8 8 8z"/>
-          <path d="M12 3v4"/>
-        </svg>
-        <span>Entspannung</span>
-      </div>
-      <!-- Extrem -->
-      <div class="feature-item">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 20l16-16"/>
-          <path d="M8 4h8v8"/>
-        </svg>
-        <span>Extrem</span>
-      </div>
-      <!-- Filter-Button -->
-      <button class="filter-button" type="button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="21" x2="4" y2="14"/>
-          <line x1="4" y1="10" x2="4" y2="3"/>
-          <line x1="12" y1="21" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12" y2="3"/>
-          <line x1="20" y1="21" x2="20" y2="16"/>
-          <line x1="20" y1="12" x2="20" y2="3"/>
-          <line x1="1" y1="14" x2="7" y2="14"/>
-          <line x1="9" y1="8" x2="15" y2="8"/>
-          <line x1="17" y1="16" x2="23" y2="16"/>
-        </svg>
-        <span>Filter</span>
-      </button>
+  <!-- 3) Dynamische Filter -->
+  <div class="filters">
+    <!-- Backpacker-Filter -->
+    <div class="filter-group active" data-type="backpacker">
+      <label><input type="checkbox" name="gear" value="zelt"> Zelt</label>
+      <label><input type="checkbox" name="gear" value="rucksack"> Rucksack</label>
+      <label><input type="checkbox" name="gear" value="multitool"> Multitool</label>
+      <label><input type="checkbox" name="gear" value="schlafsack"> Schlafsack</label>
+      <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
+    </div>
+    <!-- Radtour-Filter -->
+    <div class="filter-group" data-type="radtour">
+      <label><input type="checkbox" name="gear" value="radtasche"> Radtasche</label>
+      <label><input type="checkbox" name="gear" value="gaskocher"> Gaskocher</label>
+      <label><input type="checkbox" name="gear" value="schlafsack"> Schlafsack</label>
+      <label><input type="checkbox" name="gear" value="zelt"> Zelt</label>
+      <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
     </div>
   </div>
 
@@ -125,13 +87,18 @@
   </ul>
 </section>
 
-<!-- JS für Tab-Interaktion -->
 <script>
   document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
+      const type = link.dataset.type;
+      // Tabs
       document.querySelectorAll('.tour-tabs .tab').forEach(li => li.classList.remove('active'));
       link.parentElement.classList.add('active');
+      // Filtergroups
+      document.querySelectorAll('.filter-group').forEach(group => {
+        group.classList.toggle('active', group.dataset.type === type);
+      });
     });
   });
 </script>
