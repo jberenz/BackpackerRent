@@ -1,13 +1,120 @@
 {% extends "base.html" %}
-{% block title %}Neue Liste anlegen – Backpacker Rent{% endblock %}
+{% block title %}Neues Angebot hinzufügen – Backpacker Rent{% endblock %}
 
 {% block content %}
 <section class="add-section">
-  <h2>Neue Liste anlegen</h2>
-  <form action="{{ url_for('add') }}" method="post">
-    <label for="name">Name der Liste</label>
-    <input id="name" name="name" type="text" required>
-    <button type="submit">Hinzufügen</button>
-  </form>
+  <div class="add-container">
+    <h2 class="add-header">Neues Angebot hinzufügen</h2>
+    <form id="add-form" action="{{ url_for('add') }}" method="post">
+      <!-- Titel -->
+      <div class="add-row full">
+        <div class="add-col">
+          <label for="title">Titel</label>
+          <input id="title" name="title" type="text" required>
+        </div>
+      </div>
+
+      <!-- Kategorie + dynamische Merkmale -->
+      <div class="add-row">
+        <div class="add-col">
+          <label for="category">Kategorie</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Bitte wählen ⌄</option>
+            <option value="zelt">Zelt</option>
+            <option value="rucksack">Rucksack</option>
+            <option value="multitool">Multitool</option>
+            <option value="schlafsack">Schlafsack</option>
+            <option value="luftmatratze">Luftmatratze</option>
+          </select>
+        </div>
+        <div id="features" class="features"></div>
+      </div>
+
+      <!-- Beschreibung -->
+      <div class="add-row full">
+        <div class="add-col">
+          <label for="description">Beschreibung</label>
+          <textarea id="description" name="description" rows="5"></textarea>
+        </div>
+      </div>
+
+      <!-- Region -->
+      <div class="add-row half">
+        <div class="add-col">
+          <label for="region">Region</label>
+          <input id="region" name="region" type="text">
+        </div>
+      </div>
+
+      <!-- Angebot erstellen -->
+      <button type="submit" class="btn-create">Angebot erstellen</button>
+    </form>
+  </div>
 </section>
+
+<script>
+// Definition aller Merkmals-Sets
+const featureSets = {
+  zelt: [
+    { id: 'kapazitaet',    label: 'Kapazität (z. B. 1-,2-,4-Personen)' },
+    { id: 'packmass',      label: 'Packmaß (L × B × H in cm)' },
+    { id: 'gewicht',       label: 'Gewicht (kg)' },
+    { id: 'wassersaeule',  label: 'Wassersäule (Boden/Dach mm)' },
+    { id: 'material',      label: 'Material (z. B. Ripstop-Nylon)' }
+  ],
+  rucksack: [
+    { id: 'volumen',       label: 'Volumen (l)' },
+    { id: 'gewicht',       label: 'Gewicht (kg)' },
+    { id: 'masse',         label: 'Maße (H × B × T cm)' },
+    { id: 'material',      label: 'Material (z. B. Cordura)' },
+    { id: 'tragesystem',   label: 'Tragesystem (z. B. Hüftgurt)' }
+  ],
+  multitool: [
+    { id: 'funktionen',    label: 'Anzahl Funktionen (z. B. 12-in-1)' },
+    { id: 'gewicht',       label: 'Gewicht (g)' },
+    { id: 'material',      label: 'Material (z. B. Edelstahl)' },
+    { id: 'klingenlaenge', label: 'Klingenlänge (cm)' },
+    { id: 'masse',         label: 'Maße zusammengeklappt (L × B × T cm)' }
+  ],
+  schlafsack: [
+    { id: 'temperatur',    label: 'Temperaturbereich (°C)' },
+    { id: 'fuellmaterial', label: 'Füllmaterial (Daune/synt.)' },
+    { id: 'gewicht',       label: 'Gewicht (kg)' },
+    { id: 'packmass',      label: 'Packmaß (L × Ø cm)' },
+    { id: 'form',          label: 'Form (Mumie/Decke)' }
+  ],
+  luftmatratze: [
+    { id: 'abmessungen',   label: 'Abmessungen (L × B × H cm)' },
+    { id: 'dicke',         label: 'Dicke (cm)' },
+    { id: 'material',      label: 'Material (z. B. PVC/TPU)' },
+    { id: 'gewicht',       label: 'Gewicht (kg)' },
+    { id: 'maxbelast',     label: 'Max. Belastung (kg)' }
+  ]
+};
+
+const categorySelect = document.getElementById('category');
+const featuresDiv    = document.getElementById('features');
+
+function renderFeatures(cat) {
+  featuresDiv.innerHTML = '';
+  if (!featureSets[cat]) return;
+  featureSets[cat].forEach(f => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'feature-field';
+    const label = document.createElement('label');
+    label.setAttribute('for', f.id);
+    label.textContent = f.label;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id   = f.id;
+    input.name = f.id;
+    wrapper.append(label, input);
+    featuresDiv.append(wrapper);
+  });
+}
+
+categorySelect.addEventListener('change', e => {
+  renderFeatures(e.target.value);
+});
+</script>
 {% endblock %}

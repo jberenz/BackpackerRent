@@ -90,11 +90,22 @@
     <div class="about-content">
       <div class="about-text">
         <p>
-          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis.</strong> Ein engagiertes Team …
+          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis</strong>. 
+          Ein engagiertes Team mit einer gemeinsamen Vision: Das Reisen einfacher, nachhaltiger und flexibler 
+          zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen 
+          von Backpacking sowie Radtouren aus eigener Erfahrung.
         </p>
+
         <h3>🌍 Nachhaltigkeit, die mitreist</h3>
-        <p>…</p>
+        <p>
+          Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt 
+          stehen muss. Deshalb setzen wir mit Backpacker Rent auf <strong>nachhaltige Nutzung statt Wegwerfmentalität</strong>. 
+          Indem wir hochwertige Outdoor-Ausrüstung wiederverwendbar machen, vermeiden wir unnötige Neuanschaffungen, reduzieren Müll 
+          und schonen wertvolle Ressourcen. Jedes gemietete Zelt, jeder geteilte Schlafsack bedeutet weniger Konsum und mehr 
+          Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
+        </p>
       </div>
+
       <div class="about-images">
         <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
         <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
@@ -107,6 +118,7 @@
 <a href="{{ url_for('add') }}" class="btn-add">Hinzufügen</a>
 
 <script>
+  // Tabs + Filter umschalten
   document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
