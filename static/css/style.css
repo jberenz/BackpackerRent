@@ -342,7 +342,6 @@ body {
   gap: 16px;
   margin-bottom: 40px;
 }
-
 .about-icon {
   width: 50px;
   margin-bottom: 10px;
@@ -374,16 +373,31 @@ body {
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
-
 .about-heading h2 {
   font-size: 36px;
   font-weight: bold;
   margin-top: 10px;
-  color: #2563EB; /* Hellblau wie der Header */
+  color: #2563EB;
 }
-
 .main-nav a.active {
   font-weight: 800 !important;
   color: #2563EB !important;
- } 
+}
 
+/* === Neuer Hinzufügen-Button === */
+.btn-add {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #bbf0c3;
+  color: #2563EB;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-decoration: none;
+  z-index: 200;
+}
+.btn-add:hover {
+  background: #a1eaa7;
+}

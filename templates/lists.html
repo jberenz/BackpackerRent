@@ -90,21 +90,11 @@
     <div class="about-content">
       <div class="about-text">
         <p>
-          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis.</strong>  Ein engagiertes Team mit einer gemeinsamen Vision: 
-          Das Reisen einfacher, nachhaltiger und flexibler zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen von 
-          Backpacking sowie Radtouren aus eigener Erfahrung.
+          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis.</strong> Ein engagiertes Team …
         </p>
         <h3>🌍 Nachhaltigkeit, die mitreist</h3>
-        <p>
-          Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt stehen muss. Deshalb setzen wir mit Backpacker Rent 
-          auf <strong>nachhaltige Nutzung statt Wegwerfmentalität</strong>. Indem wir hochwertige Outdoor-Ausrüstung wiederverwendbar machen, vermeiden wir unnötige Neuanschaffungen, 
-          reduzieren Müll und schonen wertvolle Ressourcen. Jedes gemietete Zelt, jeder geteilte Schlafsack bedeutet weniger Konsum und mehr Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
-
-        </p>
-        <p>
-        </p>
+        <p>…</p>
       </div>
-
       <div class="about-images">
         <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
         <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
@@ -112,6 +102,9 @@
     </div>
   </div>
 </section>
+
+<!-- Fester Hinzufügen-Button -->
+<a href="{{ url_for('add') }}" class="btn-add">Hinzufügen</a>
 
 <script>
   document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
@@ -125,37 +118,19 @@
       });
     });
   });
-</script>
 
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Check: Sind wir direkt auf #aboutus gelandet?
+  // About-Us Nav-Aktivierung
+  document.addEventListener("DOMContentLoaded", () => {
     if (window.location.hash === "#aboutus") {
-      const navLink = document.querySelector('#nav-aboutus');
-      if (navLink) {
-        navLink.classList.add("active");
-      }
+      document.getElementById('nav-aboutus')?.classList.add("active");
     }
-  });
-
-  // Scroll Detection (optional – kann auch alleine verwendet werden)
-  document.addEventListener("scroll", function () {
-    const section = document.getElementById("aboutus");
-    const navLink = document.querySelector('#nav-aboutus');
-    if (!section || !navLink) return;
-
-    const rect = section.getBoundingClientRect();
-    const inView = rect.top <= 100 && rect.bottom >= 100;
-
-    if (inView) {
-      navLink.classList.add("active");
-    } else {
-      navLink.classList.remove("active");
-    }
+    document.addEventListener("scroll", () => {
+      const sec = document.getElementById("aboutus");
+      const link = document.getElementById('nav-aboutus');
+      if (!sec || !link) return;
+      const r = sec.getBoundingClientRect();
+      link.classList.toggle("active", r.top <= 100 && r.bottom >= 100);
+    });
   });
 </script>
-
-
 {% endblock %}
-

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Neue Liste anlegen – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="add-section">
+  <h2>Neue Liste anlegen</h2>
+  <form action="{{ url_for('add') }}" method="post">
+    <label for="name">Name der Liste</label>
+    <input id="name" name="name" type="text" required>
+    <button type="submit">Hinzufügen</button>
+  </form>
+</section>
+{% endblock %}
