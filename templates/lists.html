@@ -12,8 +12,6 @@
 
 {% block content %}
 <section class="search-section">
-
-  <!-- 1) Tabs -->
   <ul class="tour-tabs">
     <li class="tab active">
       <a href="#" data-type="backpacker">Backpacker</a>
@@ -23,7 +21,6 @@
     </li>
   </ul>
 
-  <!-- 2) Suchleiste -->
   <form class="search-bar" action="#" method="get">
     <div class="input-group">
       <label for="dest">Wohin</label>
@@ -52,9 +49,7 @@
     </button>
   </form>
 
-  <!-- 3) Dynamische Filter -->
   <div class="filters">
-    <!-- Backpacker-Filter -->
     <div class="filter-group active" data-type="backpacker">
       <label><input type="checkbox" name="gear" value="zelt"> Zelt</label>
       <label><input type="checkbox" name="gear" value="rucksack"> Rucksack</label>
@@ -62,7 +57,6 @@
       <label><input type="checkbox" name="gear" value="schlafsack"> Schlafsack</label>
       <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
     </div>
-    <!-- Radtour-Filter -->
     <div class="filter-group" data-type="radtour">
       <label><input type="checkbox" name="gear" value="radtasche"> Radtasche</label>
       <label><input type="checkbox" name="gear" value="gaskocher"> Gaskocher</label>
@@ -71,7 +65,6 @@
       <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
     </div>
   </div>
-
 </section>
 
 <section class="todo-section">
@@ -87,19 +80,82 @@
   </ul>
 </section>
 
+<section class="about-section" id="aboutus">
+  <div class="about-container">
+
+    <div class="about-heading">
+      <h2>About us</h2>
+    </div>
+
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis.</strong>  Ein engagiertes Team mit einer gemeinsamen Vision: 
+          Das Reisen einfacher, nachhaltiger und flexibler zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen von 
+          Backpacking sowie Radtouren aus eigener Erfahrung.
+        </p>
+        <h3>🌍 Nachhaltigkeit, die mitreist</h3>
+        <p>
+          Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt stehen muss. Deshalb setzen wir mit Backpacker Rent 
+          auf <strong>nachhaltige Nutzung statt Wegwerfmentalität</strong>. Indem wir hochwertige Outdoor-Ausrüstung wiederverwendbar machen, vermeiden wir unnötige Neuanschaffungen, 
+          reduzieren Müll und schonen wertvolle Ressourcen. Jedes gemietete Zelt, jeder geteilte Schlafsack bedeutet weniger Konsum und mehr Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
+
+        </p>
+        <p>
+        </p>
+      </div>
+
+      <div class="about-images">
+        <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
+        <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
+      </div>
+    </div>
+  </div>
+</section>
+
 <script>
   document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       const type = link.dataset.type;
-      // Tabs
       document.querySelectorAll('.tour-tabs .tab').forEach(li => li.classList.remove('active'));
       link.parentElement.classList.add('active');
-      // Filtergroups
       document.querySelectorAll('.filter-group').forEach(group => {
         group.classList.toggle('active', group.dataset.type === type);
       });
     });
   });
 </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Check: Sind wir direkt auf #aboutus gelandet?
+    if (window.location.hash === "#aboutus") {
+      const navLink = document.querySelector('#nav-aboutus');
+      if (navLink) {
+        navLink.classList.add("active");
+      }
+    }
+  });
+
+  // Scroll Detection (optional – kann auch alleine verwendet werden)
+  document.addEventListener("scroll", function () {
+    const section = document.getElementById("aboutus");
+    const navLink = document.querySelector('#nav-aboutus');
+    if (!section || !navLink) return;
+
+    const rect = section.getBoundingClientRect();
+    const inView = rect.top <= 100 && rect.bottom >= 100;
+
+    if (inView) {
+      navLink.classList.add("active");
+    } else {
+      navLink.classList.remove("active");
+    }
+  });
+</script>
+
+
 {% endblock %}
+

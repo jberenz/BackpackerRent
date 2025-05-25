@@ -22,7 +22,15 @@
       <nav class="main-nav">
   <ul>
     <li><a href="{{ url_for('lists') }}">Home</a></li>
-    <li><a href="#">About Us</a></li>
+   <li>
+  <a href="{{ url_for('lists') }}#aboutus"
+     id="nav-aboutus"
+     class="nav-link">
+     About Us
+  </a>
+</li>
+
+
     <li>
       <a
         href="{{ url_for('login') }}"

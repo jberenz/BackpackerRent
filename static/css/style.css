@@ -6,12 +6,13 @@
 }
 html {
   overflow-x: hidden;
-  background-color: #fef3ff; /* durchgehender Rosé-Hintergrund */
+  background-color: #fef3ff;
+  scroll-behavior: smooth;
 }
 body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
-  background-color: transparent; /* HTML-Background durchscheinen lassen */
+  background-color: transparent;
 }
 
 /* === 1) Header === */
@@ -30,7 +31,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-/* Logo (Icon + Text) */
 .logo {
   display: flex;
   align-items: center;
@@ -49,7 +49,6 @@ body {
   font-weight: 500;
   color: #2563EB;
 }
-/* Navigation rechts */
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -60,11 +59,8 @@ body {
   color: #1e1e88;
   font-weight: 500;
 }
-.main-nav a.nav-signin {
-  font-weight: 500;     /* wieder normal */
-}
 .main-nav a.nav-signin.active {
-  font-weight: bold;    /* nur wenn .active gesetzt ist */
+  font-weight: bold;
 }
 .header-actions {
   display: flex;
@@ -164,8 +160,6 @@ body {
 }
 .input-group select {
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -330,3 +324,66 @@ body {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* === About Us Section === */
+.about-section {
+  background-color: #fef3ff;
+  padding: 80px 20px;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1e1e88;
+}
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.about-icon {
+  width: 50px;
+  margin-bottom: 10px;
+}
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.about-text {
+  font-size: 18px;
+  line-height: 1.8;
+}
+.about-text h3 {
+  font-size: 22px;
+  color: #2563EB;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+.about-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+.about-images img {
+  width: 100%;
+  max-width: 550px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-heading h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #2563EB; /* Hellblau wie der Header */
+}
+
+.main-nav a.active {
+  font-weight: 800 !important;
+  color: #2563EB !important;
+ } 
+
