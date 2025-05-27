@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import db  # falls du das oben schon nutzt
+import db
 import os
 
 app = Flask(__name__)
@@ -14,12 +14,15 @@ app.config.from_mapping(
 app.cli.add_command(db.init_db)
 app.teardown_appcontext(db.close_db_con)
 
-# Startseite weiterleiten
+# Startseite
 @app.route('/')
 def index():
     return redirect(url_for('lists'))
 
-# TODO-Listen anzeigen
+# =============================
+# 📝 TODO-Listen-Logik
+# =============================
+
 @app.route('/lists/')
 def lists():
     db_con = db.get_db_con()
@@ -40,7 +43,6 @@ def lists():
         return lists
     return render_template('lists.html', lists=lists)
 
-# Einzelne Liste anzeigen
 @app.route('/lists/<int:id>')
 def show_list(id):
     db_con = db.get_db_con()
@@ -62,11 +64,9 @@ def show_list(id):
         return list_obj
     return render_template('list.html', list=list_obj)
 
-# Hinzufügen-Seite (Button „Hinzufügen“)
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        # Beispiel: neue Liste anlegen
         name = request.form.get('name')
         if name:
             db_con = db.get_db_con()
@@ -75,45 +75,58 @@ def add():
         return redirect(url_for('lists'))
     return render_template('add.html')
 
-# Beispieldaten einfügen
 @app.route('/insert/sample')
 def run_insert_sample():
     db.insert_sample()
     return 'Datenbank mit Beispieldaten gefüllt.'
 
 # =============================
-# Login / Registrierung
+# 🔐 Authentifizierung
 # =============================
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+# Neue Login-Seite
+@app.route('/anmelden', methods=['GET', 'POST'])
+def anmelden():
     if request.method == 'POST':
-        country = request.form.get('region')
-        phone = request.form.get('phone')
-        # hier später SMS-Code o.ä. verarbeiten
-        return redirect(url_for('lists'))
-    return render_template('login.html')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
+        if email == 'test@example.com' and password == 'pass123':
+            return redirect(url_for('lists'))
+        else:
+            return render_template('anmelden.html', error='Ungültige Anmeldedaten')
+
+    return render_template('anmelden.html')
+
+# Neue Registrierungsseite
+@app.route('/registrieren', methods=['GET', 'POST'])
+def registrieren():
+    if request.method == 'POST':
+        last_name = request.form.get('last_name')
+        first_name = request.form.get('first_name')
+        region = request.form.get('region')
+        phone = request.form.get('phone')
+        # Hier kannst du später in die DB schreiben
+        return redirect(url_for('lists'))
+    return render_template('registrieren.html')
+
+# 🔁 Alte URL weiterleiten (Fehlervermeidung)
+@app.route('/register')
+def redirect_register():
+    return redirect(url_for('registrieren'))
+
+# Optional: alte E-Mail-Routen (noch nicht verwendet)
 @app.route('/login/email')
 def login_email():
-    # später: eigenes E-Mail-Login-Formular
     return 'Hier kommt das E-Mail Login hin (später implementieren)'
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        last_name  = request.form.get('last_name')
-        first_name = request.form.get('first_name')
-        region     = request.form.get('region')
-        phone      = request.form.get('phone')
-        # hier später Registrierungs-Logik (DB, Session, o.ä.)
-        return redirect(url_for('lists'))
-    return render_template('login.html')
 
 @app.route('/register/email')
 def register_email():
-    # später: eigenes E-Mail-Registrierungs-Formular
     return 'Hier kommt die E-Mail Registrierung hin (später implementieren)'
+
+# =============================
+# 🚀 Startpunkt
+# =============================
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Anmelden – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+  <h1 class="login-welcome">Willkommen zurück!</h1>
+  <div class="auth-container">
+    <h2 class="auth-header">Anmelden</h2>
+
+    {% if error %}
+      <p style="color: red; text-align: center;">{{ error }}</p>
+    {% endif %}
+
+    <form class="auth-form" action="{{ url_for('anmelden') }}" method="post">
+      <div class="input-group" style="grid-column: 1 / -1;">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="Email" required>
+      </div>
+      <div class="input-group" style="grid-column: 1 / -1;">
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" placeholder="Passwort" required>
+      </div>
+      <button type="submit" class="auth-submit">Weiter</button>
+    </form>
+
+    <div class="auth-footer">
+      Noch kein Konto? <a href="{{ url_for('registrieren') }}">Jetzt registrieren</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

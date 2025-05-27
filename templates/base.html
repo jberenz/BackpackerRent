@@ -20,25 +20,23 @@
       </a>
 
       <nav class="main-nav">
-  <ul>
-    <li><a href="{{ url_for('lists') }}">Home</a></li>
-   <li>
-  <a href="{{ url_for('lists') }}#aboutus"
-     id="nav-aboutus"
-     class="nav-link">
-     About Us
-  </a>
-</li>
-
-
-    <li>
-      <a
-        href="{{ url_for('login') }}"
-        class="nav-signin{% if request.endpoint == 'login' %} active{% endif %}"
-      >Sign In</a>
-    </li>
-  </ul>
-</nav>
+        <ul>
+          <li><a href="{{ url_for('lists') }}">Home</a></li>
+          <li>
+            <a href="{{ url_for('lists') }}#aboutus"
+               id="nav-aboutus"
+               class="nav-link">
+               About Us
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('anmelden') }}"
+               class="nav-signin{% if request.endpoint == 'anmelden' %} active{% endif %}">
+              Sign In
+            </a>
+          </li>
+        </ul>
+      </nav>
 
       <div class="header-actions">
         <button class="icon-btn" aria-label="Suche öffnen">
