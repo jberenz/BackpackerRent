@@ -465,10 +465,11 @@ body {
   font-size: 16px;
   outline: none;
 }
+
 .add-col input:focus,
 .add-col select:focus,
 .add-col textarea:focus {
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.3);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 /* === Feature-Felder (dynamisch) === */

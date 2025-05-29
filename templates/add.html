@@ -19,7 +19,7 @@
         <div class="add-col">
           <label for="category">Kategorie</label>
           <select id="category" name="category" required>
-            <option value="" disabled selected>Bitte wählen ⌄</option>
+            <option value="" disabled selected>Bitte wählen </option>
             <option value="zelt">Zelt</option>
             <option value="rucksack">Rucksack</option>
             <option value="multitool">Multitool</option>
@@ -42,7 +42,13 @@
       <div class="add-row half">
         <div class="add-col">
           <label for="region">Region</label>
-          <input id="region" name="region" type="text">
+          <select id="region" name="region" required>
+            <option value="" disabled selected>Bitte wählen </option>
+            <option value="berlin">Berlin</option>
+            <option value="hamburg">Hamburg</option>
+            <option value="frankfurt">Frankfurt</option>
+            <option value="muenchen">München</option>
+          </select>
         </div>
       </div>
 
