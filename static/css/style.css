@@ -419,7 +419,7 @@ body {
   position: relative;       /* WICHTIG für den Button */
   max-width: 800px;
   margin: 0 auto;
-  background: white;
+  background: #fff8ff;
   border: 2px solid #2563EB;
   border-radius: 24px;
   padding: 32px;
