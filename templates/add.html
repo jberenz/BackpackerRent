@@ -19,12 +19,14 @@
         <div class="add-col">
           <label for="category">Kategorie</label>
           <select id="category" name="category" required>
-            <option value="" disabled selected>Bitte wählen </option>
+            <option value="" disabled selected>Bitte wählen</option>
             <option value="zelt">Zelt</option>
             <option value="rucksack">Rucksack</option>
             <option value="multitool">Multitool</option>
             <option value="schlafsack">Schlafsack</option>
             <option value="luftmatratze">Luftmatratze</option>
+            <option value="radtasche">Radtasche</option>
+            <option value="gaskocher">Gaskocher</option>
           </select>
         </div>
         <div id="features" class="features"></div>
@@ -43,7 +45,7 @@
         <div class="add-col">
           <label for="region">Region</label>
           <select id="region" name="region" required>
-            <option value="" disabled selected>Bitte wählen </option>
+            <option value="" disabled selected>Bitte wählen</option>
             <option value="berlin">Berlin</option>
             <option value="hamburg">Hamburg</option>
             <option value="frankfurt">Frankfurt</option>
@@ -62,39 +64,53 @@
 // Definition aller Merkmals-Sets
 const featureSets = {
   zelt: [
-    { id: 'kapazitaet',    label: 'Kapazität (z. B. 1-,2-,4-Personen)' },
-    { id: 'packmass',      label: 'Packmaß (L × B × H in cm)' },
-    { id: 'gewicht',       label: 'Gewicht (kg)' },
-    { id: 'wassersaeule',  label: 'Wassersäule (Boden/Dach mm)' },
-    { id: 'material',      label: 'Material (z. B. Ripstop-Nylon)' }
+    { id: 'kapazitaet',   label: 'Kapazität (z. B. 1–4 Personen)' },
+    { id: 'packmass',     label: 'Packmaß (L × B × H in cm)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'wassersaeule', label: 'Wassersäule (mm)' },
+    { id: 'material',     label: 'Material (z. B. Ripstop-Nylon)' }
   ],
   rucksack: [
-    { id: 'volumen',       label: 'Volumen (l)' },
-    { id: 'gewicht',       label: 'Gewicht (kg)' },
-    { id: 'masse',         label: 'Maße (H × B × T cm)' },
-    { id: 'material',      label: 'Material (z. B. Cordura)' },
-    { id: 'tragesystem',   label: 'Tragesystem (z. B. Hüftgurt)' }
+    { id: 'volumen',      label: 'Volumen (l)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'masse',        label: 'Maße (H × B × T in cm)' },
+    { id: 'material',     label: 'Material (z. B. Cordura)' },
+    { id: 'tragesystem',  label: 'Tragesystem (z. B. Hüftgurt)' }
   ],
   multitool: [
-    { id: 'funktionen',    label: 'Anzahl Funktionen (z. B. 12-in-1)' },
-    { id: 'gewicht',       label: 'Gewicht (g)' },
-    { id: 'material',      label: 'Material (z. B. Edelstahl)' },
-    { id: 'klingenlaenge', label: 'Klingenlänge (cm)' },
-    { id: 'masse',         label: 'Maße zusammengeklappt (L × B × T cm)' }
+    { id: 'funktionen',   label: 'Funktionen (z. B. 12-in-1)' },
+    { id: 'gewicht',      label: 'Gewicht (g)' },
+    { id: 'material',     label: 'Material (z. B. Edelstahl)' },
+    { id: 'klingenlaenge',label: 'Klingenlänge (cm)' },
+    { id: 'masse',        label: 'Maße zusammengeklappt (L × B × T in cm)' }
   ],
   schlafsack: [
-    { id: 'temperatur',    label: 'Temperaturbereich (°C)' },
-    { id: 'fuellmaterial', label: 'Füllmaterial (Daune/synt.)' },
-    { id: 'gewicht',       label: 'Gewicht (kg)' },
-    { id: 'packmass',      label: 'Packmaß (L × Ø cm)' },
-    { id: 'form',          label: 'Form (Mumie/Decke)' }
+    { id: 'temperatur',   label: 'Temperaturbereich (°C)' },
+    { id: 'fuellmaterial',label: 'Füllmaterial (Daune/synt.)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'packmass',     label: 'Packmaß (L × Ø in cm)' },
+    { id: 'form',         label: 'Form (Mumie/Decke)' }
   ],
   luftmatratze: [
-    { id: 'abmessungen',   label: 'Abmessungen (L × B × H cm)' },
-    { id: 'dicke',         label: 'Dicke (cm)' },
-    { id: 'material',      label: 'Material (z. B. PVC/TPU)' },
-    { id: 'gewicht',       label: 'Gewicht (kg)' },
-    { id: 'maxbelast',     label: 'Max. Belastung (kg)' }
+    { id: 'abmessungen',  label: 'Abmessungen (L × B × H in cm)' },
+    { id: 'dicke',        label: 'Dicke (cm)' },
+    { id: 'material',     label: 'Material (z. B. PVC/TPU)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'maxbelast',    label: 'Max. Belastung (kg)' }
+  ],
+  radtasche: [
+    { id: 'volumen_rt',   label: 'Volumen (l)' },
+    { id: 'material_rt',  label: 'Material (z. B. Cordura)' },
+    { id: 'gewicht_rt',   label: 'Gewicht (kg)' },
+    { id: 'wasserdicht_rt', label: 'Wasserdicht (ja/nein)' },
+    { id: 'tragesystem_rt', label: 'Tragesystem (z. B. Schultergurt)' }
+  ],
+  gaskocher: [
+    { id: 'leistung_gk',  label: 'Leistung (W)' },
+    { id: 'brennstoff_gk',label: 'Brennstoffart (z. B. Butan)' },
+    { id: 'durchsatz_gk', label: 'Durchsatz (g/min)' },
+    { id: 'gewicht_gk',   label: 'Gewicht (g)' },
+    { id: 'abmessungen_gk', label: 'Abmessungen (B × T × H in cm)' }
   ]
 };
 
@@ -103,24 +119,23 @@ const featuresDiv    = document.getElementById('features');
 
 function renderFeatures(cat) {
   featuresDiv.innerHTML = '';
-  if (!featureSets[cat]) return;
-  featureSets[cat].forEach(f => {
+  const set = featureSets[cat];
+  if (!set) return;
+  set.forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
-    const label = document.createElement('label');
-    label.setAttribute('for', f.id);
-    label.textContent = f.label;
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id   = f.id;
-    input.name = f.id;
-    wrapper.append(label, input);
+    const lbl = document.createElement('label');
+    lbl.setAttribute('for', f.id);
+    lbl.textContent = f.label;
+    const inp = document.createElement('input');
+    inp.type  = 'text';
+    inp.id    = f.id;
+    inp.name  = f.id;
+    wrapper.append(lbl, inp);
     featuresDiv.append(wrapper);
   });
 }
 
-categorySelect.addEventListener('change', e => {
-  renderFeatures(e.target.value);
-});
+categorySelect.addEventListener('change', e => renderFeatures(e.target.value));
 </script>
 {% endblock %}
