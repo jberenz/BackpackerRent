@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ offer.title }} – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="detail-section">
+  <div class="detail-container">
+    <h2 class="detail-title">{{ offer.title }}</h2>
+    
+    {# Bild anzeigen oder Platzhalter #}
+    <div class="detail-image-container">
+      {% if offer.photo %}
+        <img
+          src="{{ url_for('static', filename=offer.photo) }}"
+          alt="{{ offer.title }}"
+          class="detail-image">
+      {% else %}
+        <div class="detail-no-image">Kein Foto verfügbar</div>
+      {% endif %}
+    </div>
+
+    {# Grundlegende Informationen #}
+    <div class="detail-basics">
+      <p><strong>Kategorie:</strong> {{ offer.category }}</p>
+      <p><strong>Region:</strong> {{ offer.region }}</p>
+      <p><strong>Preis pro Nacht:</strong> {{ offer.price_per_night | round(2) }} €</p>
+      <p><strong>Bewertung:</strong> ★ {{ offer.rating | round(2) }}</p>
+      <p><strong>Erstellt am:</strong> {{ offer.created_at }}</p>
+    </div>
+
+    {# Beschreibung #}
+    {% if offer.description %}
+      <div class="detail-description">
+        <h3>Beschreibung</h3>
+        <p>{{ offer.description }}</p>
+      </div>
+    {% endif %}
+
+    {# Dynamische Merkmale (Features) #}
+    {% if offer.features %}
+      <div class="detail-features">
+        <h3>Merkmale</h3>
+        <ul>
+          {% for key, val in offer.features.items() %}
+            <li><strong>{{ key.replace('_', ' ') | capitalize }}:</strong> {{ val }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {# Link zurück zur Übersicht #}
+    <p style="margin-top: 24px;">
+      <a href="{{ url_for('lists') }}">← Zurück zur Übersicht</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

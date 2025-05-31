@@ -5,7 +5,8 @@
 <section class="add-section">
   <div class="add-container">
     <h2 class="add-header">Neues Angebot hinzufügen</h2>
-    <form id="add-form" action="{{ url_for('add') }}" method="post">
+    <!-- WICHTIG: enctype für Datei-Upload -->
+    <form id="add-form" action="{{ url_for('add') }}" method="post" enctype="multipart/form-data">
       <!-- Titel -->
       <div class="add-row full">
         <div class="add-col">
@@ -14,7 +15,7 @@
         </div>
       </div>
 
-      <!-- Kategorie + dynamische Merkmale -->
+      <!-- Kategorie + Foto hochladen -->
       <div class="add-row">
         <div class="add-col">
           <label for="category">Kategorie</label>
@@ -29,8 +30,14 @@
             <option value="gaskocher">Gaskocher</option>
           </select>
         </div>
-        <div id="features" class="features"></div>
+        <div class="add-col">
+          <label for="photo">Foto hochladen</label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+        </div>
       </div>
+
+      <!-- Dynamische Merkmale (werden per JavaScript ergänzt) -->
+      <div id="features" class="features"></div>
 
       <!-- Beschreibung -->
       <div class="add-row full">
@@ -99,18 +106,18 @@ const featureSets = {
     { id: 'maxbelast',    label: 'Max. Belastung (kg)' }
   ],
   radtasche: [
-    { id: 'volumen_rt',   label: 'Volumen (l)' },
-    { id: 'material_rt',  label: 'Material (z. B. Cordura)' },
-    { id: 'gewicht_rt',   label: 'Gewicht (kg)' },
+    { id: 'volumen_rt',     label: 'Volumen (l)' },
+    { id: 'material_rt',    label: 'Material (z. B. Cordura)' },
+    { id: 'gewicht_rt',     label: 'Gewicht (kg)' },
     { id: 'wasserdicht_rt', label: 'Wasserdicht (ja/nein)' },
     { id: 'tragesystem_rt', label: 'Tragesystem (z. B. Schultergurt)' }
   ],
   gaskocher: [
-    { id: 'leistung_gk',  label: 'Leistung (W)' },
-    { id: 'brennstoff_gk',label: 'Brennstoffart (z. B. Butan)' },
-    { id: 'durchsatz_gk', label: 'Durchsatz (g/min)' },
-    { id: 'gewicht_gk',   label: 'Gewicht (g)' },
-    { id: 'abmessungen_gk', label: 'Abmessungen (B × T × H in cm)' }
+    { id: 'leistung_gk',     label: 'Leistung (W)' },
+    { id: 'brennstoff_gk',   label: 'Brennstoffart (z. B. Butan)' },
+    { id: 'durchsatz_gk',    label: 'Durchsatz (g/min)' },
+    { id: 'gewicht_gk',      label: 'Gewicht (g)' },
+    { id: 'abmessungen_gk',  label: 'Abmessungen (B × T × H in cm)' }
   ]
 };
 
@@ -118,19 +125,24 @@ const categorySelect = document.getElementById('category');
 const featuresDiv    = document.getElementById('features');
 
 function renderFeatures(cat) {
+  // Container leeren
   featuresDiv.innerHTML = '';
   const set = featureSets[cat];
   if (!set) return;
+  // Jedes Merkmal als Input-Feld erstellen
   set.forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
+
     const lbl = document.createElement('label');
     lbl.setAttribute('for', f.id);
     lbl.textContent = f.label;
+
     const inp = document.createElement('input');
     inp.type  = 'text';
     inp.id    = f.id;
     inp.name  = f.id;
+
     wrapper.append(lbl, inp);
     featuresDiv.append(wrapper);
   });

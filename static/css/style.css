@@ -279,7 +279,6 @@ body {
 .auth-form input[type="password"] {
   grid-column: 1 / -1;
 }
-
 .auth-form .input-group {
   display: flex;
   flex-direction: column;
@@ -331,7 +330,6 @@ body {
 .auth-footer a:hover {
   text-decoration: underline;
 }
-
 
 /* === About Us Section === */
 .about-section {
@@ -419,7 +417,7 @@ body {
   position: relative;       /* WICHTIG für den Button */
   max-width: 800px;
   margin: 0 auto;
-  background: #fff8ff;
+  background-color: #fff8ff;  /* leicht aufgehelltes Rosa statt purem Weiß */
   border: 2px solid #2563EB;
   border-radius: 24px;
   padding: 32px;
@@ -465,7 +463,6 @@ body {
   font-size: 16px;
   outline: none;
 }
-
 .add-col input:focus,
 .add-col select:focus,
 .add-col textarea:focus {
