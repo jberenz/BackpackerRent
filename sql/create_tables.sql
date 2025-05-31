@@ -1,42 +1,35 @@
-CREATE TABLE todo (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    complete BOOLEAN DEFAULT FALSE,
-    description TEXT NOT NULL
-);
-CREATE TABLE list (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
-);
-CREATE TABLE todo_list (
-    todo_id INTEGER,
-    list_id INTEGER,
-    PRIMARY KEY (todo_id, list_id),
-    FOREIGN KEY (todo_id) REFERENCES todo (id) ON DELETE CASCADE,
-    FOREIGN KEY (list_id) REFERENCES list (id) ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS list (
-  id    INTEGER PRIMARY KEY AUTOINCREMENT,
-  name  TEXT NOT NULL
-);
-
+-- ===========================
+-- Tabelle: todo
+-- ===========================
 CREATE TABLE IF NOT EXISTS todo (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
   description TEXT NOT NULL
 );
 
+-- ===========================
+-- Tabelle: list
+-- ===========================
+CREATE TABLE IF NOT EXISTS list (
+  id   INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
+
+-- ===========================
+-- Verknüpfungstabelle: todo_list
+-- ===========================
 CREATE TABLE IF NOT EXISTS todo_list (
-  list_id  INTEGER NOT NULL,
-  todo_id  INTEGER NOT NULL,
-  complete INTEGER NOT NULL DEFAULT 0,
+  list_id   INTEGER NOT NULL,
+  todo_id   INTEGER NOT NULL,
+  complete  INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (list_id) REFERENCES list (id) ON DELETE CASCADE,
   FOREIGN KEY (todo_id) REFERENCES todo (id) ON DELETE CASCADE,
   PRIMARY KEY (list_id, todo_id)
 );
 
--- ---------------------------------------------------
--- (B) Neue Tabelle: offers (für deine Angebote)
--- ---------------------------------------------------
-CREATE TABLE IF NOT EXISTS offers (
+-- ===========================
+-- Neue Tabelle: offers
+-- ===========================
+CREATE TABLE IF NOT EXISTS angebote (
   id               INTEGER PRIMARY KEY AUTOINCREMENT,
   title            TEXT    NOT NULL,
   category         TEXT    NOT NULL,
@@ -44,7 +37,7 @@ CREATE TABLE IF NOT EXISTS offers (
   region           TEXT    NOT NULL,
   price_per_night  REAL    NOT NULL DEFAULT 0.0,
   rating           REAL    NOT NULL DEFAULT 0.0,
-  photo            TEXT,              -- Dateipfad zum hochgeladenen Bild, z.B. "uploads/123456_zelt.jpg"
-  features         TEXT,              -- JSON‐String mit den dynamischen Merkmalen
-  created_at       TEXT    NOT NULL    -- Zeitstempel als ISO‐String, z.B. "2023-05-30 14:12:05"
+  photo            TEXT,              -- z.B. uploads/bild.jpg
+  features         TEXT,              -- JSON-String für dynamische Felder
+  created_at       TEXT    NOT NULL   -- z.B. '2025-05-31 10:45:00'
 );

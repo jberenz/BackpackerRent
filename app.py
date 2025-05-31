@@ -1,8 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
 import db
 import os
+import json
+from datetime import datetime
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# Ordner für Foto-Uploads
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Konfiguration
 app.config.from_mapping(
@@ -19,10 +27,7 @@ app.teardown_appcontext(db.close_db_con)
 def index():
     return redirect(url_for('lists'))
 
-# =============================
-# 📝 TODO-Listen-Logik
-# =============================
-
+# Angebotsliste anzeigen
 @app.route('/lists/')
 def lists():
     db_con = db.get_db_con()
@@ -43,48 +48,52 @@ def lists():
         return lists
     return render_template('lists.html', lists=lists)
 
-@app.route('/lists/<int:id>')
-def show_list(id):
-    db_con = db.get_db_con()
-    sql_query_1 = 'SELECT name FROM list WHERE id=?'
-    sql_query_2 = (
-        'SELECT id, complete, description FROM todo '
-        'JOIN todo_list ON todo_id=todo.id AND list_id=? '
-        'ORDER BY id;'
-    )
-    row = db_con.execute(sql_query_1, (id,)).fetchone()
-    if row is None:
-        return 'Liste nicht gefunden', 404
-
-    list_obj = {'name': row['name']}
-    list_obj['todos'] = db_con.execute(sql_query_2, (id,)).fetchall()
-
-    if request.args.get('json') is not None:
-        list_obj['todos'] = [dict(todo) for todo in list_obj['todos']]
-        return list_obj
-    return render_template('list.html', list=list_obj)
-
+# Neues Angebot hinzufügen
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        name = request.form.get('name')
-        if name:
-            db_con = db.get_db_con()
-            db_con.execute('INSERT INTO list (name) VALUES (?)', (name,))
-            db_con.commit()
+        title = request.form.get('title')
+        category = request.form.get('category')
+        description = request.form.get('description')
+        region = request.form.get('region')
+
+        # Dynamische Felder (z. B. Merkmale)
+        dynamic_fields = {
+            key: request.form.get(key)
+            for key in request.form
+            if key not in ['title', 'category', 'description', 'region']
+        }
+        features_json = json.dumps(dynamic_fields)
+
+        # Bild speichern
+        photo = request.files.get('photo')
+        filename = None
+        if photo and photo.filename != '':
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Zeitstempel erstellen
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # In Datenbank speichern
+        db_con = db.get_db_con()
+        db_con.execute(
+            'INSERT INTO angebote (title, category, description, region, photo, features, created_at) '
+            'VALUES (?, ?, ?, ?, ?, ?, ?)',
+            (title, category, description, region, filename, features_json, created_at)
+        )
+        db_con.commit()
         return redirect(url_for('lists'))
+
     return render_template('add.html')
 
+# Beispieldaten einfügen
 @app.route('/insert/sample')
 def run_insert_sample():
     db.insert_sample()
     return 'Datenbank mit Beispieldaten gefüllt.'
 
-# =============================
-# 🔐 Authentifizierung
-# =============================
-
-# Neue Login-Seite
+# Anmeldung
 @app.route('/anmelden', methods=['GET', 'POST'])
 def anmelden():
     if request.method == 'POST':
@@ -98,7 +107,7 @@ def anmelden():
 
     return render_template('anmelden.html')
 
-# Neue Registrierungsseite
+# Registrierung
 @app.route('/registrieren', methods=['GET', 'POST'])
 def registrieren():
     if request.method == 'POST':
@@ -106,16 +115,14 @@ def registrieren():
         first_name = request.form.get('first_name')
         region = request.form.get('region')
         phone = request.form.get('phone')
-        # Hier kannst du später in die DB schreiben
         return redirect(url_for('lists'))
     return render_template('registrieren.html')
 
-# 🔁 Alte URL weiterleiten (Fehlervermeidung)
+# Weiterleitung für alte URL
 @app.route('/register')
 def redirect_register():
     return redirect(url_for('registrieren'))
 
-# Optional: alte E-Mail-Routen (noch nicht verwendet)
 @app.route('/login/email')
 def login_email():
     return 'Hier kommt das E-Mail Login hin (später implementieren)'
@@ -124,9 +131,6 @@ def login_email():
 def register_email():
     return 'Hier kommt die E-Mail Registrierung hin (später implementieren)'
 
-# =============================
-# 🚀 Startpunkt
-# =============================
-
+# Starten
 if __name__ == '__main__':
     app.run(debug=True)
