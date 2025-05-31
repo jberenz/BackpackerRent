@@ -2,6 +2,9 @@
 {% block title %}Neues Angebot hinzufügen – Backpacker Rent{% endblock %}
 
 {% block content %}
+<!-- ✅ Toast-Popup -->
+<div id="toast" class="toast">✅ Angebot erfolgreich erstellt!</div>
+
 <section class="add-section">
   <div class="add-container">
     <h2 class="add-header">Neues Angebot hinzufügen</h2>
@@ -67,8 +70,51 @@
   </div>
 </section>
 
+<!-- ✅ Toast-Styles -->
+<style>
+.toast {
+  visibility: hidden;
+  min-width: 280px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  right: 30px;
+  top: 30px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+<!-- ✅ Toast-JavaScript -->
 <script>
-// Definition aller Merkmals-Sets
+function showToast() {
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get("success") === "1") {
+  showToast();
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+</script>
+
+<!-- ✅ Feature-Merkmals-Logik -->
+<script>
 const featureSets = {
   zelt: [
     { id: 'kapazitaet',   label: 'Kapazität (z. B. 1–4 Personen)' },
@@ -125,24 +171,19 @@ const categorySelect = document.getElementById('category');
 const featuresDiv    = document.getElementById('features');
 
 function renderFeatures(cat) {
-  // Container leeren
   featuresDiv.innerHTML = '';
   const set = featureSets[cat];
   if (!set) return;
-  // Jedes Merkmal als Input-Feld erstellen
   set.forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
-
     const lbl = document.createElement('label');
     lbl.setAttribute('for', f.id);
     lbl.textContent = f.label;
-
     const inp = document.createElement('input');
     inp.type  = 'text';
     inp.id    = f.id;
     inp.name  = f.id;
-
     wrapper.append(lbl, inp);
     featuresDiv.append(wrapper);
   });

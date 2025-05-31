@@ -58,10 +58,11 @@ def add():
         region = request.form.get('region')
 
         # Dynamische Felder (z. B. Merkmale)
+        static_fields = ['title', 'category', 'description', 'region']
         dynamic_fields = {
             key: request.form.get(key)
             for key in request.form
-            if key not in ['title', 'category', 'description', 'region']
+            if key not in static_fields
         }
         features_json = json.dumps(dynamic_fields)
 
@@ -83,7 +84,7 @@ def add():
             (title, category, description, region, filename, features_json, created_at)
         )
         db_con.commit()
-        return redirect(url_for('lists'))
+        return redirect(url_for('add', success='1'))  # Für Toast-Popup in add.html
 
     return render_template('add.html')
 
