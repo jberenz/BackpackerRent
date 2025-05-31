@@ -145,4 +145,20 @@
     });
   });
 </script>
+<section class="contact-section">
+  <div class="contact-content">
+    <div class="contact-info">
+      <h2>Kontakt</h2>
+      <p>Backpackstraße 123, 12345 Berlin</p>
+      <p><a href="mailto:hallo@backpackerrent.de">hallo@backpackerrent.de</a></p>
+    </div>
+    <div class="contact-action">
+      <a href="mailto:hallo@backpackerrent.de" class="contact-btn">E-Mail</a>
+    </div>
+  </div>
+  <div class="contact-image">
+    <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft">
+  </div>
+</section>
+
 {% endblock %}

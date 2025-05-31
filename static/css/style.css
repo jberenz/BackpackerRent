@@ -501,3 +501,67 @@ body {
 .btn-create:hover {
   background-color: #6EE7B7;
 }
+.contact-section {
+  background-color: #fef3ff;
+  font-family: Georgia, serif;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 64px 48px 32px;
+  flex-wrap: wrap;
+}
+
+.contact-info h2 {
+  font-size: 36px;
+  color: #2563EB;
+  margin-bottom: 16px;
+}
+
+.contact-info p {
+  font-size: 18px;
+  color: #1e1e88;
+  margin-bottom: 8px;
+}
+
+.contact-info a {
+  color: #1e1e88;
+  text-decoration: none;
+}
+
+.contact-action {
+  align-self: start;
+}
+
+.contact-btn {
+  border: 1px solid #2563EB;
+  color: #2563EB;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+}
+
+.contact-btn:hover {
+  background-color: #e0d9ff;
+}
+
+.contact-image {
+  margin: 0;
+  padding: 0;
+}
+
+.contact-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  object-fit: cover;
+}
