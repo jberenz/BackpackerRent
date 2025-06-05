@@ -71,48 +71,53 @@
   </section>
 
   <!-- ================= -->
-  <!-- Angebots-Bereich (statt der alten TODO-Liste) -->
+  <!-- Fester „Hinzufügen“-Button (bleibt erhalten) -->
+  <!-- ================= -->
+  <a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
+
+  <!-- ================= -->
+  <!-- Angebots-Bereich (ohne Überschrift) -->
   <!-- ================= -->
   <section class="offers-section">
-    <h2 class="section-header">Aktuelle Angebote</h2>
+    <div class="offers-container">
 
-    {% if offers|length == 0 %}
-      <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
-      <!-- Hier wurde der btn-create-Button „Neues Angebot hinzufügen“ entfernt -->
-    {% else %}
-      <div class="offers-grid">
-        {% for offer in offers %}
-          <div class="offer-card">
-            {% if offer.photo %}
-              <img src="{{ url_for('static', filename=offer.photo) }}"
-                   alt="Foto: {{ offer.title }}" class="offer-image">
-            {% else %}
-              <div class="offer-placeholder">
-                <!-- Fallback-Bild, falls kein Foto hochgeladen wurde -->
-                <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
-                     stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <path d="M8 19l4-4 4 4"/>
-                  <path d="M12 15V9"/>
-                </svg>
-              </div>
-            {% endif %}
+      {% if offers|length == 0 %}
+        <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
+      {% else %}
+        <div class="offers-grid">
+          {% for offer in offers %}
+            <div class="offer-card">
+              {% if offer.photo %}
+                <img src="{{ url_for('static', filename=offer.photo) }}"
+                     alt="Foto: {{ offer.title }}" class="offer-image">
+              {% else %}
+                <div class="offer-placeholder">
+                  <!-- Fallback-Bild, falls kein Foto hochgeladen wurde -->
+                  <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
+                       stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <path d="M8 19l4-4 4 4"/>
+                    <path d="M12 15V9"/>
+                  </svg>
+                </div>
+              {% endif %}
 
-            <h3 class="offer-title">
-              <a href="{{ url_for('offer_detail', offer_id=offer.id) }}">
-                {{ offer.title }}
-              </a>
-            </h3>
-            <p class="offer-meta">
-              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
-              <br>
-              <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
-            </p>
-          </div>
-        {% endfor %}
-      </div>
-      <!-- Auch hier wurde der btn-create-Button entfernt -->
-    {% endif %}
+              <h3 class="offer-title">
+                <a href="{{ url_for('offer_detail', offer_id=offer.id) }}">
+                  {{ offer.title }}
+                </a>
+              </h3>
+              <p class="offer-meta">
+                {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
+                <br>
+                <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </div> <!-- Ende .offers-container -->
   </section>
 
   <!-- ================= -->
@@ -148,40 +153,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ================= -->
-  <!-- Fester „Hinzufügen“-Button (bleibt erhalten) -->
-  <!-- ================= -->
-  <a href="{{ url_for('add_offer') }}" class="btn-add">Hinzufügen</a>
-
-  <script>
-    // Tabs + Filter umschalten
-    document.querySelectorAll('.tour-tabs .tab a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const type = link.dataset.type;
-        document.querySelectorAll('.tour-tabs .tab').forEach(li => li.classList.remove('active'));
-        link.parentElement.classList.add('active');
-        document.querySelectorAll('.filter-group').forEach(group => {
-          group.classList.toggle('active', group.dataset.type === type);
-        });
-      });
-    });
-
-    // About-Us Nav-Aktivierung
-    document.addEventListener("DOMContentLoaded", () => {
-      if (window.location.hash === "#aboutus") {
-        document.getElementById('nav-aboutus')?.classList.add("active");
-      }
-      document.addEventListener("scroll", () => {
-        const sec = document.getElementById("aboutus");
-        const link = document.getElementById('nav-aboutus');
-        if (!sec || !link) return;
-        const r = sec.getBoundingClientRect();
-        link.classList.toggle("active", r.top <= 100 && r.bottom >= 100);
-      });
-    });
-  </script>
 
   <!-- ================= -->
   <!-- Kontakt-Bereich (bleibt unverändert) -->

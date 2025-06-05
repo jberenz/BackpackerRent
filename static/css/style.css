@@ -501,6 +501,8 @@ body {
 .btn-create:hover {
   background-color: #6EE7B7;
 }
+
+/* === Kontakt-Bereich === */
 .contact-section {
   background-color: #fef3ff;
   font-family: Georgia, serif;
@@ -564,4 +566,103 @@ body {
   padding: 0;
   border: none;
   object-fit: cover;
+}
+
+/* === 1) Container + Überschrift zentrieren === */
+.offers-section {
+  /* Abstand oben/unten, damit Sektion nicht direkt am Scroll-Rand klebt */
+  padding: 2rem 0;
+}
+
+/* Die .offers-container fasst Überschrift + Grid + internen Button zusammen */
+.offers-container {
+  max-width: 1024px;   /* maximale Breite, damit es nicht zu breit wird */
+  margin: 0 auto;      /* horizontal zentrieren */
+  padding: 0 1rem;     /* etwas Innenabstand links/rechts */
+  box-sizing: border-box;
+}
+
+/* Überschrift mittig ausrichten */
+.offers-container .section-header {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #111;        /* dunkles Grau/Schwarz für bessere Lesbarkeit */
+}
+
+/* === 2) Grid-Layout für Angebot-Karten === */
+.offers-grid {
+  display: grid;
+  /* „auto-fit“ lässt so viele Spalten wie Platz, jede Karte mindestens 260px breit */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;            /* Abstand zwischen den Karten */
+  justify-items: center;  /* zentriert jede Karte in ihrer Zelle */
+  align-items: start;     /* Karten beginnen immer oben */
+  margin-top: 1rem;       /* Abstand zwischen Überschrift und Grid */
+}
+
+/* Einzelne Karten mit Schatten, abgerundet und Hover-Effekt */
+.offer-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  width: 100%;
+  max-width: 280px;       /* Jede Karte bleibt höchstens 280px breit */
+  text-align: center;     /* Bild und Text sind zentriert */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Bild oder Platzhalter in der Karte */
+.offer-image,
+.offer-placeholder {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background-color: #f4f4f4;
+  display: block;
+}
+
+.offer-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Titel in der Karte */
+.offer-title {
+  font-size: 1.25rem;
+  margin: 0.75rem 0 0.5rem;
+  color: #333;
+}
+
+.offer-title a {
+  color: #5c2d91;         /* dunkles Lila als Link-Farbe */
+  text-decoration: none;
+}
+
+.offer-title a:hover {
+  text-decoration: underline;
+}
+
+/* Meta (Kategorie, Region, Datum) */
+.offer-meta {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* === 4) Responsives Verhalten === */
+@media screen and (max-width: 640px) {
+  .offers-grid {
+    grid-template-columns: 1fr; /* eine Spalte statt mehrere */
+  }
+  .offer-card {
+    max-width: 100%; /* Karte nimmt dann die komplette Breite ein */
+  }
 }
