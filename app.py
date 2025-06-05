@@ -4,8 +4,18 @@ from datetime import datetime
 
 import click
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for, flash, current_app, g
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    current_app,
+    g
+)
 from werkzeug.utils import secure_filename
+from flask_sqlalchemy import SQLAlchemy
 
 # ---------------------------------------------------
 # 1) DB-Hilfsfunktionen (für raw sqlite3 Queries für TODO-Listen)
@@ -69,8 +79,6 @@ def insert_sample_data() -> None:
 # ---------------------------------------------------
 # 2) SQLAlchemy-Models (interna)
 # ---------------------------------------------------
-
-from flask_sqlalchemy import SQLAlchemy
 
 # Ein einziges SQLAlchemy-Objekt für unsere Modelle
 sqla_db = SQLAlchemy()
@@ -197,10 +205,12 @@ with app.app_context():
 # 4) 🔀 TODO-Listen-Routen (raw sqlite3)
 # ---------------------------------------------------
 
-# Startseite leitet weiter zu /lists/
+# Startseite zeigt jetzt home.html (statt redirect auf /lists/)
 @app.route("/")
 def index():
-    return redirect(url_for("lists"))
+    # Alle Angebote aus der Datenbank holen, sortiert nach Erstellungszeitpunkt absteigend
+    offers = Offer.query.order_by(Offer.created_at.desc()).all()
+    return render_template("home.html", offers=offers)
 
 # Alle TODO-Listen anzeigen
 @app.route("/lists/")
@@ -321,7 +331,6 @@ def list_offers():
     offers = Offer.query.order_by(Offer.created_at.desc()).all()
     return render_template("lists_offers.html", offers=offers)
 
-
 @app.route("/offers/add", methods=["GET", "POST"])
 def add_offer():
     """
@@ -382,11 +391,11 @@ def add_offer():
         sqla_db.session.commit()
 
         flash("Angebot erfolgreich erstellt!", "success")
-        return redirect(url_for("list_offers"))
+        # Nach dem Speichern zurück zur Startseite (/)
+        return redirect(url_for("index"))
 
     # GET: Formular anzeigen
     return render_template("add_offer.html")
-
 
 @app.route("/offers/<int:offer_id>")
 def offer_detail(offer_id):
