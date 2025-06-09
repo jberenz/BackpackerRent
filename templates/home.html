@@ -106,11 +106,10 @@
               </a>
             </h3>
             <p class="offer-meta">
-              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}<br>
-              <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
+              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
             </p>
             <p class="offer-price">
-              {{ '%.2f' % offer.price_per_night }} €
+              {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht
             </p>
           </div>
         {% endfor %}

@@ -658,16 +658,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* === Neuer Preis unten rechts in jeder Karte === */
-.offer-price {
-  position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #2563EB;
-}
-
 /* === 4) Responsives Verhalten === */
 @media screen and (max-width: 640px) {
   .offers-grid {
@@ -676,4 +666,20 @@ body {
   .offer-card {
     max-width: 100%; /* Karte nimmt dann die komplette Breite ein */
   }
+}
+
+/* === Angebot-Grid: Preis unten rechts === */
+.offer-card {
+  position: relative;  /* damit .offer-price absolut arbeitet */
+}
+.offer-meta {
+  margin-bottom: 2.5rem; /* mehr Platz, damit nichts überschneidet */
+}
+.offer-price {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2563EB;
 }
