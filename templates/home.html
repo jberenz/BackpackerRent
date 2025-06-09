@@ -11,117 +11,113 @@
 {% endblock %}
 
 {% block content %}
-  <!-- ================= -->
-  <!-- Such- und Filterbereich -->
-  <!-- ================= -->
-  <section class="search-section">
-    <ul class="tour-tabs">
-      <li class="tab active">
-        <a href="#" data-type="backpacker">Backpacker</a>
-      </li>
-      <li class="tab">
-        <a href="#" data-type="radtour">Radtour</a>
-      </li>
-    </ul>
+<section class="search-section">
+  <ul class="tour-tabs">
+    <li class="tab {% if selected_type=='backpacker' %}active{% endif %}">
+      <a href="{{ url_for('index', type='backpacker') }}">Backpacker</a>
+    </li>
+    <li class="tab {% if selected_type=='radtour' %}active{% endif %}">
+      <a href="{{ url_for('index', type='radtour') }}">Radtour</a>
+    </li>
+  </ul>
 
-    <form class="search-bar" action="#" method="get">
-      <div class="input-group">
-        <label for="dest">Wohin</label>
-        <select id="dest" name="dest">
-          <option value="" disabled selected>Wohin geht es</option>
-          <option value="berlin">Berlin</option>
-          <option value="muenchen">München</option>
-          <option value="hamburg">Hamburg</option>
-          <option value="frankfurt">Frankfurt</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label for="start">Start Date</label>
-        <input id="start" name="start" type="date">
-      </div>
-      <div class="input-group">
-        <label for="end">End Date</label>
-        <input id="end" name="end" type="date">
-      </div>
-      <button type="submit" class="search-button" aria-label="Suchen">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-    </form>
+  <form class="search-bar" action="{{ url_for('index') }}" method="get">
+    <input type="hidden" name="type" value="{{ selected_type }}">
 
-    <div class="filters">
-      <div class="filter-group active" data-type="backpacker">
-        <label><input type="checkbox" name="gear" value="zelt"> Zelt</label>
-        <label><input type="checkbox" name="gear" value="rucksack"> Rucksack</label>
-        <label><input type="checkbox" name="gear" value="multitool"> Multitool</label>
-        <label><input type="checkbox" name="gear" value="schlafsack"> Schlafsack</label>
-        <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
-      </div>
-      <div class="filter-group" data-type="radtour">
-        <label><input type="checkbox" name="gear" value="radtasche"> Radtasche</label>
-        <label><input type="checkbox" name="gear" value="gaskocher"> Gaskocher</label>
-        <label><input type="checkbox" name="gear" value="schlafsack"> Schlafsack</label>
-        <label><input type="checkbox" name="gear" value="zelt"> Zelt</label>
-        <label><input type="checkbox" name="gear" value="luftmatratze"> Luftmatratze</label>
-      </div>
+    <div class="input-group">
+      <label for="dest">Wohin</label>
+      <select id="dest" name="dest">
+        <option value="" disabled {{ not request.args.get('dest') and 'selected' }}>
+          Wohin geht es
+        </option>
+        {% for region_name in ["berlin","muenchen","hamburg","frankfurt"] %}
+          <option
+            value="{{ region_name }}"
+            {{ 'selected' if request.args.get('dest') == region_name else '' }}
+          >{{ region_name|capitalize }}</option>
+        {% endfor %}
+      </select>
     </div>
-  </section>
 
-  <!-- ================= -->
-  <!-- Fester „Hinzufügen“-Button -->
-  <!-- ================= -->
-  <a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
+    <div class="input-group">
+      <label for="category_filter">Kategorie</label>
+      <select id="category_filter" name="category_filter">
+        <option value="" disabled {{ not request.args.get('category_filter') and 'selected' }}>
+          Alle Kategorien
+        </option>
+        {% for cat in categories %}
+          <option
+            value="{{ cat }}"
+            {{ 'selected' if request.args.get('category_filter') == cat else '' }}
+          >{{ cat|capitalize }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-  <!-- ================= -->
-  <!-- Angebots-Bereich -->
-  <!-- ================= -->
-  <section class="offers-section">
-    <div class="offers-container">
+    <div class="input-group">
+      <label for="start">Start Date</label>
+      <input id="start" name="start" type="date" value="{{ request.args.get('start','') }}">
+    </div>
+    <div class="input-group">
+      <label for="end">End Date</label>
+      <input id="end" name="end" type="date" value="{{ request.args.get('end','') }}">
+    </div>
 
-      {% if offers|length == 0 %}
-        <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
-      {% else %}
-        <div class="offers-grid">
-          {% for offer in offers %}
-            <div class="offer-card">
-              {% if offer.photo %}
-                <img
-                  src="{{ url_for('static', filename=offer.photo) }}"
-                  alt="Foto: {{ offer.title }}"
-                  class="offer-image"
-                >
-              {% else %}
-                <div class="offer-placeholder">
-                  <!-- Fallback-SVG, falls kein Foto existiert -->
-                  <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
-                       stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                    <path d="M8 19l4-4 4 4"/>
-                    <path d="M12 15V9"/>
-                  </svg>
-                </div>
-              {% endif %}
+    <button type="submit" class="search-button" aria-label="Suchen">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+           stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+  </form>
+</section>
 
-              <h3 class="offer-title">
-                <a href="{{ url_for('offer_detail', offer_id=offer.id) }}">
-                  {{ offer.title }}
-                </a>
-              </h3>
-              <p class="offer-meta">
-                {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
-                <br>
-                <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
-              </p>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+<a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
 
-    </div> <!-- .offers-container -->
-  </section>
+<section class="offers-section">
+  <div class="offers-container">
+    {% if offers|length == 0 %}
+      <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
+    {% else %}
+      <div class="offers-grid">
+        {% for offer in offers %}
+          <div class="offer-card">
+            {% if offer.photo %}
+              <img
+                src="{{ url_for('static', filename=offer.photo) }}"
+                alt="Foto: {{ offer.title }}"
+                class="offer-image"
+              >
+            {% else %}
+              <div class="offer-placeholder">
+                <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
+                     stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <path d="M8 19l4-4 4 4"/>
+                  <path d="M12 15V9"/>
+                </svg>
+              </div>
+            {% endif %}
+
+            <h3 class="offer-title">
+              <a href="{{ url_for('offer_detail', offer_id=offer.id) }}">
+                {{ offer.title }}
+              </a>
+            </h3>
+            <p class="offer-meta">
+              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
+              <br>
+              <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+
 
   <!-- ================= -->
   <!-- About-Us-Bereich -->

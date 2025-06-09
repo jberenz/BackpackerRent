@@ -24,6 +24,10 @@ from werkzeug.utils import secure_filename
 # ---------------------------------------------------
 
 def get_db_con(pragma_foreign_keys: bool = True) -> sqlite3.Connection:
+    """
+    Liefert eine SQLite-Verbindung aus dem Flask-Context (g).
+    Aktiviert optional PRAGMA foreign_keys = ON.
+    """
     if "db_con" not in g:
         g.db_con = sqlite3.connect(
             current_app.config["DATABASE"],
@@ -35,12 +39,20 @@ def get_db_con(pragma_foreign_keys: bool = True) -> sqlite3.Connection:
     return g.db_con
 
 def close_db_con(e=None) -> None:
+    """
+    Schließt die SQLite-Verbindung am Ende jeder Request-Verarbeitung.
+    """
     db_con = g.pop("db_con", None)
     if db_con is not None:
         db_con.close()
 
 @click.command("init-db")
 def init_db_command() -> None:
+    """
+    CLI-Command, um die Datenbank neu aufzusetzen:
+    1) drop_tables.sql ausführen
+    2) create_tables.sql ausführen
+    """
     try:
         os.makedirs(current_app.instance_path, exist_ok=True)
     except OSError:
@@ -53,10 +65,12 @@ def init_db_command() -> None:
     click.echo("Datenbank wurde initialisiert.")
 
 def insert_sample_data() -> None:
+    """
+    Optional: Füllt Beispieldaten aus insert_sample.sql ein.
+    """
     db_con = get_db_con()
     with current_app.open_resource("sql/insert_sample.sql") as f:
         db_con.executescript(f.read().decode("utf8"))
-
 
 # ---------------------------------------------------
 # 2) Offer-Klasse mit reinem sqlite3-Zugriff
@@ -106,13 +120,12 @@ class Offer:
             except json.JSONDecodeError:
                 feats = {}
 
-        # created_at konvertieren, falls es als String kommt
+        # created_at konvertieren
         raw = row["created_at"]
         if isinstance(raw, str):
-            # SQLite CURRENT_TIMESTAMP liefert 'YYYY-MM-DD HH:MM:SS'
             created = datetime.fromisoformat(raw)
         else:
-            created = raw  # evtl. schon datetime, je nach detect_types
+            created = raw
 
         return cls(
             id=row["id"],
@@ -192,8 +205,10 @@ class Offer:
         db.commit()
         self.id = None
 
-
 def init_offers_table() -> None:
+    """
+    Erstellt die offers-Tabelle, falls sie noch nicht existiert.
+    """
     db = get_db_con()
     db.executescript("""
     CREATE TABLE IF NOT EXISTS offers (
@@ -211,32 +226,34 @@ def init_offers_table() -> None:
     """)
     db.commit()
 
-
 # ---------------------------------------------------
 # 3) Flask-App-Setup
 # ---------------------------------------------------
 
 app = Flask(__name__, instance_relative_config=True)
 
+# Basis-Konfiguration
 app.config.from_mapping(
     SECRET_KEY="secret_key_just_for_dev_environment",
     DATABASE=os.path.join(app.instance_path, "todos.sqlite")
 )
 
+# Upload-Ordner
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+# CLI-Command & teardown
 app.cli.add_command(init_db_command)
 app.teardown_appcontext(close_db_con)
 
+# Tabelle initialisieren
 with app.app_context():
     init_offers_table()
 
-
 # ---------------------------------------------------
-# 4) TODO-Listen-Routen
+# 4) TODO-Listen-Routen (raw sqlite3)
 # ---------------------------------------------------
 
 @app.route("/lists/")
@@ -291,7 +308,6 @@ def run_insert_sample():
     insert_sample_data()
     return "Datenbank mit Beispieldaten gefüllt."
 
-
 # ---------------------------------------------------
 # 5) Auth-Routen
 # ---------------------------------------------------
@@ -324,15 +340,48 @@ def login_email():
 def register_email():
     return "Email-Registrierung (später)"
 
-
 # ---------------------------------------------------
-# 6) Angebots-Routen
+# 6) Angebots-Routen (sqlite3-basiert)
 # ---------------------------------------------------
 
 @app.route("/")
 def index():
-    offers = Offer.all()
-    return render_template("home.html", offers=offers)
+    # Filter nach Tab-Typ, Region und Kategorie
+    selected_type    = request.args.get("type", "backpacker")
+    dest             = request.args.get("dest", type=str)
+    category_filter  = request.args.get("category_filter", type=str)
+
+    # Dynamische Kategorien pro Tab
+    type_cats = {
+        "backpacker": ["zelt","rucksack","multitool","schlafsack","luftmatratze"],
+        "radtour":    ["radtasche","gaskocher","schlafsack","zelt","luftmatratze"]
+    }
+    categories = type_cats.get(selected_type, type_cats["backpacker"])
+
+    # Baue WHERE-Klauseln
+    conditions: list[str] = []
+    params:     list[str] = []
+    if dest:
+        conditions.append("region = ?")
+        params.append(dest)
+    if category_filter:
+        conditions.append("category = ?")
+        params.append(category_filter)
+
+    sql = "SELECT * FROM offers"
+    if conditions:
+        sql += " WHERE " + " AND ".join(conditions)
+    sql += " ORDER BY created_at DESC"
+
+    rows = get_db_con().execute(sql, params).fetchall()
+    offers = [Offer.from_row(r) for r in rows]
+
+    return render_template(
+        "home.html",
+        offers=offers,
+        selected_type=selected_type,
+        categories=categories
+    )
 
 @app.route("/offers")
 def list_offers():
@@ -342,30 +391,30 @@ def list_offers():
 @app.route("/offers/add", methods=["GET", "POST"])
 def add_offer():
     if request.method == "POST":
-        title = request.form.get("title", "").strip()
-        category = request.form.get("category", "").strip()
-        description = request.form.get("description", "").strip() or None
-        region = request.form.get("region", "").strip()
-        price_per_night = float(request.form.get("price_per_night", 0))
-        rating = 0.0
+        title            = request.form.get("title", "").strip()
+        category         = request.form.get("category", "").strip()
+        description      = request.form.get("description", "").strip() or None
+        region           = request.form.get("region", "").strip()
+        price_per_night  = float(request.form.get("price_per_night", 0))
+        rating           = 0.0
 
         photo_filename = None
-        uploaded_file = request.files.get("photo")
+        uploaded_file  = request.files.get("photo")
         if uploaded_file and uploaded_file.filename:
-            filename = secure_filename(uploaded_file.filename)
-            ts = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-            filename = f"{ts}_{filename}"
-            save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            filename   = secure_filename(uploaded_file.filename)
+            ts         = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+            filename   = f"{ts}_{filename}"
+            save_path  = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             uploaded_file.save(save_path)
             photo_filename = f"uploads/{filename}"
 
         expected_keys = [
-            "kapazitaet", "packmass", "gewicht", "wassersaeule", "material",
-            "volumen", "masse", "tragesystem", "funktionen", "klingenlaenge",
-            "temperatur", "fuellmaterial", "form", "abmessungen", "dicke",
-            "maxbelast", "volumen_rt", "material_rt", "gewicht_rt",
-            "wasserdicht_rt", "tragesystem_rt", "leistung_gk", "brennstoff_gk",
-            "durchsatz_gk", "gewicht_gk", "abmessungen_gk"
+            "kapazitaet","packmass","gewicht","wassersaeule","material",
+            "volumen","masse","tragesystem","funktionen","klingenlaenge",
+            "temperatur","fuellmaterial","form","abmessungen","dicke",
+            "maxbelast","volumen_rt","material_rt","gewicht_rt",
+            "wasserdicht_rt","tragesystem_rt","leistung_gk","brennstoff_gk",
+            "durchsatz_gk","gewicht_gk","abmessungen_gk"
         ]
         feature_data: dict = {}
         for key in expected_keys:
@@ -395,7 +444,6 @@ def offer_detail(offer_id):
     if not offer:
         abort(404)
     return render_template("offer_detail.html", offer=offer, features=offer.features)
-
 
 # ---------------------------------------------------
 # 7) Startpunkt
