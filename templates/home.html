@@ -106,9 +106,11 @@
               </a>
             </h3>
             <p class="offer-meta">
-              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
-              <br>
+              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}<br>
               <small>erstellt am {{ offer.created_at.strftime("%d.%m.%Y %H:%M") }}</small>
+            </p>
+            <p class="offer-price">
+              {{ '%.2f' % offer.price_per_night }} €
             </p>
           </div>
         {% endfor %}
@@ -117,57 +119,55 @@
   </div>
 </section>
 
-
-
-  <!-- ================= -->
-  <!-- About-Us-Bereich -->
-  <!-- ================= -->
-  <section class="about-section" id="aboutus">
-    <div class="about-container">
-      <div class="about-heading">
-        <h2>About us</h2>
+<!-- ================= -->
+<!-- About-Us-Bereich -->
+<!-- ================= -->
+<section class="about-section" id="aboutus">
+  <div class="about-container">
+    <div class="about-heading">
+      <h2>About us</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis</strong>. 
+          Ein engagiertes Team mit einer gemeinsamen Vision: Das Reisen einfacher, nachhaltiger und flexibler 
+          zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen 
+          von Backpacking sowie Radtouren aus eigener Erfahrung.
+        </p>
+        <h3>🌍 Nachhaltigkeit, die mitreist</h3>
+        <p>
+          Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt 
+          stehen muss. Deshalb setzen wir mit Backpacker Rent auf <strong>nachhaltige Nutzung statt Wegwerfmentalität</strong>. 
+          Indem wir hochwertige Outdoor-Ausrüstung wiederverwendbar machen, vermeiden wir unnötige Neuanschaffungen, reduzieren Müll 
+          und schonen wertvolle Ressourcen. Jedes gemietete Zelt, jeder geteilte Schlafsack bedeutet weniger Konsum und mehr 
+          Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
+        </p>
       </div>
-      <div class="about-content">
-        <div class="about-text">
-          <p>
-            Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis</strong>. 
-            Ein engagiertes Team mit einer gemeinsamen Vision: Das Reisen einfacher, nachhaltiger und flexibler 
-            zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen 
-            von Backpacking sowie Radtouren aus eigener Erfahrung.
-          </p>
-          <h3>🌍 Nachhaltigkeit, die mitreist</h3>
-          <p>
-            Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt 
-            stehen muss. Deshalb setzen wir mit Backpacker Rent auf <strong>nachhaltige Nutzung statt Wegwerfmentalität</strong>. 
-            Indem wir hochwertige Outdoor-Ausrüstung wiederverwendbar machen, vermeiden wir unnötige Neuanschaffungen, reduzieren Müll 
-            und schonen wertvolle Ressourcen. Jedes gemietete Zelt, jeder geteilte Schlafsack bedeutet weniger Konsum und mehr 
-            Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
-          </p>
-        </div>
-        <div class="about-images">
-          <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
-          <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
-        </div>
+      <div class="about-images">
+        <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
+        <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ================= -->
-  <!-- Kontakt-Bereich -->
-  <!-- ================= -->
-  <section class="contact-section">
-    <div class="contact-content">
-      <div class="contact-info">
-        <h2>Kontakt</h2>
-        <p>Backpackstraße 123, 12345 Berlin</p>
-        <p><a href="mailto:hallo@backpackerrent.de">hallo@backpackerrent.de</a></p>
-      </div>
-      <div class="contact-action">
-        <a href="mailto:hallo@backpackerrent.de" class="contact-btn">E-Mail</a>
-      </div>
+<!-- ================= -->
+<!-- Kontakt-Bereich -->
+<!-- ================= -->
+<section class="contact-section">
+  <div class="contact-content">
+    <div class="contact-info">
+      <h2>Kontakt</h2>
+      <p>Backpackstraße 123, 12345 Berlin</p>
+      <p><a href="mailto:hallo@backpackerrent.de">hallo@backpackerrent.de</a></p>
     </div>
-    <div class="contact-image">
-      <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft">
+    <div class="contact-action">
+      <a href="mailto:hallo@backpackerrent.de" class="contact-btn">E-Mail</a>
     </div>
-  </section>
+  </div>
+  <div class="contact-image">
+    <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft">
+  </div>
+</section>
 {% endblock %}

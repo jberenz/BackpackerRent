@@ -611,6 +611,7 @@ body {
   max-width: 280px;       /* Jede Karte bleibt höchstens 280px breit */
   text-align: center;     /* Bild und Text sind zentriert */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;     /* **neu**: für den absolut positionierten Preis */
 }
 
 .offer-card:hover {
@@ -655,6 +656,16 @@ body {
   font-size: 0.9rem;
   color: #555;
   margin-bottom: 1rem;
+}
+
+/* === Neuer Preis unten rechts in jeder Karte === */
+.offer-price {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2563EB;
 }
 
 /* === 4) Responsives Verhalten === */
