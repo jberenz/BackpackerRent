@@ -346,7 +346,7 @@ def add_offer():
         category = request.form.get("category", "").strip()
         description = request.form.get("description", "").strip() or None
         region = request.form.get("region", "").strip()
-        price_per_night = 0.0
+        price_per_night = float(request.form.get("price_per_night", 0))
         rating = 0.0
 
         photo_filename = None
@@ -357,7 +357,7 @@ def add_offer():
             filename = f"{ts}_{filename}"
             save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             uploaded_file.save(save_path)
-            photo_filename = os.path.join("uploads", filename)
+            photo_filename = f"uploads/{filename}"
 
         expected_keys = [
             "kapazitaet", "packmass", "gewicht", "wassersaeule", "material",

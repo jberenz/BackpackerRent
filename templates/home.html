@@ -71,12 +71,12 @@
   </section>
 
   <!-- ================= -->
-  <!-- Fester „Hinzufügen“-Button (bleibt erhalten) -->
+  <!-- Fester „Hinzufügen“-Button -->
   <!-- ================= -->
   <a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
 
   <!-- ================= -->
-  <!-- Angebots-Bereich (ohne Überschrift) -->
+  <!-- Angebots-Bereich -->
   <!-- ================= -->
   <section class="offers-section">
     <div class="offers-container">
@@ -88,11 +88,14 @@
           {% for offer in offers %}
             <div class="offer-card">
               {% if offer.photo %}
-                <img src="{{ url_for('static', filename=offer.photo) }}"
-                     alt="Foto: {{ offer.title }}" class="offer-image">
+                <img
+                  src="{{ url_for('static', filename=offer.photo) }}"
+                  alt="Foto: {{ offer.title }}"
+                  class="offer-image"
+                >
               {% else %}
                 <div class="offer-placeholder">
-                  <!-- Fallback-Bild, falls kein Foto hochgeladen wurde -->
+                  <!-- Fallback-SVG, falls kein Foto existiert -->
                   <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
                        stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -117,11 +120,11 @@
         </div>
       {% endif %}
 
-    </div> <!-- Ende .offers-container -->
+    </div> <!-- .offers-container -->
   </section>
 
   <!-- ================= -->
-  <!-- About-Us-Bereich (bleibt unverändert) -->
+  <!-- About-Us-Bereich -->
   <!-- ================= -->
   <section class="about-section" id="aboutus">
     <div class="about-container">
@@ -136,7 +139,6 @@
             zu gestalten. Als Studierende mit einem Faible für Technik und Natur kennen wir die Herausforderungen 
             von Backpacking sowie Radtouren aus eigener Erfahrung.
           </p>
-
           <h3>🌍 Nachhaltigkeit, die mitreist</h3>
           <p>
             Wir sind überzeugt, dass Reisen nicht im Widerspruch zu einem verantwortungsvollen Umgang mit unserer Umwelt 
@@ -155,7 +157,7 @@
   </section>
 
   <!-- ================= -->
-  <!-- Kontakt-Bereich (bleibt unverändert) -->
+  <!-- Kontakt-Bereich -->
   <!-- ================= -->
   <section class="contact-section">
     <div class="contact-content">
