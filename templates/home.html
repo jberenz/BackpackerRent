@@ -109,8 +109,12 @@
               {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
             </p>
             <p class="offer-price">
-              {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht
+              <span class="price-amount">
+              {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €
+              </span>
+              <span class="price-unit">pro Nacht</span>
             </p>
+
           </div>
         {% endfor %}
       </div>

@@ -683,3 +683,12 @@ body {
   font-weight: bold;
   color: #2563EB;
 }
+.offer-price .price-amount {
+  font-weight: 700;   /* fett */
+  color: #2563EB;     /* optional: Farbe anpassen */
+}
+
+.offer-price .price-unit {
+  font-weight: 400;   /* normal/dünn */
+  color: #555;        /* optional: etwas dezenter */
+}
