@@ -47,6 +47,19 @@
         </div>
       </div>
 
+      <!-- Preis pro Nacht -->
+  <div class="add-row half">
+    <div class="add-col">
+      <label for="price_per_night">Preis pro Nacht (€)</label>
+      <select id="price_per_night" name="price_per_night" required>
+        <option value="" disabled selected>Bitte wählen</option>
+        {% for i in range(0, 401) %}
+          {% set price = (i * 0.25) | round(2) %}
+          <option value="{{ price }}">{{ '%.2f' % price }} €</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
       <!-- Region -->
       <div class="add-row half">
         <div class="add-col">
