@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import json
 from datetime import datetime
@@ -12,20 +14,16 @@ from flask import (
     url_for,
     flash,
     current_app,
-    g
+    g,
+    abort
 )
 from werkzeug.utils import secure_filename
-from flask_sqlalchemy import SQLAlchemy
 
 # ---------------------------------------------------
-# 1) DB-Hilfsfunktionen (für raw sqlite3 Queries für TODO-Listen)
+# 1) DB-Hilfsfunktionen (für raw sqlite3 Queries)
 # ---------------------------------------------------
 
 def get_db_con(pragma_foreign_keys: bool = True) -> sqlite3.Connection:
-    """
-    Liefert eine SQLite-Verbindung aus dem Flask-Context (g).
-    Aktiviert optional PRAGMA foreign_keys = ON.
-    """
     if "db_con" not in g:
         g.db_con = sqlite3.connect(
             current_app.config["DATABASE"],
@@ -37,127 +35,59 @@ def get_db_con(pragma_foreign_keys: bool = True) -> sqlite3.Connection:
     return g.db_con
 
 def close_db_con(e=None) -> None:
-    """
-    Schließt die SQLite-Verbindung am Ende der Request-Verarbeitung,
-    sofern sie geöffnet war.
-    """
     db_con = g.pop("db_con", None)
     if db_con is not None:
         db_con.close()
 
 @click.command("init-db")
 def init_db_command() -> None:
-    """
-    CLI-Command, um die Datenbank neu aufzusetzen:
-    1) drop_tables.sql ausführen
-    2) create_tables.sql ausführen
-    """
-    # Stelle sicher, dass der instance-Ordner existiert
     try:
         os.makedirs(current_app.instance_path, exist_ok=True)
     except OSError:
         pass
-
     db_con = get_db_con()
-    # DROP aller Tabellen
     with current_app.open_resource("sql/drop_tables.sql") as f:
         db_con.executescript(f.read().decode("utf8"))
-    # CREATE aller Tabellen
     with current_app.open_resource("sql/create_tables.sql") as f:
         db_con.executescript(f.read().decode("utf8"))
     click.echo("Datenbank wurde initialisiert.")
 
 def insert_sample_data() -> None:
-    """
-    Optionales Einfügen von Beispieldaten aus insert_sample.sql
-    """
     db_con = get_db_con()
     with current_app.open_resource("sql/insert_sample.sql") as f:
         db_con.executescript(f.read().decode("utf8"))
 
 
 # ---------------------------------------------------
-# 2) SQLAlchemy-Models (interna)
+# 2) Offer-Klasse mit reinem sqlite3-Zugriff
 # ---------------------------------------------------
 
-# Ein einziges SQLAlchemy-Objekt für unsere Modelle
-sqla_db = SQLAlchemy()
+class Offer:
+    TABLE_NAME = "offers"
 
-class Todo(sqla_db.Model):
-    __tablename__ = "todo"
-
-    id = sqla_db.Column(sqla_db.Integer, primary_key=True, autoincrement=True)
-    description = sqla_db.Column(sqla_db.Text, nullable=False)
-    complete = sqla_db.Column(sqla_db.Boolean, default=False, nullable=False)
-
-    # n-m Beziehung zu List über die Zwischentabelle "todo_list"
-    lists = sqla_db.relationship(
-        "List",
-        secondary="todo_list",
-        back_populates="todos"
-    )
-
-    def __repr__(self):
-        return f"<Todo id={self.id} complete={self.complete} description={self.description!r}>"
-
-class List(sqla_db.Model):
-    __tablename__ = "list"
-
-    id = sqla_db.Column(sqla_db.Integer, primary_key=True, autoincrement=True)
-    name = sqla_db.Column(sqla_db.Text, nullable=False)
-
-    # n-m Beziehung zu Todo über "todo_list"
-    todos = sqla_db.relationship(
-        "Todo",
-        secondary="todo_list",
-        back_populates="lists"
-    )
-
-    def __repr__(self):
-        return f"<List id={self.id} name={self.name!r}>"
-
-class TodoList(sqla_db.Model):
-    __tablename__ = "todo_list"
-
-    list_id = sqla_db.Column(
-        sqla_db.Integer,
-        sqla_db.ForeignKey("list.id", ondelete="CASCADE"),
-        primary_key=True,
-        nullable=False
-    )
-    todo_id = sqla_db.Column(
-        sqla_db.Integer,
-        sqla_db.ForeignKey("todo.id", ondelete="CASCADE"),
-        primary_key=True,
-        nullable=False
-    )
-    complete = sqla_db.Column(sqla_db.Integer, default=0, nullable=False)
-
-    todo = sqla_db.relationship(
-        "Todo",
-        backref=sqla_db.backref("todo_list_entries", cascade="all, delete-orphan")
-    )
-    list = sqla_db.relationship(
-        "List",
-        backref=sqla_db.backref("todo_list_entries", cascade="all, delete-orphan")
-    )
-
-    def __repr__(self):
-        return f"<TodoList list_id={self.list_id} todo_id={self.todo_id} complete={self.complete}>"
-
-class Offer(sqla_db.Model):
-    __tablename__ = "offers"
-
-    id = sqla_db.Column(sqla_db.Integer, primary_key=True, autoincrement=True)
-    title = sqla_db.Column(sqla_db.Text, nullable=False)
-    category = sqla_db.Column(sqla_db.Text, nullable=False)
-    description = sqla_db.Column(sqla_db.Text, nullable=True)
-    region = sqla_db.Column(sqla_db.Text, nullable=False)
-    price_per_night = sqla_db.Column(sqla_db.Float, nullable=False, default=0.0)
-    rating = sqla_db.Column(sqla_db.Float, nullable=False, default=0.0)
-    photo = sqla_db.Column(sqla_db.Text, nullable=True)    # z.B. "uploads/20230601_zelt.jpg"
-    features = sqla_db.Column(sqla_db.Text, nullable=True) # JSON-String mit den dynamischen Merkmalen
-    created_at = sqla_db.Column(sqla_db.DateTime, nullable=False, default=datetime.utcnow)
+    def __init__(
+        self,
+        title: str,
+        category: str,
+        region: str,
+        price_per_night: float = 0.0,
+        rating: float = 0.0,
+        description: str | None = None,
+        photo: str | None = None,
+        features: dict | None = None,
+        created_at: datetime | None = None,
+        id: int | None = None
+    ):
+        self.id = id
+        self.title = title
+        self.category = category
+        self.region = region
+        self.price_per_night = price_per_night
+        self.rating = rating
+        self.description = description
+        self.photo = photo
+        self.features = features or {}
+        self.created_at = created_at or datetime.utcnow()
 
     def __repr__(self):
         return (
@@ -166,6 +96,121 @@ class Offer(sqla_db.Model):
             f"photo={self.photo!r} created_at={self.created_at}>"
         )
 
+    @classmethod
+    def from_row(cls, row: sqlite3.Row) -> Offer:
+        # Features parsen
+        feats: dict = {}
+        if row["features"]:
+            try:
+                feats = json.loads(row["features"])
+            except json.JSONDecodeError:
+                feats = {}
+
+        # created_at konvertieren, falls es als String kommt
+        raw = row["created_at"]
+        if isinstance(raw, str):
+            # SQLite CURRENT_TIMESTAMP liefert 'YYYY-MM-DD HH:MM:SS'
+            created = datetime.fromisoformat(raw)
+        else:
+            created = raw  # evtl. schon datetime, je nach detect_types
+
+        return cls(
+            id=row["id"],
+            title=row["title"],
+            category=row["category"],
+            description=row["description"],
+            region=row["region"],
+            price_per_night=row["price_per_night"],
+            rating=row["rating"],
+            photo=row["photo"],
+            features=feats,
+            created_at=created,
+        )
+
+    @classmethod
+    def all(cls) -> list[Offer]:
+        db = get_db_con()
+        cur = db.execute(
+            f"""
+            SELECT id, title, category, description, region,
+                   price_per_night, rating, photo, features, created_at
+            FROM {cls.TABLE_NAME}
+            ORDER BY created_at DESC
+            """
+        )
+        return [cls.from_row(r) for r in cur.fetchall()]
+
+    @classmethod
+    def get_by_id(cls, offer_id: int) -> Offer | None:
+        db = get_db_con()
+        row = db.execute(
+            f"SELECT * FROM {cls.TABLE_NAME} WHERE id = ?",
+            (offer_id,)
+        ).fetchone()
+        return cls.from_row(row) if row else None
+
+    def save(self) -> None:
+        db = get_db_con()
+        data = {
+            "title": self.title,
+            "category": self.category,
+            "description": self.description,
+            "region": self.region,
+            "price_per_night": self.price_per_night,
+            "rating": self.rating,
+            "photo": self.photo,
+            "features": json.dumps(self.features) if self.features else None,
+            "created_at": self.created_at,
+        }
+
+        if self.id is None:
+            cols = ", ".join(data.keys())
+            placeholders = ", ".join("?" for _ in data)
+            vals = tuple(data.values())
+            cur = db.execute(
+                f"INSERT INTO {self.TABLE_NAME} ({cols}) VALUES ({placeholders})",
+                vals
+            )
+            self.id = cur.lastrowid
+        else:
+            assignments = ", ".join(f"{k}=?" for k in data.keys())
+            vals = tuple(data.values()) + (self.id,)
+            db.execute(
+                f"UPDATE {self.TABLE_NAME} SET {assignments} WHERE id = ?",
+                vals
+            )
+        db.commit()
+
+    def delete(self) -> None:
+        if self.id is None:
+            return
+        db = get_db_con()
+        db.execute(
+            f"DELETE FROM {self.TABLE_NAME} WHERE id = ?",
+            (self.id,)
+        )
+        db.commit()
+        self.id = None
+
+
+def init_offers_table() -> None:
+    db = get_db_con()
+    db.executescript("""
+    CREATE TABLE IF NOT EXISTS offers (
+        id               INTEGER PRIMARY KEY AUTOINCREMENT,
+        title            TEXT    NOT NULL,
+        category         TEXT    NOT NULL,
+        description      TEXT,
+        region           TEXT    NOT NULL,
+        price_per_night  REAL    NOT NULL DEFAULT 0.0,
+        rating           REAL    NOT NULL DEFAULT 0.0,
+        photo            TEXT,
+        features         TEXT,
+        created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    """)
+    db.commit()
+
 
 # ---------------------------------------------------
 # 3) Flask-App-Setup
@@ -173,89 +218,63 @@ class Offer(sqla_db.Model):
 
 app = Flask(__name__, instance_relative_config=True)
 
-# 3a) Basis-Konfiguration: SECRET_KEY & Pfad zur SQLite-Datei (für raw sqlite3)
 app.config.from_mapping(
     SECRET_KEY="secret_key_just_for_dev_environment",
     DATABASE=os.path.join(app.instance_path, "todos.sqlite")
 )
 
-# 3b) Konfiguration für SQLAlchemy
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + app.config["DATABASE"]
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-# 3c) Ordner für Uploads (Fotos von Angeboten)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# 3d) Registriere raw-sqlite3 CLI-Command und teardown-Funktion
 app.cli.add_command(init_db_command)
 app.teardown_appcontext(close_db_con)
 
-# 3e) SQLAlchemy initialisieren
-sqla_db.init_app(app)
-
-# 3f) Erstelle alle Tabellen (Todo, List, TodoList, Offer) beim ersten Start
 with app.app_context():
-    sqla_db.create_all()
+    init_offers_table()
 
 
 # ---------------------------------------------------
-# 4) 🔀 TODO-Listen-Routen (raw sqlite3)
+# 4) TODO-Listen-Routen
 # ---------------------------------------------------
 
-# Startseite zeigt jetzt home.html (statt redirect auf /lists/)
-@app.route("/")
-def index():
-    # Alle Angebote aus der Datenbank holen, sortiert nach Erstellungszeitpunkt absteigend
-    offers = Offer.query.order_by(Offer.created_at.desc()).all()
-    return render_template("home.html", offers=offers)
-
-# Alle TODO-Listen anzeigen
 @app.route("/lists/")
 def lists():
     db_con = get_db_con()
-    sql_query = "SELECT * FROM list ORDER BY name"
-    lists_temp = db_con.execute(sql_query).fetchall()
+    lists_temp = db_con.execute("SELECT * FROM list ORDER BY name").fetchall()
     lists = []
-    for list_temp in lists_temp:
-        list_obj = dict(list_temp)
-        sql_query = (
-            "SELECT COUNT(complete) = SUM(complete) AS complete FROM todo "
-            "JOIN todo_list ON list_id=? AND todo_id=todo.id;"
-        )
-        complete = db_con.execute(sql_query, (list_obj["id"],)).fetchone()["complete"]
-        list_obj["complete"] = complete
-        lists.append(list_obj)
+    for lt in lists_temp:
+        obj = dict(lt)
+        complete = db_con.execute(
+            "SELECT COUNT(complete)=SUM(complete) AS complete "
+            "FROM todo JOIN todo_list ON list_id=? AND todo_id=todo.id;",
+            (obj["id"],)
+        ).fetchone()["complete"]
+        obj["complete"] = complete
+        lists.append(obj)
 
-    if request.args.get("json") is not None:
+    if request.args.get("json"):
         return lists
     return render_template("lists.html", lists=lists)
 
-# Einzelne TODO-Liste und ihre Todos anzeigen
 @app.route("/lists/<int:id>")
 def show_list(id):
     db_con = get_db_con()
-    sql_query_1 = "SELECT name FROM list WHERE id=?"
-    sql_query_2 = (
-        "SELECT id, complete, description FROM todo "
-        "JOIN todo_list ON todo_id=todo.id AND list_id=? "
-        "ORDER BY id;"
-    )
-    row = db_con.execute(sql_query_1, (id,)).fetchone()
-    if row is None:
+    row = db_con.execute("SELECT name FROM list WHERE id=?", (id,)).fetchone()
+    if not row:
         return "Liste nicht gefunden", 404
 
-    list_obj = {"name": row["name"]}
-    list_obj["todos"] = db_con.execute(sql_query_2, (id,)).fetchall()
+    todos = db_con.execute(
+        "SELECT id, complete, description FROM todo "
+        "JOIN todo_list ON todo_id=todo.id AND list_id=? ORDER BY id;",
+        (id,)
+    ).fetchall()
 
-    if request.args.get("json") is not None:
-        list_obj["todos"] = [dict(todo) for todo in list_obj["todos"]]
-        return list_obj
-    return render_template("list.html", list=list_obj)
+    if request.args.get("json"):
+        return {"name": row["name"], "todos": [dict(t) for t in todos]}
+    return render_template("list.html", list={"name": row["name"], "todos": todos})
 
-# Neue Liste anlegen (Formular und Einfügen)
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if request.method == "POST":
@@ -267,7 +286,6 @@ def add():
         return redirect(url_for("lists"))
     return render_template("add.html")
 
-# Beispieldaten einfügen (nur via Browser-Aufruf)
 @app.route("/insert/sample")
 def run_insert_sample():
     insert_sample_data()
@@ -275,80 +293,62 @@ def run_insert_sample():
 
 
 # ---------------------------------------------------
-# 5) 🔒 Authentifizierungs-Routen
+# 5) Auth-Routen
 # ---------------------------------------------------
 
-# Login-Seite
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-
         if email == "test@example.com" and password == "pass123":
             return redirect(url_for("lists"))
-        else:
-            return render_template("anmelden.html", error="Ungültige Anmeldedaten")
-
+        return render_template("anmelden.html", error="Ungültige Anmeldedaten")
     return render_template("anmelden.html")
 
-# Registrierungsseite
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     if request.method == "POST":
-        last_name = request.form.get("last_name")
-        first_name = request.form.get("first_name")
-        region = request.form.get("region")
-        phone = request.form.get("phone")
-        # TODO: Hier später in die DB schreiben
         return redirect(url_for("lists"))
     return render_template("registrieren.html")
 
-# Alte URL weiterleiten
 @app.route("/register")
 def redirect_register():
     return redirect(url_for("registrieren"))
 
-# Platzhalter-Routen (noch nicht verwendet)
 @app.route("/login/email")
 def login_email():
-    return "Hier kommt das E-Mail Login hin (später implementieren)"
+    return "Email-Login (später)"
 
 @app.route("/register/email")
 def register_email():
-    return "Hier kommt die E-Mail Registrierung hin (später implementieren)"
+    return "Email-Registrierung (später)"
 
 
 # ---------------------------------------------------
-# 6) 🚀 Angebots-Routen (SQLAlchemy)
+# 6) Angebots-Routen
 # ---------------------------------------------------
+
+@app.route("/")
+def index():
+    offers = Offer.all()
+    return render_template("home.html", offers=offers)
 
 @app.route("/offers")
 def list_offers():
-    """
-    Zeigt alle Angebote an (SQLAlchemy-Abfrage).
-    """
-    offers = Offer.query.order_by(Offer.created_at.desc()).all()
+    offers = Offer.all()
     return render_template("lists_offers.html", offers=offers)
 
 @app.route("/offers/add", methods=["GET", "POST"])
 def add_offer():
-    """
-    Zeigt das Formular zum Anlegen eines neuen Angebots und
-    verarbeitet die POST-Daten, um ein Offer-Objekt in die DB zu speichern.
-    """
     if request.method == "POST":
-        # ----- A) Basis-Felder auslesen -----
         title = request.form.get("title", "").strip()
         category = request.form.get("category", "").strip()
-        description = request.form.get("description", "").strip()
+        description = request.form.get("description", "").strip() or None
         region = request.form.get("region", "").strip()
-
-        # Momentan fixe Default-Werte für Preis und Rating:
         price_per_night = 0.0
         rating = 0.0
 
-        # ----- B) Foto-Upload verarbeiten -----
         photo_filename = None
         uploaded_file = request.files.get("photo")
         if uploaded_file and uploaded_file.filename:
@@ -357,66 +357,48 @@ def add_offer():
             filename = f"{ts}_{filename}"
             save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             uploaded_file.save(save_path)
-            # Speichere nur den relativen Pfad unter /static
             photo_filename = os.path.join("uploads", filename)
 
-        # ----- C) Dynamische Merkmale sammeln -----
-        expected_feature_keys = [
+        expected_keys = [
             "kapazitaet", "packmass", "gewicht", "wassersaeule", "material",
-            "volumen", "masse", "tragesystem",
-            "funktionen", "klingenlaenge",
-            "temperatur", "fuellmaterial", "form",
-            "abmessungen", "dicke", "maxbelast",
-            "volumen_rt", "material_rt", "gewicht_rt", "wasserdicht_rt", "tragesystem_rt",
-            "leistung_gk", "brennstoff_gk", "durchsatz_gk", "gewicht_gk", "abmessungen_gk"
+            "volumen", "masse", "tragesystem", "funktionen", "klingenlaenge",
+            "temperatur", "fuellmaterial", "form", "abmessungen", "dicke",
+            "maxbelast", "volumen_rt", "material_rt", "gewicht_rt",
+            "wasserdicht_rt", "tragesystem_rt", "leistung_gk", "brennstoff_gk",
+            "durchsatz_gk", "gewicht_gk", "abmessungen_gk"
         ]
-        feature_data = {}
-        for key in expected_feature_keys:
-            value = request.form.get(key)
-            if value and value.strip():
-                feature_data[key] = value.strip()
+        feature_data: dict = {}
+        for key in expected_keys:
+            val = request.form.get(key)
+            if val and val.strip():
+                feature_data[key] = val.strip()
 
-        # ----- D) Offer-Instanz anlegen und speichern -----
         new_offer = Offer(
             title=title,
             category=category,
-            description=description or None,
+            description=description,
             region=region,
             price_per_night=price_per_night,
             rating=rating,
             photo=photo_filename,
-            features=json.dumps(feature_data) if feature_data else None
+            features=feature_data
         )
-        sqla_db.session.add(new_offer)
-        sqla_db.session.commit()
-
+        new_offer.save()
         flash("Angebot erfolgreich erstellt!", "success")
-        # Nach dem Speichern zurück zur Startseite (/)
         return redirect(url_for("index"))
 
-    # GET: Formular anzeigen
     return render_template("add_offer.html")
 
 @app.route("/offers/<int:offer_id>")
 def offer_detail(offer_id):
-    """
-    Zeigt ein einzelnes Angebot im Detail an.
-    """
-    offer = Offer.query.get_or_404(offer_id)
-
-    # Features (JSON) wieder in ein Python-Dict umwandeln
-    feature_dict = {}
-    if offer.features:
-        try:
-            feature_dict = json.loads(offer.features)
-        except ValueError:
-            feature_dict = {}
-
-    return render_template("offer_detail.html", offer=offer, features=feature_dict)
+    offer = Offer.get_by_id(offer_id)
+    if not offer:
+        abort(404)
+    return render_template("offer_detail.html", offer=offer, features=offer.features)
 
 
 # ---------------------------------------------------
-# 7) 🚀 Startpunkt
+# 7) Startpunkt
 # ---------------------------------------------------
 
 if __name__ == "__main__":

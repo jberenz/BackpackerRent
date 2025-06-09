@@ -35,5 +35,5 @@ CREATE TABLE IF NOT EXISTS offers (
   rating           REAL    NOT NULL DEFAULT 0.0,
   photo            TEXT,              -- Dateipfad zum hochgeladenen Bild, z.B. "uploads/123456_zelt.jpg"
   features         TEXT,              -- JSON-String mit den dynamischen Merkmalen
-  created_at       TEXT    NOT NULL    -- Zeitstempel als ISO-String, z.B. "2023-05-30 14:12:05"
+  created_at       DATETIME NOT NULL DEFAULT (CURRENT_TIMESTAMP)
 );
