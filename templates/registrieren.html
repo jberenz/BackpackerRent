@@ -7,6 +7,7 @@
   <div class="auth-container">
     <h2 class="auth-header">Registrieren</h2>
 
+    {# Flash-Nachrichten (z. B. bei Erfolg) #}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-messages">
@@ -16,6 +17,11 @@
         </div>
       {% endif %}
     {% endwith %}
+
+    {# Fehleranzeige (z. B. E-Mail schon vergeben) #}
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
 
     <form class="auth-form" action="{{ url_for('registrieren') }}" method="post">
       <div class="input-group">

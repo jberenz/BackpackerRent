@@ -18,6 +18,7 @@ from flask import (
     abort
 )
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # ---------------------------------------------------
 # 1) DB-Hilfsfunktionen (für raw sqlite3 Queries)
@@ -253,44 +254,8 @@ with app.app_context():
     init_offers_table()
 
 # ---------------------------------------------------
-# 4) TODO-Listen-Routen (raw sqlite3)
+# 4) Add-Routen (raw sqlite3)
 # ---------------------------------------------------
-
-@app.route("/lists/")
-def lists():
-    db_con = get_db_con()
-    lists_temp = db_con.execute("SELECT * FROM list ORDER BY name").fetchall()
-    lists = []
-    for lt in lists_temp:
-        obj = dict(lt)
-        complete = db_con.execute(
-            "SELECT COUNT(complete)=SUM(complete) AS complete "
-            "FROM todo JOIN todo_list ON list_id=? AND todo_id=todo.id;",
-            (obj["id"],)
-        ).fetchone()["complete"]
-        obj["complete"] = complete
-        lists.append(obj)
-
-    if request.args.get("json"):
-        return lists
-    return render_template("lists.html", lists=lists)
-
-@app.route("/lists/<int:id>")
-def show_list(id):
-    db_con = get_db_con()
-    row = db_con.execute("SELECT name FROM list WHERE id=?", (id,)).fetchone()
-    if not row:
-        return "Liste nicht gefunden", 404
-
-    todos = db_con.execute(
-        "SELECT id, complete, description FROM todo "
-        "JOIN todo_list ON todo_id=todo.id AND list_id=? ORDER BY id;",
-        (id,)
-    ).fetchall()
-
-    if request.args.get("json"):
-        return {"name": row["name"], "todos": [dict(t) for t in todos]}
-    return render_template("list.html", list={"name": row["name"], "todos": todos})
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -315,17 +280,27 @@ def run_insert_sample():
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-        if email == "test@example.com" and password == "pass123":
-            return redirect(url_for("lists"))
-        return render_template("anmelden.html", error="Ungültige Anmeldedaten")
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "").strip()
+
+        db = get_db_con()
+        user = db.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email,)
+        ).fetchone()
+
+        if user and check_password_hash(user["password"], password):
+            flash(f"Willkommen zurück, {user['first_name']}!", "success")
+            return redirect(url_for("index"))  # <- geändert von "lists" zu "index"
+        else:
+            return render_template("anmelden.html", error="Ungültige Anmeldedaten")
+
     return render_template("anmelden.html")
+
 
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     if request.method == "POST":
-        # A) Form-Felder auslesen
         first_name = request.form.get("first_name", "").strip()
         last_name  = request.form.get("last_name", "").strip()
         email      = request.form.get("email", "").strip()
@@ -333,14 +308,22 @@ def registrieren():
         region     = request.form.get("region", "").strip()
         phone      = request.form.get("phone", "").strip() or None
 
-        # B) In DB speichern
         db = get_db_con()
+
+        # E-Mail prüfen
+        existing_user = db.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        if existing_user:
+            error = "Es existiert bereits ein Konto mit dieser E-Mail-Adresse."
+            return render_template("registrieren.html", error=error)
+
+        #  Passwort hashen und speichern
+        hashed_pw = generate_password_hash(password)
         db.execute(
             """
             INSERT INTO users (first_name, last_name, email, password, region, phone)
             VALUES (?, ?, ?, ?, ?, ?)
             """,
-            (first_name, last_name, email, password, region, phone)
+            (first_name, last_name, email, hashed_pw, region, phone)
         )
         db.commit()
 
@@ -349,9 +332,6 @@ def registrieren():
 
     return render_template("registrieren.html")
 
-@app.route("/register")
-def redirect_register():
-    return redirect(url_for("registrieren"))
 
 # ---------------------------------------------------
 # 6) Angebots-Routen (sqlite3-basiert)
