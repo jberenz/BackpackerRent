@@ -325,20 +325,33 @@ def anmelden():
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     if request.method == "POST":
-        return redirect(url_for("lists"))
+        # A) Form-Felder auslesen
+        first_name = request.form.get("first_name", "").strip()
+        last_name  = request.form.get("last_name", "").strip()
+        email      = request.form.get("email", "").strip()
+        password   = request.form.get("password", "").strip()
+        region     = request.form.get("region", "").strip()
+        phone      = request.form.get("phone", "").strip() or None
+
+        # B) In DB speichern
+        db = get_db_con()
+        db.execute(
+            """
+            INSERT INTO users (first_name, last_name, email, password, region, phone)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (first_name, last_name, email, password, region, phone)
+        )
+        db.commit()
+
+        flash("Registrierung erfolgreich! Du kannst dich jetzt anmelden.", "success")
+        return redirect(url_for("anmelden"))
+
     return render_template("registrieren.html")
 
 @app.route("/register")
 def redirect_register():
     return redirect(url_for("registrieren"))
-
-@app.route("/login/email")
-def login_email():
-    return "Email-Login (später)"
-
-@app.route("/register/email")
-def register_email():
-    return "Email-Registrierung (später)"
 
 # ---------------------------------------------------
 # 6) Angebots-Routen (sqlite3-basiert)

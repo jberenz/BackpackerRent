@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS todo_list (
 );
 
 -- ---------------------------------------------------
--- (B) Neue Tabelle: offers (für deine Angebote)
+-- (B) Tabelle: offers 
 -- ---------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS offers (
@@ -36,4 +36,16 @@ CREATE TABLE IF NOT EXISTS offers (
   photo            TEXT,              -- Dateipfad zum hochgeladenen Bild, z.B. "uploads/123456_zelt.jpg"
   features         TEXT,              -- JSON-String mit den dynamischen Merkmalen
   created_at       DATETIME NOT NULL DEFAULT (CURRENT_TIMESTAMP)
+);
+-- ---------------------------------------------------
+-- (C) Tabelle für Benutzer
+-- ---------------------------------------------------
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  region TEXT NOT NULL,
+  phone TEXT
 );
