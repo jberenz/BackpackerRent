@@ -70,19 +70,19 @@ venv\Scripts\activate
 **Screenshots der App**
 
 **Startseite**
-![Startseite](static/images/startseite.jpg)
+![Startseite](screenshots/images/startseite.jpg)
 
 **About Us**
-![About Us](static/images/aboutus.jpg)
+![About Us](screenshots/images/aboutus.jpg)
 
 **Kontakt**
-![Kontakr](static/images/kontakt.jpg)
+![Kontakr](screenshots/images/kontakt.jpg)
 
 **Registrierung**
-![register](static/images/register.jpg)
+![register](screenshots/images/register.jpg)
 
 **Login**
-![Login](static/images/login.jpg)
+![Login](screenshots/images/login.jpg)
 
 **Angebot**
-![Angebot](static/images/angebot.jpg)
+![Angebot](screenshots/images/angebot.jpg)
