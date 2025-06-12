@@ -58,6 +58,13 @@ Team & persönliche Ziele
 - Bessere Teamkommunikation erleben und mitgestalten
 - Zusammenarbeit im Team als Stärke aufbauen
 
+Aufgabenaufteilung:
+
+Jelena: Angebote, Startseite, Details 
+Pana und Aleyna: Angebote buchen, Details, Offer View, Login
+Pana: Kontakt, About us
+Aleyna: Register
+
 
 Datenbank:
 In der aktuellen Datenbankstruktur bilden die Tabellen users und offers das Grundgerüst eines Systems zur Verwaltung und Vermietung von *Produkten*. Ziel ist es, eine Plattform bereitzustellen, auf der Nutzer verschiedene Gegenstände zur Miete anbieten können – zum Beispiel Zelte, technische Geräte oder andere physische Produkte.
@@ -77,4 +84,6 @@ Darüber hinaus ist bereits angedacht, künftig eine weitere Tabelle für *Buchu
 ```bash
 python -m venv venv
 venv\Scripts\activate
+flask init-db
+flask run
 
