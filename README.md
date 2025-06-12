@@ -59,6 +59,7 @@ Team & persönliche Ziele
 - Zusammenarbeit im Team als Stärke aufbauen
 
 
+Datenbank:
 In der aktuellen Datenbankstruktur bilden die Tabellen users und offers das Grundgerüst eines Systems zur Verwaltung und Vermietung von *Produkten*. Ziel ist es, eine Plattform bereitzustellen, auf der Nutzer verschiedene Gegenstände zur Miete anbieten können – zum Beispiel Zelte, technische Geräte oder andere physische Produkte.
 
 Die users-Tabelle verwaltet alle registrierten Benutzer. Für jede Person werden der Vorname, Nachname, die E-Mail-Adresse, ein verschlüsseltes Passwort, die zugehörige Region sowie *verbindlich auch eine Telefonnummer* gespeichert. Diese Informationen sind notwendig, um Nutzer eindeutig zu identifizieren und eine sichere Kommunikation zwischen Mietenden und Vermietenden zu ermöglichen. Jede E-Mail-Adresse muss dabei eindeutig sein, um Dopplungen im System zu verhindern.
