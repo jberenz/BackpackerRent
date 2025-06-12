@@ -1,52 +1,136 @@
-# Contents of this repository
+# 🏕 Backpacker Rent
 
-This repository complements the [online notebooks](https://hwrberlin.github.io/fswd/) to the Full-Stack Web Development course at HWR Berlin.
+**Teamname:** Backpacker Rent Team  
+**Projektidee:** Plattform zur flexiblen Ausleihe von Reiseausrüstung
 
-The commit history on the `main` branch has been enriched with [tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) that match the individual notebooks. Think of these tags as progressing "releases" of the app: as the semester unfolds, more features will be built in, with the occasional refactoring here and there.
+![Backpacker Rent Logo](static/images/Logo.jpg) <!-- ← Pfad ggf. anpassen -->
 
-I recommend you `git checkout` the repository at the tagged location of a particular notebook:
+---
 
-+ `git checkout docs`: basic structure for your own documentation
-+ `git checkout intro`: "[Intro to full-stack web development with Flask](https://hwrberlin.github.io/fswd/02-fswd-intro.html)"
-+ *... more to come*
+**Projektbeschreibung**
 
-> By checking out a particular tag, git will throw you a "detached HEAD" warning. This is a feature not a bug :) Consult the [git manual](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for how to work around this warning, if you are so inclined.
-> 
-> Alternatively, you may revert to the latest commit with `git reset --hard`: this is a destructive command, deleting any local changes you may have done. Be sure to preserve them at some other location if you need them later.
+**Problem**
 
-In addition to exemplary code, this repository contains a basic structure for your documentation page in the `📁/docs` folder, as a source to GitHub Pages. For setup instructions, see [this notebook](https://hwrberlin.github.io/fswd/04-git.html#5-github-pages).
+Reisende und Backpacker benötigen passende Ausrüstung für ihre Unternehmungen. Oft müssen sie teure Ausrüstung kaufen und während der gesamten Reise mit sich tragen – oder haben Schwierigkeiten, vor Ort geeignete Ausstattung zu finden.
 
-# Steps to execute the app
+Ob für eine Radtour, einen Roadtrip, ein Camping-Abenteuer oder eine klassische Backpacking-Reise: Viele Reisende wünschen sich **flexible, einfache Lösungen**, um hochwertige Ausrüstung **nur für den tatsächlichen Bedarf zu nutzen – ohne hohe Anschaffungskosten**.
 
-**Step 1:** set up and activate a [Python Virtual Environment](https://hwrberlin.github.io/fswd/01-python-vscode.html#32-use-the-python-virtual-environment-as-default-for-this-workspace).
 
-**Step 2:** install the required Python packages from the terminal with the command `pip install -r requirements.txt`:
 
-```console
-(venv) C:\Users\me\projects\webapp> pip install -r requirements.txt
-```
+Eine **Web-Plattform**, auf der Nutzer lokal Reise-Equipment wie:
 
-> I created the file `📄requirements.txt` with this command: `pip freeze > requirements.txt`
+- Rucksäcke
+- Zelte
+- Powerbanks
+- Kameras  
+... mieten und vermieten können – einfach, flexibel und nachhaltig.
 
-**Step 3:** initialize the app's SQLite database via `flask init-db`:
+Zielgruppe
 
-```console
-(venv) PS C:\Users\me\projects\webapp> flask init-db
-Database has been initialized.
-```
+Reisende und Backpacker, die **temporär Ausrüstung benötigen**, ohne sie dauerhaft besitzen zu müssen.
 
-**Step 4:** start the web server via `flask run --reload`:
+---
 
-```console
-(venv) PS C:\Users\me\projects\webapp> flask run --reload
- * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment.
-Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
- * Restarting with stat
-```
+Projektziele
 
-**Step 5:** visit [http://127.0.0.1:5000/insert/sample](http://127.0.0.1:5000/insert/sample) to populate the app's database with some sample data.
+Ziel ist die Entwicklung einer Plattform, auf der Nutzer Equipment **vermieten, mieten und bewerten** können. Der Fokus liegt auf Nachhaltigkeit, Nutzerfreundlichkeit und Community.
 
-**Step 6:** visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to view the landing page
+---
+
+Team & persönliche Ziele
+
+**Jelena Berenz**
+
+- Backend-Logik selbstständig umsetzen (Python)
+- Kenntnisse in Datenbankanbindung & -pflege vertiefen
+- Kreativität im UI-Design weiterentwickeln
+- Teamfähigkeit durch aktives Feedback & Austausch stärken
+
+**Panagiotis Tsangarakis**
+
+- Python-Grundlagen erlernen und anwenden
+- Eigenständig Webanwendungen mit Python entwickeln
+- Umgang mit Datenbanken lernen & pflegen
+
+**Aleyna Nur Özdemir**
+
+- Python-Kenntnisse vertiefen
+- Bessere Teamkommunikation erleben und mitgestalten
+- Zusammenarbeit im Team als Stärke aufbauen
+
+---
+
+**Anwendung starten**
+
+**1. Virtuelle Umgebung aktivieren**
+
+**Backpacker Rent**
+
+**Teamname:** Backpacker Rent Team  
+**Projektidee:** Plattform zur flexiblen Ausleihe von Reiseausrüstung
+
+![Backpacker Rent Logo](static/images/logo.jpg) <!-- ← Pfad ggf. anpassen -->
+
+---
+
+**Projektbeschreibung**
+
+**Problem**
+
+Reisende und Backpacker benötigen passende Ausrüstung für ihre Unternehmungen. Oft müssen sie teure Ausrüstung kaufen und während der gesamten Reise mit sich tragen – oder haben Schwierigkeiten, vor Ort geeignete Ausstattung zu finden.
+
+Ob für eine Radtour, einen Roadtrip, ein Camping-Abenteuer oder eine klassische Backpacking-Reise: Viele Reisende wünschen sich **flexible, einfache Lösungen**, um hochwertige Ausrüstung **nur für den tatsächlichen Bedarf zu nutzen – ohne hohe Anschaffungskosten**.
+
+**Lösung**
+
+Eine **Web-Plattform**, auf der Nutzer lokal Reise-Equipment wie:
+
+- Rucksäcke
+- Zelte
+- Powerbanks
+- Kameras  
+... mieten und vermieten können – einfach, flexibel und nachhaltig.
+
+**Zielgruppe**
+
+Reisende und Backpacker, die **temporär Ausrüstung benötigen**, ohne sie dauerhaft besitzen zu müssen.
+
+---
+
+**Projektziele**
+
+Ziel ist die Entwicklung einer Plattform, auf der Nutzer Equipment **vermieten, mieten und bewerten** können. Der Fokus liegt auf Nachhaltigkeit, Nutzerfreundlichkeit und Community.
+
+---
+
+**Team & persönliche Ziele**
+
+**Jelena Berenz**
+
+- Backend-Logik selbstständig umsetzen (Python)
+- Kenntnisse in Datenbankanbindung & -pflege vertiefen
+- Kreativität im UI-Design weiterentwickeln
+- Teamfähigkeit durch aktives Feedback & Austausch stärken
+
+**Panagiotis Tsangarakis**
+
+- Python-Grundlagen erlernen und anwenden
+- Eigenständig Webanwendungen mit Python entwickeln
+- Umgang mit Datenbanken lernen & pflegen
+
+**Aleyna Nur Özdemir**
+
+- Python-Kenntnisse vertiefen
+- Bessere Teamkommunikation erleben und mitgestalten
+- Zusammenarbeit im Team als Stärke aufbauen
+
+---
+
+**Anwendung starten**
+
+**1. Virtuelle Umgebung aktivieren**
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+
