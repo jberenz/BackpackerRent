@@ -67,22 +67,3 @@ Team & persönliche Ziele
 python -m venv venv
 venv\Scripts\activate
 
-**Screenshots der App**
-
-**Startseite**
-![Startseite](screenshots/images/startseite.jpg)
-
-**About Us**
-![About Us](screenshots/images/aboutus.jpg)
-
-**Kontakt**
-![Kontakr](screenshots/images/kontakt.jpg)
-
-**Registrierung**
-![register](screenshots/images/register.jpg)
-
-**Login**
-![Login](screenshots/images/login.jpg)
-
-**Angebot**
-![Angebot](screenshots/images/angebot.jpg)
