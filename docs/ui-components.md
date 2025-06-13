@@ -66,9 +66,26 @@ Visit the [Mermaid docs](https://mermaid.js.org/intro/) for a thorough descripti
 
 ## Bilder anzeigen
 
-![Angebot](assets/images/angebot.jpg)
-![Kontakt](assets/images/kontakt.jpg)
-![Login](assets/images/login.jpg)
-![Register](assets/images/register.jpg)
+### Angebot – Startansicht
+![Angebot 1](assets/images/angebot.jpg)
 
- 
+### Angebot – Variante 2
+![Angebot 2](assets/images/angebot2.jpg)
+
+### Angebot – Variante 3
+![Angebot 3](assets/images/angebot3.jpg)
+
+### Angebot – Variante 4
+![Angebot 4](assets/images/angebot4.jpg)
+
+### Angebot – Variante 5
+![Angebot 5](assets/images/angebot5.jpg)
+
+### Kontakt
+![Kontakt](assets/images/kontakt.jpg)
+
+### Login
+![Login](assets/images/login.jpg)
+
+### Registrierung
+![Register](assets/images/register.jpg)
