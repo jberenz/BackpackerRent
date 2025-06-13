@@ -7,7 +7,7 @@
   <div class="auth-container">
     <h2 class="auth-header">Registrieren</h2>
 
-    {# Flash-Nachrichten (z. B. bei Erfolg) #}
+    {# Flash-Nachrichten (z. B. bei Erfolg) #}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-messages">
@@ -18,7 +18,7 @@
       {% endif %}
     {% endwith %}
 
-    {# Fehleranzeige (z. B. E-Mail schon vergeben) #}
+    {# Fehleranzeige (z. B. E-Mail schon vergeben) #}
     {% if error %}
       <div class="alert alert-danger">{{ error }}</div>
     {% endif %}
@@ -65,13 +65,13 @@
       </div>
 
       <div class="input-group">
-        <label for="region">Region</label>
-        <select id="region" name="region" required>
-          <option value="" disabled selected>Region</option>
-          <option value="berlin">Berlin</option>
-          <option value="hamburg">Hamburg</option>
-          <option value="muenchen">München</option>
-          <option value="frankfurt">Frankfurt</option>
+        <label for="region_id">Region</label>
+        <select id="region_id" name="region_id" required>
+          <option value="" disabled selected>Region wählen</option>
+          <option value="1">Berlin</option>
+          <option value="2">Hamburg</option>
+          <option value="3">München</option>
+          <option value="4">Frankfurt</option>
         </select>
       </div>
 

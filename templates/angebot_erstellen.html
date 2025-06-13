@@ -18,16 +18,16 @@
       <!-- Kategorie + Foto hochladen -->
       <div class="add-row">
         <div class="add-col">
-          <label for="category">Kategorie</label>
-          <select id="category" name="category" required>
+          <label for="category_id">Kategorie</label>
+          <select id="category_id" name="category_id" required>
             <option value="" disabled selected>Bitte wählen</option>
-            <option value="zelt">Zelt</option>
-            <option value="rucksack">Rucksack</option>
-            <option value="multitool">Multitool</option>
-            <option value="schlafsack">Schlafsack</option>
-            <option value="luftmatratze">Luftmatratze</option>
-            <option value="radtasche">Radtasche</option>
-            <option value="gaskocher">Gaskocher</option>
+            <option value="1">Zelt</option>
+            <option value="2">Rucksack</option>
+            <option value="3">Multitool</option>
+            <option value="4">Schlafsack</option>
+            <option value="5">Luftmatratze</option>
+            <option value="6">Radtasche</option>
+            <option value="7">Gaskocher</option>
           </select>
         </div>
         <div class="add-col">
@@ -48,28 +48,29 @@
       </div>
 
       <!-- Preis pro Nacht -->
-  <div class="add-row half">
-    <div class="add-col">
-      <label for="price_per_night">Preis pro Nacht (€)</label>
-      <select id="price_per_night" name="price_per_night" required>
-        <option value="" disabled selected>Bitte wählen</option>
-        {% for i in range(0, 401) %}
-          {% set price = (i * 0.25) | round(2) %}
-          <option value="{{ price }}">{{ '%.2f' % price }} €</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+      <div class="add-row half">
+        <div class="add-col">
+          <label for="price_per_night">Preis pro Nacht (€)</label>
+          <select id="price_per_night" name="price_per_night" required>
+            <option value="" disabled selected>Bitte wählen</option>
+            {% for i in range(0, 401) %}
+              {% set price = (i * 0.25) | round(2) %}
+              <option value="{{ price }}">{{ '%.2f' % price }} €</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
       <!-- Region -->
       <div class="add-row half">
         <div class="add-col">
-          <label for="region">Region</label>
-          <select id="region" name="region" required>
-            <option value="" disabled selected>Bitte wählen</option>
-            <option value="berlin">Berlin</option>
-            <option value="hamburg">Hamburg</option>
-            <option value="frankfurt">Frankfurt</option>
-            <option value="muenchen">München</option>
+          <label for="region_id">Region</label>
+          <select id="region_id" name="region_id" required>
+            <option value="" disabled selected>Region wählen</option>
+            <option value="1">Berlin</option>
+            <option value="2">Hamburg</option>
+            <option value="3">München</option>
+            <option value="4">Frankfurt</option>
           </select>
         </div>
       </div>
@@ -134,15 +135,13 @@ const featureSets = {
   ]
 };
 
-const categorySelect = document.getElementById('category');
+const categorySelect = document.getElementById('category_id');
 const featuresDiv    = document.getElementById('features');
 
 function renderFeatures(cat) {
-  // Container leeren
   featuresDiv.innerHTML = '';
   const set = featureSets[cat];
   if (!set) return;
-  // Jedes Merkmal als Input-Feld erstellen
   set.forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
