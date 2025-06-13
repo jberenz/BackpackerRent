@@ -76,10 +76,10 @@ Visit the [Mermaid docs](https://mermaid.js.org/intro/) for a thorough descripti
 ![Angebot 3](assets/images/angebot3.jpg)
 
 ### Angebot – Variante 4
-![Angebot 4](assets/images/angebot4.jpg)
+![Angebot 4](assets/images/angebot7.jpeg)
 
 ### Angebot – Variante 5
-![Angebot 5](assets/images/angebot5.jpg)
+![Angebot 5](assets/images/angebot8.jpeg)
 
 ### Kontakt
 ![Kontakt](assets/images/kontakt.jpg)
