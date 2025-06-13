@@ -3,7 +3,9 @@
 **Teamname:** Backpacker Rent Team  
 **Projektidee:** Plattform zur flexiblen Ausleihe von Reiseausrüstung
 
-![Backpacker Rent Logo](static/images/Logo.jpg) <!-- ← Pfad ggf. anpassen -->
+# Logo
+
+![Backpacker Rent Logo](static/images/Logo.jpg) 
 
 ---
 
