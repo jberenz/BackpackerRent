@@ -63,3 +63,17 @@ graph TD;
 ```
 
 Visit the [Mermaid docs](https://mermaid.js.org/intro/) for a thorough description of the charting possibilities.
+
+## Bilder anzeigen
+
+### Angebot
+![Angebot](/assets/images/angebot.jpg)
+
+### Kontakt
+![Kontakt](/assets/images/kontakt.jpg)
+
+### Startseite
+![Startseite](/assets/images/startseite.jpg)
+ 
+##hjk
+ Hallo Test
