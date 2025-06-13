@@ -4,8 +4,6 @@ parent: Technical Docs
 nav_order: 2
 ---
 
-{: .label }
-[Jane Dane]
 
 {: .no_toc }
 # Data model
@@ -17,7 +15,7 @@ nav_order: 2
 {: toc }
 </details>
 
-![Datenmodell Backpacker Rent](/assets/images/Datamodel_BackpackerRent.png)
+![Datenmodell Backpacker Rent](assets/images/Datamodel_BackpackerRent.png)
 
 In der aktuellen Datenbankstruktur bilden die Tabellen users und offers das Grundgerüst eines Systems zur Verwaltung und Vermietung von Produkten. Ziel ist es, eine Plattform bereitzustellen, auf der Nutzer verschiedene Gegenstände zur Miete anbieten können, zum Beispiel Zelte, technische Geräte oder andere physische Produkte.
 
