@@ -27,21 +27,9 @@ For a quick reference of the markdown syntax, visit [this page](https://github.c
 ![get_list_todos_sample](assets/images/fswd-intro_02.png)
 ```
 
-![get_list_todos_sample](assets/images/fswd-intro_02.png)
 
-## Callouts
 
-{: .info }
-> This is an info callout.
 
-{: .tip }
-> This is a tip callout.
-
-{: .attention }
-> This is an attention callout.
-
-> {: .download }
-> This is a download callout.
 
 ## Labels
 
