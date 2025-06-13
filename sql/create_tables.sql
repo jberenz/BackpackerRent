@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS offers (
   FOREIGN KEY (region_id) REFERENCES region(region_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS offer_features (
+  offer_id INTEGER NOT NULL,
+  feature_id INTEGER NOT NULL,
+  value TEXT NOT NULL,
+  PRIMARY KEY (offer_id, feature_id),
+  FOREIGN KEY (offer_id) REFERENCES offers(offer_id) ON DELETE CASCADE,
+  FOREIGN KEY (feature_id) REFERENCES features(feature_id) ON DELETE CASCADE
+);
+
+
 -- ===========================================
 -- Tabelle: Rentals (Buchungen / Ausleihen)
 -- ===========================================
