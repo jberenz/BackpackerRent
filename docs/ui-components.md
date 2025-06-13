@@ -66,14 +66,9 @@ Visit the [Mermaid docs](https://mermaid.js.org/intro/) for a thorough descripti
 
 ## Bilder anzeigen
 
-### Angebot
-![Angebot](/assets/images/angebot.jpg)
+![Angebot](assets/images/angebot.jpg)
+![Kontakt](assets/images/kontakt.jpg)
+![Login](assets/images/login.jpg)
+![Register](assets/images/register.jpg)
 
-### Kontakt
-![Kontakt](/assets/images/kontakt.jpg)
-
-### Startseite
-![Startseite](/assets/images/startseite.jpg)
  
-##hjk
- Hallo Test
