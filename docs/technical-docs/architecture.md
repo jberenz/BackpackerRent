@@ -33,7 +33,9 @@ nav_order: 1
 
 ## Overview
 
-[Give a high-level overview of what your app does and how it achieves it: similar to the value proposition, but targeted at a fellow developer who wishes to contribute.]
+Backpacker Rent ist eine webbasierte Ausleihplattform, über die Nutzer:innen physische Gegenstände – wie Zelte, technische Geräte oder andere Outdoor-Produkte – temporär vermieten und ausleihen können. Die Plattform richtet sich insbesondere an reisende oder minimalistisch lebende Nutzergruppen, die funktionale Dinge für begrenzte Zeit benötigen, ohne sie dauerhaft zu besitzen.
+
+Das System basiert auf einer relationalen Datenbankstruktur mit sauberer Entkopplung von Nutzerdaten, Angeboten, Kategorien, Regionen und buchbaren Zeitfenstern. Registrierte Nutzer:innen können Angebote erstellen, inklusive Beschreibung, Preis, Foto und optionalen Features (z. B. "wasserdicht", "für 2 Personen"). Weitere Nutzer:innen können diese Angebote durchsuchen und für bestimmte Zeiträume buchen. Die App prüft dabei automatisch, ob ein Angebot im gewählten Zeitraum bereits gebucht wurde.
 
 ## Codemap
 
