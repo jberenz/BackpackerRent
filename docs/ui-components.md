@@ -28,9 +28,6 @@ For a quick reference of the markdown syntax, visit [this page](https://github.c
 ```
 
 
-
-
-
 ## Labels
 
 {: .label }
@@ -42,15 +39,7 @@ For a quick reference of the markdown syntax, visit [this page](https://github.c
 {: .label .label-red }
 [Red label]
 
-## Mermaid.js
 
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-```
-
-Visit the [Mermaid docs](https://mermaid.js.org/intro/) for a thorough description of the charting possibilities.
 
 ## Bilder anzeigen
 
