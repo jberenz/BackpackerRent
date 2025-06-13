@@ -6,6 +6,12 @@ CREATE TABLE IF NOT EXISTS region (
   region_name TEXT NOT NULL
 );
 
+INSERT OR IGNORE INTO region (region_name) VALUES
+  ('Berlin'),
+  ('Hamburg'),
+  ('München'),
+  ('Frankfurt');
+
 -- ===========================================
 -- Tabelle: Users
 -- ===========================================
