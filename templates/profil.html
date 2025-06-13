@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Profil – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="profile-section">
+  <div class="profile-container">
+    
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+      <h2>Profil</h2>
+      <ul class="profile-menu">
+        <li>
+          <span class="icon-circle">F</span>
+          <a href="#">Über mich</a>
+        </li>
+        <li>
+          <svg class="icon-book" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20V20H6.5A2.5 2.5 0 0 1 4 17.5z"/>
+          </svg>
+          <a href="#">gebuchte Angebote</a>
+        </li>
+        <li>
+          <svg class="icon-mountains" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20L8.5 10L14 20H3Z"/>
+            <path d="M13 20L20 8L23 14.5L22 20H13Z"/>
+          </svg>
+          <a href="#">eigene Angebote</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Content Area -->
+    <div class="profile-content">
+      <div class="profile-header">
+        <h2>Über mich</h2>
+        <button class="btn-edit">Bearbeiten</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar">F</div>
+        <div class="profile-info">
+          <h3>Fabienne</h3>
+          <p>Berlin, Deutschland</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
