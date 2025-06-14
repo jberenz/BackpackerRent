@@ -24,43 +24,68 @@ init_app(app)
 def index():
     db = get_db_con()
 
-    # Region‐Filter aus dem Query-String lesen (z.B. ?region_id=2)
-    region_id = request.args.get("region_id", type=int)
+    region_id       = request.args.get("region_id", type=int)
+    category_filter = request.args.get("category_filter", type=int)
+    selected_type   = request.args.get("type", default="backpacker")
 
-    # Basis‐Query
     sql = """
         SELECT
             o.offer_id,
             o.title,
             o.price_per_night,
             o.photo_path,
-            c.category_name,
-            r.region_name
+            c.category_name AS category,
+            r.region_name   AS region
         FROM offers o
         JOIN category c ON o.category_id = c.category_id
         JOIN region   r ON o.region_id   = r.region_id
     """
+
+    filters = []
     params = []
 
-    # Falls eine region_id angegeben wurde, WHERE‐Klausel ergänzen
     if region_id:
-        sql += " WHERE o.region_id = ?"
+        filters.append("o.region_id = ?")
         params.append(region_id)
 
-    # Immer sortiert nach Erstellungsdatum
+    if category_filter:
+        filters.append("o.category_id = ?")
+        params.append(category_filter)
+
+    if filters:
+        sql += " WHERE " + " AND ".join(filters)
+
     sql += " ORDER BY o.created_at DESC"
 
-    # Query ausführen
     offers = db.execute(sql, params).fetchall()
-
-    # Regionen für das Dropdown im Template
     regionen = db.execute("SELECT * FROM region").fetchall()
+    if selected_type == "radtour":
+          categories = db.execute("""
+              SELECT * FROM category
+              WHERE category_name IN (
+                  'Radtasche', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool'
+              )
+           """).fetchall()
+    else:
+    # Standard: backpacker oder leer
+          categories = db.execute("""
+              SELECT * FROM category
+              WHERE category_name IN (
+                  'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Rucksack', 'Multitool'
+              )
+          """).fetchall()
+
 
     return render_template(
         "home.html",
         offers=offers,
-        regionen=regionen
+        regionen=regionen,
+        categories=categories,
+        selected_type=selected_type,
+        selected_region_id=region_id,
+        selected_category_id=category_filter
     )
+
 
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():

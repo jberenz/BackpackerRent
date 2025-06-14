@@ -26,15 +26,15 @@
 
     <div class="input-group">
       <label for="dest">Wohin</label>
-      <select id="dest" name="dest">
-        <option value="" disabled {{ not request.args.get('dest') and 'selected' }}>
+      <select id="region_id" name="region_id">
+       <option value="" disabled {{ not selected_region_id and 'selected' }}>
           Wohin geht es
-        </option>
-        {% for region_name in ["berlin","muenchen","hamburg","frankfurt"] %}
-          <option
-            value="{{ region_name }}"
-            {{ 'selected' if request.args.get('dest') == region_name else '' }}
-          >{{ region_name|capitalize }}</option>
+       </option>
+        {% for region in regionen %}
+          <option value="{{ region.region_id }}"
+            {% if selected_region_id == region.region_id %}selected{% endif %}>
+            {{ region.region_name }}
+          </option>
         {% endfor %}
       </select>
     </div>
@@ -42,14 +42,14 @@
     <div class="input-group">
       <label for="category_filter">Kategorie</label>
       <select id="category_filter" name="category_filter">
-        <option value="" disabled {{ not request.args.get('category_filter') and 'selected' }}>
+        <option value="" disabled {{ not selected_category_id and 'selected' }}>
           Alle Kategorien
         </option>
         {% for cat in categories %}
-          <option
-            value="{{ cat }}"
-            {{ 'selected' if request.args.get('category_filter') == cat else '' }}
-          >{{ cat|capitalize }}</option>
+          <option value="{{ cat.category_id }}"
+            {% if selected_category_id == cat.category_id %}selected{% endif %}>
+            {{ cat.category_name }}
+          </option>
         {% endfor %}
       </select>
     </div>
@@ -112,7 +112,7 @@
               <span class="price-amount">
               {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €
               </span>
-              <span class="price-unit">pro Nacht</span>
+              <span class="price-unit">p.N.</span>
             </p>
 
           </div>
