@@ -82,65 +82,75 @@
 </section>
 
 <script>
-// Definition aller Merkmals-Sets
 const featureSets = {
   zelt: [
-    { id: 'kapazitaet',   label: 'Kapazität (z. B. 1–4 Personen)' },
-    { id: 'packmass',     label: 'Packmaß (L × B × H in cm)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'kapazitaet', label: 'Kapazität (z. B. 1–4 Personen)' },
+    { id: 'packmass', label: 'Packmaß (L × B × H in cm)' },
+    { id: 'gewicht', label: 'Gewicht (kg)' },
     { id: 'wassersaeule', label: 'Wassersäule (mm)' },
-    { id: 'material',     label: 'Material (z. B. Ripstop-Nylon)' }
+    { id: 'material', label: 'Material (z. B. Ripstop-Nylon)' }
   ],
   rucksack: [
-    { id: 'volumen',      label: 'Volumen (l)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'masse',        label: 'Maße (H × B × T in cm)' },
-    { id: 'material',     label: 'Material (z. B. Cordura)' },
-    { id: 'tragesystem',  label: 'Tragesystem (z. B. Hüftgurt)' }
+    { id: 'volumen', label: 'Volumen (l)' },
+    { id: 'gewicht', label: 'Gewicht (kg)' },
+    { id: 'masse', label: 'Maße (H × B × T in cm)' },
+    { id: 'material', label: 'Material (z. B. Cordura)' },
+    { id: 'tragesystem', label: 'Tragesystem (z. B. Hüftgurt)' }
   ],
   multitool: [
-    { id: 'funktionen',   label: 'Funktionen (z. B. 12-in-1)' },
-    { id: 'gewicht',      label: 'Gewicht (g)' },
-    { id: 'material',     label: 'Material (z. B. Edelstahl)' },
-    { id: 'klingenlaenge',label: 'Klingenlänge (cm)' },
-    { id: 'masse',        label: 'Maße zusammengeklappt (L × B × T in cm)' }
+    { id: 'funktionen', label: 'Funktionen (z. B. 12-in-1)' },
+    { id: 'gewicht', label: 'Gewicht (g)' },
+    { id: 'material', label: 'Material (z. B. Edelstahl)' },
+    { id: 'klingenlaenge', label: 'Klingenlänge (cm)' },
+    { id: 'masse', label: 'Maße zusammengeklappt (L × B × T in cm)' }
   ],
   schlafsack: [
-    { id: 'temperatur',   label: 'Temperaturbereich (°C)' },
-    { id: 'fuellmaterial',label: 'Füllmaterial (Daune/synt.)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'packmass',     label: 'Packmaß (L × Ø in cm)' },
-    { id: 'form',         label: 'Form (Mumie/Decke)' }
+    { id: 'temperatur', label: 'Temperaturbereich (°C)' },
+    { id: 'fuellmaterial', label: 'Füllmaterial (Daune/synt.)' },
+    { id: 'gewicht', label: 'Gewicht (kg)' },
+    { id: 'packmass', label: 'Packmaß (L × Ø in cm)' },
+    { id: 'form', label: 'Form (Mumie/Decke)' }
   ],
   luftmatratze: [
-    { id: 'abmessungen',  label: 'Abmessungen (L × B × H in cm)' },
-    { id: 'dicke',        label: 'Dicke (cm)' },
-    { id: 'material',     label: 'Material (z. B. PVC/TPU)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'maxbelast',    label: 'Max. Belastung (kg)' }
+    { id: 'abmessungen', label: 'Abmessungen (L × B × H in cm)' },
+    { id: 'dicke', label: 'Dicke (cm)' },
+    { id: 'material', label: 'Material (z. B. PVC/TPU)' },
+    { id: 'gewicht', label: 'Gewicht (kg)' },
+    { id: 'maxbelast', label: 'Max. Belastung (kg)' }
   ],
   radtasche: [
-    { id: 'volumen_rt',     label: 'Volumen (l)' },
-    { id: 'material_rt',    label: 'Material (z. B. Cordura)' },
-    { id: 'gewicht_rt',     label: 'Gewicht (kg)' },
+    { id: 'volumen_rt', label: 'Volumen (l)' },
+    { id: 'material_rt', label: 'Material (z. B. Cordura)' },
+    { id: 'gewicht_rt', label: 'Gewicht (kg)' },
     { id: 'wasserdicht_rt', label: 'Wasserdicht (ja/nein)' },
     { id: 'tragesystem_rt', label: 'Tragesystem (z. B. Schultergurt)' }
   ],
   gaskocher: [
-    { id: 'leistung_gk',     label: 'Leistung (W)' },
-    { id: 'brennstoff_gk',   label: 'Brennstoffart (z. B. Butan)' },
-    { id: 'durchsatz_gk',    label: 'Durchsatz (g/min)' },
-    { id: 'gewicht_gk',      label: 'Gewicht (g)' },
-    { id: 'abmessungen_gk',  label: 'Abmessungen (B × T × H in cm)' }
+    { id: 'leistung_gk', label: 'Leistung (W)' },
+    { id: 'brennstoff_gk', label: 'Brennstoffart (z. B. Butan)' },
+    { id: 'durchsatz_gk', label: 'Durchsatz (g/min)' },
+    { id: 'gewicht_gk', label: 'Gewicht (g)' },
+    { id: 'abmessungen_gk', label: 'Abmessungen (B × T × H in cm)' }
   ]
 };
 
-const categorySelect = document.getElementById('category_id');
-const featuresDiv    = document.getElementById('features');
+const categoryKeyMap = {
+  1: 'zelt',
+  2: 'rucksack',
+  3: 'multitool',
+  4: 'schlafsack',
+  5: 'luftmatratze',
+  6: 'radtasche',
+  7: 'gaskocher'
+};
 
-function renderFeatures(cat) {
+const categorySelect = document.getElementById('category_id');
+const featuresDiv = document.getElementById('features');
+
+function renderFeatures(catId) {
   featuresDiv.innerHTML = '';
-  const set = featureSets[cat];
+  const key = categoryKeyMap[catId];
+  const set = featureSets[key];
   if (!set) return;
   set.forEach(f => {
     const wrapper = document.createElement('div');
@@ -151,15 +161,18 @@ function renderFeatures(cat) {
     lbl.textContent = f.label;
 
     const inp = document.createElement('input');
-    inp.type  = 'text';
-    inp.id    = f.id;
-    inp.name  = f.id;
+    inp.type = 'text';
+    inp.id = f.id;
+    inp.name = f.id;
 
     wrapper.append(lbl, inp);
     featuresDiv.append(wrapper);
   });
 }
 
-categorySelect.addEventListener('change', e => renderFeatures(e.target.value));
+categorySelect.addEventListener('change', e => {
+  const selectedId = parseInt(e.target.value);
+  renderFeatures(selectedId);
+});
 </script>
 {% endblock %}
