@@ -23,15 +23,44 @@ init_app(app)
 @app.route("/")
 def index():
     db = get_db_con()
-    offers = db.execute("""
-        SELECT o.offer_id, o.title, o.price_per_night, o.photo_path,
-               c.category_name, r.region_name
+
+    # Region‐Filter aus dem Query-String lesen (z.B. ?region_id=2)
+    region_id = request.args.get("region_id", type=int)
+
+    # Basis‐Query
+    sql = """
+        SELECT
+            o.offer_id,
+            o.title,
+            o.price_per_night,
+            o.photo_path,
+            c.category_name,
+            r.region_name
         FROM offers o
         JOIN category c ON o.category_id = c.category_id
-        JOIN region r   ON o.region_id   = r.region_id
-        ORDER BY o.created_at DESC
-    """).fetchall()
-    return render_template("home.html", offers=offers)
+        JOIN region   r ON o.region_id   = r.region_id
+    """
+    params = []
+
+    # Falls eine region_id angegeben wurde, WHERE‐Klausel ergänzen
+    if region_id:
+        sql += " WHERE o.region_id = ?"
+        params.append(region_id)
+
+    # Immer sortiert nach Erstellungsdatum
+    sql += " ORDER BY o.created_at DESC"
+
+    # Query ausführen
+    offers = db.execute(sql, params).fetchall()
+
+    # Regionen für das Dropdown im Template
+    regionen = db.execute("SELECT * FROM region").fetchall()
+
+    return render_template(
+        "home.html",
+        offers=offers,
+        regionen=regionen
+    )
 
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
