@@ -189,6 +189,86 @@ body {
   height: 28px;
   stroke: #1e1e88;
 }
+.price-range-wrapper {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+}
+
+.price-range-wrapper label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e1e88;
+  margin-bottom: 0.75rem;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 40px;
+}
+
+.slider-container input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  pointer-events: none;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #1e3a8a;
+  cursor: pointer;
+  pointer-events: auto;
+  margin-top: -9px;
+  position: relative;
+  z-index: 2;
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #1e3a8a;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.slider-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  width: 100%;
+  background: #1e3a8a;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.price-values {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e1e88;
+}
 
 /* === 5) Dynamische Filter === */
 .filters {

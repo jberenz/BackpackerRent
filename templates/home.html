@@ -54,6 +54,7 @@
       </select>
     </div>
 
+    
     <div class="input-group">
       <label for="start">Start Date</label>
       <input id="start" name="start" type="date" value="{{ request.args.get('start','') }}">
@@ -71,7 +72,24 @@
       </svg>
     </button>
   </form>
+  <div class="price-range-wrapper">
+    <label for="price_range">Preis (€)</label>
+    <div class="slider-container">
+      <input type="range" id="min_price" min="0" max="100" value="0" step="1">
+      <input type="range" id="max_price" min="0" max="100" value="100" step="1">
+    </div>
+    <div class="price-values">
+      <span id="price-min-label">0 €</span>
+      <span id="price-max-label">100 €</span>
+    </div>
+  </div>
+
+
 </section>
+
+
+
+
 
 <a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
 
@@ -173,4 +191,34 @@
     <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft">
   </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const minInput = document.getElementById('min_price');
+  const maxInput = document.getElementById('max_price');
+  const minLabel = document.getElementById('price-min-label');
+  const maxLabel = document.getElementById('price-max-label');
+
+  function updateLabels() {
+    minLabel.innerText = `${minInput.value} €`;
+    maxLabel.innerText = `${maxInput.value} €`;
+  }
+
+  minInput.addEventListener('input', () => {
+    if (parseInt(minInput.value) > parseInt(maxInput.value)) {
+      minInput.value = maxInput.value;
+    }
+    updateLabels();
+  });
+
+  maxInput.addEventListener('input', () => {
+    if (parseInt(maxInput.value) < parseInt(minInput.value)) {
+      maxInput.value = minInput.value;
+    }
+    updateLabels();
+  });
+
+  updateLabels();
+</script>
 {% endblock %}

@@ -27,6 +27,8 @@ def index():
     region_id       = request.args.get("region_id", type=int)
     category_filter = request.args.get("category_filter", type=int)
     selected_type   = request.args.get("type", default="backpacker")
+    min_price       = request.args.get("min_price", default=0, type=float)
+    max_price       = request.args.get("max_price", default=100, type=float)
 
     sql = """
         SELECT
@@ -52,6 +54,10 @@ def index():
         filters.append("o.category_id = ?")
         params.append(category_filter)
 
+    # Preisfilter hinzufügen
+    filters.append("o.price_per_night BETWEEN ? AND ?")
+    params.extend([min_price, max_price])
+
     if filters:
         sql += " WHERE " + " AND ".join(filters)
 
@@ -59,22 +65,21 @@ def index():
 
     offers = db.execute(sql, params).fetchall()
     regionen = db.execute("SELECT * FROM region").fetchall()
-    if selected_type == "radtour":
-          categories = db.execute("""
-              SELECT * FROM category
-              WHERE category_name IN (
-                  'Radtasche', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool'
-              )
-           """).fetchall()
-    else:
-    # Standard: backpacker oder leer
-          categories = db.execute("""
-              SELECT * FROM category
-              WHERE category_name IN (
-                  'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Rucksack', 'Multitool'
-              )
-          """).fetchall()
 
+    if selected_type == "radtour":
+        categories = db.execute("""
+            SELECT * FROM category
+            WHERE category_name IN (
+                'Radtasche', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool'
+            )
+        """).fetchall()
+    else:
+        categories = db.execute("""
+            SELECT * FROM category
+            WHERE category_name IN (
+                'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Rucksack', 'Multitool'
+            )
+        """).fetchall()
 
     return render_template(
         "home.html",
@@ -85,6 +90,7 @@ def index():
         selected_region_id=region_id,
         selected_category_id=category_filter
     )
+
 
 
 @app.route("/anmelden", methods=["GET", "POST"])
