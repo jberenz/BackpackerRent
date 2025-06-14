@@ -66,7 +66,6 @@ nav_order: 3
 
 **Sample output:**
 
-![get_list_todos() sample](../assets/images/fswd-intro_02.png)
 
 ---
 
