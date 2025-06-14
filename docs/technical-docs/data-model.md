@@ -19,12 +19,9 @@ nav_order: 2
 
 ![Datenmodell Backpacker Rent](../assets/images/Datamodel_BR.png)
 
-In der aktuellen Datenbankstruktur bilden die Tabellen users und offers das Grundgerüst eines Systems zur Verwaltung und Vermietung von Produkten. Ziel ist es, eine Plattform bereitzustellen, auf der Nutzer verschiedene Gegenstände zur Miete anbieten können, zum Beispiel Zelte, technische Geräte oder andere physische Produkte.
+Im Mittelpunkt steht die Tabelle User, in der alle Nutzer der Plattform gespeichert sind. Jeder Nutzer kann sich registrieren und wählt eine Region zugeordnet, damit der User lokale Angebote finden kann.
 
-Die users-Tabelle verwaltet alle registrierten Benutzer. Für jede Person werden der Vorname, Nachname, die E-Mail-Adresse, ein verschlüsseltes Passwort, die zugehörige Region sowie verbindlich auch eine Telefonnummer gespeichert. Diese Informationen sind notwendig, um Nutzer eindeutig zu identifizieren und eine sichere Kommunikation zwischen Mietenden und Vermietenden zu ermöglichen. Jede E-Mail-Adresse muss dabei eindeutig sein, um Dopplungen im System zu verhindern.
+Die Tabelle Offers enthält sämtliche Verleihangebote – darunter z. B. Fahrräder, Zelte oder Schlafplätze. Jedes Angebot ist mit einem Nutzer (dem Anbieter), einer Kategorie (z. B. „Zelt“, „Fahrrad“, „Schlafplatz“) sowie einer Region verknüpft. Um spezifische Merkmale wie „Anzahl Personen“ bei Zelten oder „Rahmengröße“ bei Fahrrädern abzubilden, existiert die Tabelle Features, deren Einträge kategorienabhängig sind.
 
-Die offers-Tabelle speichert die einzelnen Produktangebote, die von den Benutzern eingestellt werden. Ein Angebot enthält Angaben wie den Titel, die zugehörige Kategorie, eine Beschreibung, die Region, den Preis pro Nacht sowie optional ein Foto, das per Dateipfad eingebunden wird. Zusätzlich gibt es ein Feld für dynamische Produktmerkmale (features) im JSON-Format. Jedes Angebot erhält außerdem eine Bewertung (z. B. durch Nutzerfeedback) und einen automatisch generierten Zeitstempel, der die Erstellung dokumentiert.
+Nutzer, die ein Angebot mieten möchten, erzeugen einen Eintrag in der Tabelle Rentals. Hier werden Informationen zur Buchungsdauer, zum Gesamtpreis sowie zu Start- und Enddatum gespeichert. Jede Buchung ist eindeutig einem Angebot und einem Nutzer zugeordnet.
 
-Aktuell besteht noch keine direkte Verknüpfung zwischen Angeboten und ihren Erstellern. Um dies langfristig sauber abzubilden, wäre es sinnvoll, die offers-Tabelle um ein Feld user_id zu erweitern, das als Fremdschlüssel auf die users-Tabelle verweist. Damit ließe sich eindeutig festhalten, welcher Benutzer welches Produkt anbietet. Eine 1:n-Beziehung, wie sie in solchen Systemen üblich ist.
-
-Darüber hinaus ist bereits angedacht, künftig eine weitere Tabelle für Buchungen zu integrieren. Diese soll erfassen, welcher Nutzer welches Produkt für welchen Zeitraum und zu welchem Preis gebucht hat. Auch wenn diese Buchungstabelle aktuell noch nicht umgesetzt ist, ist sie ein zentraler Bestandteil der geplanten Funktionalität und wird in einem nächsten Schritt ergänzt werden.
