@@ -34,6 +34,15 @@ CREATE TABLE IF NOT EXISTS category (
   category_name TEXT NOT NULL
 );
 
+INSERT INTO category (category_id, category_name) VALUES
+ (1,'Zelt'),
+ (2,'Rucksack'),
+ (3,'Multitool'),
+ (4,'Schlafsack'),
+ (5,'Luftmatratze'),
+ (6,'Radtasche'),
+ (7,'Gaskocher');
+
 -- ===========================================
 -- Tabelle: Features (gehören zu einer Category)
 -- ===========================================

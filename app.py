@@ -59,24 +59,37 @@ def registrieren():
     regionen = db.execute("SELECT * FROM region").fetchall()
 
     if request.method == "POST":
-        first_name = request.form["first_name"].strip()
-        last_name  = request.form["last_name"].strip()
-        email      = request.form["email"].strip()
-        password   = request.form["password"].strip()
-        region_id  = request.form["region_id"].strip()
-        phone      = request.form.get("phone", "").strip() or None
+        # 1) Form-Werte einlesen
+        first_name     = request.form["first_name"].strip()
+        last_name      = request.form["last_name"].strip()
+        email          = request.form["email"].strip()
+        password       = request.form["password"].strip()
+        region_id_str  = request.form.get("region_id", "").strip()
+        phone          = request.form.get("phone", "").strip() or None
 
-        existing_user = db.execute(
-            "SELECT * FROM users WHERE email = ?",
-            (email,)
-        ).fetchone()
+        # 2) Validierung: Region ausgewählt?
+        if not region_id_str:
+            flash("Bitte wähle eine Region aus.", "warning")
+            return render_template("registrieren.html", error="Bitte wähle eine Region aus.", regionen=regionen)
+        try:
+            region_id = int(region_id_str)
+        except ValueError:
+            flash("Ungültige Region ausgewählt.", "danger")
+            return render_template("registrieren.html", error="Ungültige Region.", regionen=regionen)
+
+        # 3) Prüfen, ob diese Region wirklich existiert
+        exists = db.execute("SELECT 1 FROM region WHERE region_id = ?", (region_id,)).fetchone()
+        if not exists:
+            flash("Ausgewählte Region existiert nicht.", "danger")
+            return render_template("registrieren.html", error="Ausgewählte Region existiert nicht.", regionen=regionen)
+
+        # 4) Prüfen, ob E-Mail schon existiert
+        existing_user = db.execute("SELECT 1 FROM users WHERE email = ?", (email,)).fetchone()
         if existing_user:
-            return render_template(
-                "registrieren.html",
-                error="E-Mail bereits registriert",
-                regionen=regionen
-            )
+            flash("E-Mail bereits registriert.", "warning")
+            return render_template("registrieren.html", error="E-Mail bereits registriert.", regionen=regionen)
 
+        # 5) Passwort hashen und User anlegen
         hashed_pw = generate_password_hash(password)
         db.execute(
             """
@@ -88,10 +101,13 @@ def registrieren():
             (first_name, last_name, email, hashed_pw, region_id, phone)
         )
         db.commit()
-        flash("Registrierung erfolgreich!", "success")
+
+        flash("Registrierung erfolgreich! Bitte melde dich an.", "success")
         return redirect(url_for("anmelden"))
 
+    # GET: Registrierungsformular anzeigen
     return render_template("registrieren.html", regionen=regionen)
+
 
 @app.route("/angebot_erstellen", methods=["GET", "POST"])
 def add_offer():
@@ -102,7 +118,7 @@ def add_offer():
     if request.method == "POST":
         title           = request.form["title"].strip()
         description     = request.form.get("description", "").strip()
-        category_id     = request.form["category"]
+        category_id     = request.form["category_id"]
         region_id       = request.form["region_id"]
         price_per_night = float(request.form["price_per_night"])
         user_id         = session.get("user_id")

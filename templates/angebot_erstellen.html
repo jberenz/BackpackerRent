@@ -21,13 +21,9 @@
           <label for="category_id">Kategorie</label>
           <select id="category_id" name="category_id" required>
             <option value="" disabled selected>Bitte wählen</option>
-            <option value="1">Zelt</option>
-            <option value="2">Rucksack</option>
-            <option value="3">Multitool</option>
-            <option value="4">Schlafsack</option>
-            <option value="5">Luftmatratze</option>
-            <option value="6">Radtasche</option>
-            <option value="7">Gaskocher</option>
+            {% for cat in categories %}
+              <option value="{{ cat.category_id }}">{{ cat.category_name }}</option>
+            {% endfor %}
           </select>
         </div>
         <div class="add-col">
@@ -67,10 +63,9 @@
           <label for="region_id">Region</label>
           <select id="region_id" name="region_id" required>
             <option value="" disabled selected>Region wählen</option>
-            <option value="1">Berlin</option>
-            <option value="2">Hamburg</option>
-            <option value="3">München</option>
-            <option value="4">Frankfurt</option>
+            {% for reg in regionen %}
+              <option value="{{ reg.region_id }}">{{ reg.region_name }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -84,53 +79,53 @@
 <script>
 const featureSets = {
   zelt: [
-    { id: 'kapazitaet', label: 'Kapazität (z. B. 1–4 Personen)' },
-    { id: 'packmass', label: 'Packmaß (L × B × H in cm)' },
-    { id: 'gewicht', label: 'Gewicht (kg)' },
+    { id: 'kapazitaet',   label: 'Kapazität (z. B. 1–4 Personen)' },
+    { id: 'packmass',     label: 'Packmaß (L × B × H in cm)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
     { id: 'wassersaeule', label: 'Wassersäule (mm)' },
-    { id: 'material', label: 'Material (z. B. Ripstop-Nylon)' }
+    { id: 'material',     label: 'Material (z. B. Ripstop-Nylon)' }
   ],
   rucksack: [
-    { id: 'volumen', label: 'Volumen (l)' },
-    { id: 'gewicht', label: 'Gewicht (kg)' },
-    { id: 'masse', label: 'Maße (H × B × T in cm)' },
-    { id: 'material', label: 'Material (z. B. Cordura)' },
-    { id: 'tragesystem', label: 'Tragesystem (z. B. Hüftgurt)' }
+    { id: 'volumen',      label: 'Volumen (l)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'masse',        label: 'Maße (H × B × T in cm)' },
+    { id: 'material',     label: 'Material (z. B. Cordura)' },
+    { id: 'tragesystem',  label: 'Tragesystem (z. B. Hüftgurt)' }
   ],
   multitool: [
-    { id: 'funktionen', label: 'Funktionen (z. B. 12-in-1)' },
-    { id: 'gewicht', label: 'Gewicht (g)' },
-    { id: 'material', label: 'Material (z. B. Edelstahl)' },
-    { id: 'klingenlaenge', label: 'Klingenlänge (cm)' },
-    { id: 'masse', label: 'Maße zusammengeklappt (L × B × T in cm)' }
+    { id: 'funktionen',   label: 'Funktionen (z. B. 12-in-1)' },
+    { id: 'gewicht',      label: 'Gewicht (g)' },
+    { id: 'material',     label: 'Material (z. B. Edelstahl)' },
+    { id: 'klingenlaenge',label: 'Klingenlänge (cm)' },
+    { id: 'masse',        label: 'Maße zusammengeklappt (L × B × T in cm)' }
   ],
   schlafsack: [
-    { id: 'temperatur', label: 'Temperaturbereich (°C)' },
-    { id: 'fuellmaterial', label: 'Füllmaterial (Daune/synt.)' },
-    { id: 'gewicht', label: 'Gewicht (kg)' },
-    { id: 'packmass', label: 'Packmaß (L × Ø in cm)' },
-    { id: 'form', label: 'Form (Mumie/Decke)' }
+    { id: 'temperatur',   label: 'Temperaturbereich (°C)' },
+    { id: 'fuellmaterial',label: 'Füllmaterial (Daune/synt.)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'packmass',     label: 'Packmaß (L × Ø in cm)' },
+    { id: 'form',         label: 'Form (Mumie/Decke)' }
   ],
   luftmatratze: [
-    { id: 'abmessungen', label: 'Abmessungen (L × B × H in cm)' },
-    { id: 'dicke', label: 'Dicke (cm)' },
-    { id: 'material', label: 'Material (z. B. PVC/TPU)' },
-    { id: 'gewicht', label: 'Gewicht (kg)' },
-    { id: 'maxbelast', label: 'Max. Belastung (kg)' }
+    { id: 'abmessungen',  label: 'Abmessungen (L × B × H in cm)' },
+    { id: 'dicke',        label: 'Dicke (cm)' },
+    { id: 'material',     label: 'Material (z. B. PVC/TPU)' },
+    { id: 'gewicht',      label: 'Gewicht (kg)' },
+    { id: 'maxbelast',    label: 'Max. Belastung (kg)' }
   ],
   radtasche: [
-    { id: 'volumen_rt', label: 'Volumen (l)' },
-    { id: 'material_rt', label: 'Material (z. B. Cordura)' },
-    { id: 'gewicht_rt', label: 'Gewicht (kg)' },
+    { id: 'volumen_rt',     label: 'Volumen (l)' },
+    { id: 'material_rt',    label: 'Material (z. B. Cordura)' },
+    { id: 'gewicht_rt',     label: 'Gewicht (kg)' },
     { id: 'wasserdicht_rt', label: 'Wasserdicht (ja/nein)' },
     { id: 'tragesystem_rt', label: 'Tragesystem (z. B. Schultergurt)' }
   ],
   gaskocher: [
-    { id: 'leistung_gk', label: 'Leistung (W)' },
-    { id: 'brennstoff_gk', label: 'Brennstoffart (z. B. Butan)' },
-    { id: 'durchsatz_gk', label: 'Durchsatz (g/min)' },
-    { id: 'gewicht_gk', label: 'Gewicht (g)' },
-    { id: 'abmessungen_gk', label: 'Abmessungen (B × T × H in cm)' }
+    { id: 'leistung_gk',     label: 'Leistung (W)' },
+    { id: 'brennstoff_gk',   label: 'Brennstoffart (z. B. Butan)' },
+    { id: 'durchsatz_gk',    label: 'Durchsatz (g/min)' },
+    { id: 'gewicht_gk',      label: 'Gewicht (g)' },
+    { id: 'abmessungen_gk',  label: 'Abmessungen (B × T × H in cm)' }
   ]
 };
 
@@ -145,24 +140,23 @@ const categoryKeyMap = {
 };
 
 const categorySelect = document.getElementById('category_id');
-const featuresDiv = document.getElementById('features');
+const featuresDiv    = document.getElementById('features');
 
 function renderFeatures(catId) {
   featuresDiv.innerHTML = '';
   const key = categoryKeyMap[catId];
-  const set = featureSets[key];
-  if (!set) return;
-  set.forEach(f => {
+  if (!key) return;
+  featureSets[key].forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
 
     const lbl = document.createElement('label');
-    lbl.setAttribute('for', f.id);
+    lbl.htmlFor = f.id;
     lbl.textContent = f.label;
 
     const inp = document.createElement('input');
     inp.type = 'text';
-    inp.id = f.id;
+    inp.id   = f.id;
     inp.name = f.id;
 
     wrapper.append(lbl, inp);
@@ -170,9 +164,6 @@ function renderFeatures(catId) {
   });
 }
 
-categorySelect.addEventListener('change', e => {
-  const selectedId = parseInt(e.target.value);
-  renderFeatures(selectedId);
-});
+categorySelect.addEventListener('change', e => renderFeatures(parseInt(e.target.value)));
 </script>
 {% endblock %}

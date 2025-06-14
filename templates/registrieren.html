@@ -64,16 +64,13 @@
           required>
       </div>
 
-      <div class="input-group">
-        <label for="region_id">Region</label>
-        <select id="region_id" name="region_id" required>
-          <option value="" disabled selected>Region wählen</option>
-          <option value="1">Berlin</option>
-          <option value="2">Hamburg</option>
-          <option value="3">München</option>
-          <option value="4">Frankfurt</option>
-        </select>
-      </div>
+      <select id="region_id" name="region_id" required>
+        <option value="" disabled selected>Region wählen</option>
+        {% for reg in regionen %}
+          <option value="{{ reg.region_id }}">{{ reg.region_name }}</option>
+        {% endfor %}
+      </select>
+
 
       <div class="input-group">
         <label for="phone">Telefonnummer</label>
