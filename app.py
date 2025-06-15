@@ -24,12 +24,14 @@ init_app(app)
 def index():
     db = get_db_con()
 
-    region_id       = request.args.get("region_id", type=int)
-    category_filter = request.args.get("category_filter", type=int)
-    selected_type   = request.args.get("type", default="backpacker")
-    min_price       = request.args.get("min_price", default=0, type=float)
-    max_price       = request.args.get("max_price", default=100, type=float)
+    # 1) GET-Parameter auslesen
+    region_id       = request.args.get("region_id",       type=int)
+    category_id     = request.args.get("category_filter", type=int)
+    min_price       = request.args.get("min_price",  0.0,  type=float)
+    max_price       = request.args.get("max_price",50.0,  type=float)
+    selected_type   = request.args.get("type",       "backpacker")
 
+    # 2) Basis-SQL
     sql = """
         SELECT
             o.offer_id,
@@ -42,19 +44,19 @@ def index():
         JOIN category c ON o.category_id = c.category_id
         JOIN region   r ON o.region_id   = r.region_id
     """
-
     filters = []
-    params = []
+    params  = []
 
+    # 3) Dynamische WHERE-Klauseln
     if region_id:
         filters.append("o.region_id = ?")
         params.append(region_id)
 
-    if category_filter:
+    if category_id:
         filters.append("o.category_id = ?")
-        params.append(category_filter)
+        params.append(category_id)
 
-    # Preisfilter hinzufügen
+    # Preis-Filter immer anhängen
     filters.append("o.price_per_night BETWEEN ? AND ?")
     params.extend([min_price, max_price])
 
@@ -63,24 +65,25 @@ def index():
 
     sql += " ORDER BY o.created_at DESC"
 
-    offers = db.execute(sql, params).fetchall()
-    regionen = db.execute("SELECT * FROM region").fetchall()
+    # 4) Ausführen
+    offers    = db.execute(sql, params).fetchall()
+    regionen  = db.execute("SELECT * FROM region").fetchall()
 
+    # 5) Kategorien nach Tour-Type einschränken (optional)
     if selected_type == "radtour":
         categories = db.execute("""
             SELECT * FROM category
             WHERE category_name IN (
-                'Radtasche', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool'
-            )
-        """).fetchall()
+              'Radtasche','Gaskocher','Schlafsack','Zelt','Luftmatratze','Multitool'
+            )""").fetchall()
     else:
         categories = db.execute("""
             SELECT * FROM category
             WHERE category_name IN (
-                'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Rucksack', 'Multitool'
-            )
-        """).fetchall()
+              'Gaskocher','Schlafsack','Zelt','Luftmatratze','Rucksack','Multitool'
+            )""").fetchall()
 
+    # 6) Rendern
     return render_template(
         "home.html",
         offers=offers,
@@ -88,7 +91,7 @@ def index():
         categories=categories,
         selected_type=selected_type,
         selected_region_id=region_id,
-        selected_category_id=category_filter
+        selected_category_id=category_id
     )
 
 
