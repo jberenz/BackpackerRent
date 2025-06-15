@@ -48,13 +48,24 @@
         </button>
 
         <!-- Profil-Icon rechts -->
-        <button class="icon-btn profile-btn" aria-label="Konto">
+        {% if session.user_id %}
+        <a href="{{ url_for('profil') }}" class="icon-btn profile-btn" title="Mein Profil">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="4"/>
-            <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
-          </svg>
-        </button>
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+                </svg>
+        </a>
+      {% else %}
+        <a href="{{ url_for('anmelden') }}" class="icon-btn profile-btn" title="Anmelden">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                     stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+                 </svg>
+        </a>
+      {% endif %}
+
 
         <button class="icon-btn lang-switch">Englisch ⌵</button>
       </div>

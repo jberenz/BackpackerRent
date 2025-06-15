@@ -11,8 +11,8 @@
       <h2>Profil</h2>
       <ul class="profile-menu">
         <li>
-          <span class="icon-circle">F</span>
-          <a href="#">Über mich</a>
+          <span class="icon-circle">👤</span>
+          <a href="{{ url_for('profil') }}">Über mich</a>
         </li>
         <li>
           <svg class="icon-book" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -37,14 +37,18 @@
     <div class="profile-content">
       <div class="profile-header">
         <h2>Über mich</h2>
-        <button class="btn-edit">Bearbeiten</button>
+        <a href="#" class="btn-edit">Bearbeiten</a>
       </div>
 
       <div class="profile-card">
-        <div class="profile-avatar">F</div>
+        <div class="profile-avatar">
+          {{ user.first_name[0] | upper }}
+        </div>
         <div class="profile-info">
-          <h3>Fabienne</h3>
-          <p>Berlin, Deutschland</p>
+          <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+          <p><strong>E-Mail:</strong> {{ user.email }}</p>
+          <p><strong>Region:</strong> {{ user.region_name }}</p>
+          <p><strong>Telefon:</strong> {{ user.phone or '–' }}</p>
         </div>
       </div>
     </div>

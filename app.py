@@ -222,6 +222,20 @@ def add_offer():
         regionen=regionen
     )
 
+@app.route("/profil")
+def profil():
+    if "user_id" not in session:
+        return redirect(url_for("anmelden"))
+    db = get_db_con()
+    user = db.execute(
+        "SELECT user_id, first_name, last_name, email, region_id, phone "
+        "FROM users WHERE user_id = ?",
+        (session["user_id"],)
+    ).fetchone()
+    return render_template("profil.html", user=user)
+
+
+
 @app.route("/insert/sample")
 def insert_sample():
     insert_sample_data()
