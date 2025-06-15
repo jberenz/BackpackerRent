@@ -4,54 +4,86 @@
 
 {% block content %}
 <section class="profile-section">
-  <div class="profile-container">
-    
+  <div class="profile-container" style="display: grid; grid-template-columns: 240px 1fr; border-top:1px solid #2563EB;">
+
     <!-- Sidebar -->
-    <aside class="profile-sidebar">
-      <h2>Profil</h2>
-      <ul class="profile-menu">
-        <li>
-          <span class="icon-circle">👤</span>
-          <a href="{{ url_for('profil') }}">Über mich</a>
+    <aside class="profile-sidebar" style="background:#fef3ff; padding:2rem; border-right:1px solid #2563EB;">
+      <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Profil</h2>
+      <ul class="profile-menu" style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:1rem;">
+        {% set section = request.args.get('section','about') %}
+        <li style="display:flex; align-items:center; gap:0.5rem;">
+          <div style="width:32px; height:32px; border-radius:50%; background:#f3d3eb; color:#2563EB; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+            {{ user.first_name[0]|upper }}
+          </div>
+          <a href="{{ url_for('profil', section='about') }}"
+             style="text-decoration:none; color:{% if section=='about' %}#2563EB{% else %}#1e1e88{% endif %};
+                    font-weight:{% if section=='about' %}600{% else %}400{% endif %};">
+            Über mich
+          </a>
         </li>
-        <li>
-          <svg class="icon-book" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        <li style="display:flex; align-items:center; gap:0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20V20H6.5A2.5 2.5 0 0 1 4 17.5z"/>
           </svg>
-          <a href="#">gebuchte Angebote</a>
+          <a href="{{ url_for('profil', section='booked') }}"
+             style="text-decoration:none; color:{% if section=='booked' %}#2563EB{% else %}#1e1e88{% endif %};
+                    font-weight:{% if section=='booked' %}600{% else %}400{% endif %};">
+            gebuchte Angebote
+          </a>
         </li>
-        <li>
-          <svg class="icon-mountains" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        <li style="display:flex; align-items:center; gap:0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 20L8.5 10L14 20H3Z"/>
             <path d="M13 20L20 8L23 14.5L22 20H13Z"/>
           </svg>
-          <a href="#">eigene Angebote</a>
+          <a href="{{ url_for('profil', section='own') }}"
+             style="text-decoration:none; color:{% if section=='own' %}#2563EB{% else %}#1e1e88{% endif %};
+                    font-weight:{% if section=='own' %}600{% else %}400{% endif %};">
+            eigene Angebote
+          </a>
         </li>
       </ul>
     </aside>
 
-    <!-- Content Area -->
-    <div class="profile-content">
-      <div class="profile-header">
-        <h2>Über mich</h2>
-        <a href="#" class="btn-edit">Bearbeiten</a>
-      </div>
+    <!-- Main Content -->
+    <div class="profile-content" style="background:#fef3ff; padding:2rem;">
+      {% if section == 'about' %}
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;">
+          <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold;">Über mich</h2>
+          <a href="#" class="btn-edit" style="padding:0.5rem 1rem; border:1px solid #2563EB; border-radius:4px; color:#2563EB; text-decoration:none;">
+            Bearbeiten
+          </a>
+        </div>
+        <!-- Card -->
+        <div class="profile-card" style="display:inline-block; background:white; border:1px solid #cbd5e1; border-radius:1.5rem; padding:2rem; text-align:center;">
+          <div class="profile-avatar" style="width:80px; height:80px; border-radius:1rem; background:#f3d3eb; color:#ffffff; font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+            {{ user.first_name[0]|upper }}
+          </div>
+          <div class="profile-info">
+            <h3 style="margin:0 0 0.25rem; color:#1e40af; font-size:1.25rem;">
+              {{ user.first_name }} {{ user.last_name }}
+            </h3>
+            <p style="margin:0; color:#6b7280;">
+              {{ user.region_name }}, {{ user.phone or '–' }}
+            </p>
+          </div>
+        </div>
 
-      <div class="profile-card">
-        <div class="profile-avatar">
-          {{ user.first_name[0] | upper }}
-        </div>
-        <div class="profile-info">
-          <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-          <p><strong>E-Mail:</strong> {{ user.email }}</p>
-          <p><strong>Region:</strong> {{ user.region_name }}</p>
-          <p><strong>Telefon:</strong> {{ user.phone or '–' }}</p>
-        </div>
-      </div>
+      {% elif section == 'booked' %}
+        <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Gebuchte Angebote</h2>
+        <!-- TODO: Liste deiner gebuchten Angebote hier -->
+
+      {% elif section == 'own' %}
+        <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Eigene Angebote</h2>
+        <!-- TODO: Liste deiner eigenen Angebote hier -->
+
+      {% endif %}
     </div>
+
   </div>
 </section>
 {% endblock %}

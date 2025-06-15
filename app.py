@@ -227,12 +227,21 @@ def profil():
     if "user_id" not in session:
         return redirect(url_for("anmelden"))
     db = get_db_con()
-    user = db.execute(
-        "SELECT user_id, first_name, last_name, email, region_id, phone "
-        "FROM users WHERE user_id = ?",
-        (session["user_id"],)
-    ).fetchone()
-    return render_template("profil.html", user=user)
+    user = db.execute("""
+    SELECT 
+      u.user_id,
+      u.first_name,
+      u.last_name,
+      u.email,
+      u.phone,
+      r.region_name
+    FROM users u
+    JOIN region r ON u.region_id = r.region_id
+    WHERE u.user_id = ?
+""", (session["user_id"],)).fetchone()
+    section = request.args.get("section","about")
+    return render_template("profil.html", user=user, section=section)
+
 
 
 
