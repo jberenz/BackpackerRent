@@ -19,7 +19,6 @@ os.makedirs(app.instance_path, exist_ok=True)
 
 init_app(app)
 
-
 @app.route("/")
 def index():
     db = get_db_con()
@@ -84,7 +83,6 @@ def index():
         selected_category_id=category_id
     )
 
-
 @app.route("/angebot/<int:offer_id>")
 def angebot_details(offer_id):
     db = get_db_con()
@@ -93,7 +91,7 @@ def angebot_details(offer_id):
         SELECT o.*, c.category_name AS category, r.region_name AS region
         FROM offers o
         JOIN category c ON o.category_id = c.category_id
-        JOIN region   r ON o.region_id   = r.region_id
+        JOIN region   r ON o.region_id = r.region_id
         WHERE o.offer_id = ?
     """, (offer_id,)).fetchone()
 
@@ -111,7 +109,6 @@ def angebot_details(offer_id):
 
     return render_template("offer_detail.html", offer=offer, features=features)
 
-
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
     if request.method == "POST":
@@ -128,7 +125,6 @@ def anmelden():
             return render_template("anmelden.html", error="Ungültige Anmeldedaten")
 
     return render_template("anmelden.html")
-
 
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
@@ -174,7 +170,6 @@ def registrieren():
         return redirect(url_for("anmelden"))
 
     return render_template("registrieren.html", regionen=regionen)
-
 
 @app.route("/angebot_erstellen", methods=["GET", "POST"])
 def add_offer():
@@ -227,7 +222,6 @@ def add_offer():
 
     return render_template("angebot_erstellen.html", categories=categories, regionen=regionen)
 
-
 @app.route("/mieten/<int:offer_id>", methods=["GET", "POST"])
 def rental_form(offer_id):
     if "user_id" not in session:
@@ -236,22 +230,23 @@ def rental_form(offer_id):
 
     db = get_db_con()
     offer = db.execute("""
-        SELECT o.*, r.region_name, c.category_name
+        SELECT o.*, c.category_name AS category, r.region_name AS region
         FROM offers o
-        JOIN region r ON o.region_id = r.region_id
         JOIN category c ON o.category_id = c.category_id
+        JOIN region   r ON o.region_id = r.region_id
         WHERE o.offer_id = ?
     """, (offer_id,)).fetchone()
 
     if not offer:
-        abort(404)
+        abort(404, "Angebot nicht gefunden")
 
     if request.method == "POST":
         start = request.form["start_date"]
         end = request.form["end_date"]
         address = request.form["address"]
-        card = request.form["card_number"]
-        name = request.form["name_on_card"]
+        name_on_card = request.form["name_on_card"]
+        card_number = request.form["card_number"]
+        sec_code = request.form.get("sec_code", "")
 
         try:
             start_date = datetime.strptime(start, "%Y-%m-%d")
@@ -264,20 +259,22 @@ def rental_form(offer_id):
             flash("Enddatum muss nach Startdatum liegen.", "warning")
             return redirect(request.url)
 
-        days = (end_date - start_date).days
-        total_price = days * offer["price_per_night"]
+        total_days = (end_date - start_date).days
+        total_price = total_days * offer["price_per_night"]
 
-        db.execute("""
-            INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
-            VALUES (?, ?, ?, ?, ?)
-        """, (offer_id, session["user_id"], start, end, total_price))
-        db.commit()
-
-        flash("Buchung erfolgreich!", "success")
-        return redirect(url_for("profil", section="booked"))
+        return render_template(
+            "rental_confirm.html",
+            offer=offer,
+            start_date=start,
+            end_date=end,
+            address=address,
+            name_on_card=name_on_card,
+            card_number=card_number,
+            sec_code=sec_code,
+            total_price=total_price
+        )
 
     return render_template("rental_form.html", offer=offer)
-
 
 @app.route("/profil")
 def profil():
@@ -306,12 +303,10 @@ def profil():
 
     return render_template("profil.html", user=user, section=section, rentals=rentals)
 
-
 @app.route("/insert/sample")
 def insert_sample():
     insert_sample_data()
     return "Sample-Daten wurden eingefügt."
-
 
 if __name__ == "__main__":
     app.run(debug=True)

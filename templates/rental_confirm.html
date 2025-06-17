@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Buchung bestätigt – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="add-section">
+  <div class="add-container">
+    <h2 class="add-header">🎉 Buchung erfolgreich!</h2>
+
+    <div class="confirmation-details" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <p><strong>Produkt:</strong> {{ offer.title }}</p>
+      <p><strong>Kategorie:</strong> {{ offer.category }}</p>
+      <p><strong>Region:</strong> {{ offer.region }}</p>
+      <p><strong>Preis pro Nacht:</strong> {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</p>
+      <hr>
+      <p><strong>Buchungszeitraum:</strong> {{ start_date }} bis {{ end_date }}</p>
+      <p><strong>Lieferadresse:</strong> {{ address }}</p>
+      <p><strong>Name auf der Karte:</strong> {{ name_on_card }}</p>
+    </div>
+
+    <div style="margin-top: 2rem;">
+    </div>
+  </div>
+</section>
+{% endblock %}

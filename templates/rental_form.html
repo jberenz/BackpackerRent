@@ -6,7 +6,7 @@
   <div class="add-container">
     <h2 class="add-header">Jetzt mieten: {{ offer.title }}</h2>
 
-    <form method="post">
+<form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) }}">
       <!-- Zeitraum -->
       <div class="add-row half">
         <div class="add-col">
