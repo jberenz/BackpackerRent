@@ -2,55 +2,49 @@
 {% block title %}{{ offer.title }} – Backpacker Rent{% endblock %}
 
 {% block content %}
-<section class="detail-section">
-  <div class="detail-container">
-    <h2 class="detail-title">{{ offer.title }}</h2>
+<section class="detail-section" style="display:flex; justify-content:center; background:#fef3ff; padding:2rem;">
+  <div class="detail-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:2rem; background:white; padding:2rem; border-radius:2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width:960px; width:100%;">
     
-    {# Bild anzeigen oder Platzhalter #}
-    <div class="detail-image-container">
-      {% if offer.photo %}
-        <img
-          src="{{ url_for('static', filename=offer.photo) }}"
-          alt="{{ offer.title }}"
-          class="detail-image">
+    
+    <div>
+      {% if offer.photo_path %}
+        <img src="{{ url_for('static', filename=offer.photo_path) }}" alt="{{ offer.title }}" style="max-width:100%; border-radius:1rem;">
       {% else %}
-        <div class="detail-no-image">Kein Foto verfügbar</div>
+        <div style="width:100%; height:300px; background:#eee; display:flex; align-items:center; justify-content:center; border-radius:1rem;">
+          Kein Bild verfügbar
+        </div>
       {% endif %}
     </div>
 
-    {# Grundlegende Informationen #}
-    <div class="detail-basics">
+    
+    <div>
+      <h2 style="font-size:1.75rem; color:#1e3a8a; margin-bottom:0.5rem;">{{ offer.title }}</h2>
       <p><strong>Kategorie:</strong> {{ offer.category }}</p>
       <p><strong>Region:</strong> {{ offer.region }}</p>
-      <p><strong>Preis pro Nacht:</strong> {{ offer.price_per_night | round(2) }} €</p>
-      <p><strong>Bewertung:</strong> ★ {{ offer.rating | round(2) }}</p>
-      <p><strong>Erstellt am:</strong> {{ offer.created_at }}</p>
-    </div>
+      <p><strong>Preis pro Nacht:</strong> {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</p>
 
-    {# Beschreibung #}
-    {% if offer.description %}
-      <div class="detail-description">
-        <h3>Beschreibung</h3>
+      {% if offer.description %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Beschreibung</h3>
         <p>{{ offer.description }}</p>
-      </div>
-    {% endif %}
+      {% endif %}
 
-    {# Dynamische Merkmale (Features) #}
-    {% if offer.features %}
-      <div class="detail-features">
-        <h3>Merkmale</h3>
-        <ul>
-          {% for key, val in offer.features.items() %}
-            <li><strong>{{ key.replace('_', ' ') | capitalize }}:</strong> {{ val }}</li>
+      {% if features %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Merkmale</h3>
+        <ul style="list-style:none; padding:0;">
+          {% for key, val in features.items() %}
+            <li><strong>{{ key }}:</strong> {{ val }}</li>
           {% endfor %}
         </ul>
-      </div>
-    {% endif %}
+      {% endif %}
 
-    {# Link zurück zur Übersicht #}
-    <p style="margin-top: 24px;">
-      <a href="{{ url_for('lists') }}">← Zurück zur Übersicht</a>
-    </p>
+      
+      <div style="margin-top:2rem; display:flex; flex-direction:column; gap:1rem;">
+        <button style="padding:1rem; border:none; background:#e9a8cf; border-radius:2rem; color:white; font-weight:bold;">Sofort-Mieten</button>
+        <button style="padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:white;">In den Warenkorb</button>
+        <button style="padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:white;">♡ Auf die Wunschliste</button>
+        <a href="{{ url_for('index') }}" style="margin-top:1rem; display:inline-block; color:#1e3a8a;">← Zurück zur Übersicht</a>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}

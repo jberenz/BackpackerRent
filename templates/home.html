@@ -129,7 +129,7 @@
             {% endif %}
 
             <h3 class="offer-title">
-              <a href="{{ url_for('add_offer') }}">
+              <a href="{{ url_for('angebot_details', offer_id=offer.offer_id) }}">
                 {{ offer.title }}
               </a>
             </h3>

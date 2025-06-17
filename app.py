@@ -17,21 +17,19 @@ app.config.from_mapping(
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.instance_path, exist_ok=True)
 
-# initialize DB CLI and teardown
 init_app(app)
+
 
 @app.route("/")
 def index():
     db = get_db_con()
 
-    # 1) GET-Parameter auslesen
     region_id       = request.args.get("region_id",       type=int)
     category_id     = request.args.get("category_filter", type=int)
-    min_price       = request.args.get("min_price",  0.0,  type=float)
-    max_price       = request.args.get("max_price",50.0,  type=float)
-    selected_type   = request.args.get("type",       "backpacker")
+    min_price       = request.args.get("min_price",  0.0, type=float)
+    max_price       = request.args.get("max_price", 50.0, type=float)
+    selected_type   = request.args.get("type", "backpacker")
 
-    # 2) Basis-SQL
     sql = """
         SELECT
             o.offer_id,
@@ -47,16 +45,13 @@ def index():
     filters = []
     params  = []
 
-    # 3) Dynamische WHERE-Klauseln
     if region_id:
         filters.append("o.region_id = ?")
         params.append(region_id)
-
     if category_id:
         filters.append("o.category_id = ?")
         params.append(category_id)
 
-    # Preis-Filter immer anhängen
     filters.append("o.price_per_night BETWEEN ? AND ?")
     params.extend([min_price, max_price])
 
@@ -65,25 +60,20 @@ def index():
 
     sql += " ORDER BY o.created_at DESC"
 
-    # 4) Ausführen
     offers    = db.execute(sql, params).fetchall()
     regionen  = db.execute("SELECT * FROM region").fetchall()
 
-    # 5) Kategorien nach Tour-Type einschränken (optional)
     if selected_type == "radtour":
         categories = db.execute("""
             SELECT * FROM category
-            WHERE category_name IN (
-              'Radtasche','Gaskocher','Schlafsack','Zelt','Luftmatratze','Multitool'
-            )""").fetchall()
+            WHERE category_name IN ('Radtasche','Gaskocher','Schlafsack','Zelt','Luftmatratze','Multitool')
+        """).fetchall()
     else:
         categories = db.execute("""
             SELECT * FROM category
-            WHERE category_name IN (
-              'Gaskocher','Schlafsack','Zelt','Luftmatratze','Rucksack','Multitool'
-            )""").fetchall()
+            WHERE category_name IN ('Gaskocher','Schlafsack','Zelt','Luftmatratze','Rucksack','Multitool')
+        """).fetchall()
 
-    # 6) Rendern
     return render_template(
         "home.html",
         offers=offers,
@@ -95,6 +85,32 @@ def index():
     )
 
 
+@app.route("/angebot/<int:offer_id>")
+def angebot_details(offer_id):
+    db = get_db_con()
+
+    offer = db.execute("""
+        SELECT o.*, c.category_name AS category, r.region_name AS region
+        FROM offers o
+        JOIN category c ON o.category_id = c.category_id
+        JOIN region   r ON o.region_id   = r.region_id
+        WHERE o.offer_id = ?
+    """, (offer_id,)).fetchone()
+
+    if offer is None:
+        return "Angebot nicht gefunden", 404
+
+    features_rows = db.execute("""
+        SELECT f.feature_name, of.value
+        FROM offer_features of
+        JOIN features f ON of.feature_id = f.feature_id
+        WHERE of.offer_id = ?
+    """, (offer_id,)).fetchall()
+
+    features = {row["feature_name"]: row["value"] for row in features_rows} if features_rows else {}
+
+    return render_template("offer_detail.html", offer=offer, features=features)
+
 
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
@@ -102,10 +118,7 @@ def anmelden():
         email = request.form["email"].strip()
         password = request.form["password"].strip()
         db = get_db_con()
-        user = db.execute(
-            "SELECT * FROM users WHERE email = ?",
-            (email,)
-        ).fetchone()
+        user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
         if user and check_password_hash(user["password"], password):
             session["user_id"] = user["user_id"]
@@ -116,59 +129,50 @@ def anmelden():
 
     return render_template("anmelden.html")
 
+
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     db = get_db_con()
     regionen = db.execute("SELECT * FROM region").fetchall()
 
     if request.method == "POST":
-        # 1) Form-Werte einlesen
-        first_name     = request.form["first_name"].strip()
-        last_name      = request.form["last_name"].strip()
-        email          = request.form["email"].strip()
-        password       = request.form["password"].strip()
-        region_id_str  = request.form.get("region_id", "").strip()
-        phone          = request.form.get("phone", "").strip() or None
+        first_name = request.form["first_name"].strip()
+        last_name  = request.form["last_name"].strip()
+        email      = request.form["email"].strip()
+        password   = request.form["password"].strip()
+        region_id_str = request.form.get("region_id", "").strip()
+        phone = request.form.get("phone", "").strip() or None
 
-        # 2) Validierung: Region ausgewählt?
         if not region_id_str:
             flash("Bitte wähle eine Region aus.", "warning")
             return render_template("registrieren.html", error="Bitte wähle eine Region aus.", regionen=regionen)
+
         try:
             region_id = int(region_id_str)
         except ValueError:
-            flash("Ungültige Region ausgewählt.", "danger")
+            flash("Ungültige Region.", "danger")
             return render_template("registrieren.html", error="Ungültige Region.", regionen=regionen)
 
-        # 3) Prüfen, ob diese Region wirklich existiert
         exists = db.execute("SELECT 1 FROM region WHERE region_id = ?", (region_id,)).fetchone()
         if not exists:
-            flash("Ausgewählte Region existiert nicht.", "danger")
-            return render_template("registrieren.html", error="Ausgewählte Region existiert nicht.", regionen=regionen)
+            flash("Region existiert nicht.", "danger")
+            return render_template("registrieren.html", error="Region existiert nicht.", regionen=regionen)
 
-        # 4) Prüfen, ob E-Mail schon existiert
         existing_user = db.execute("SELECT 1 FROM users WHERE email = ?", (email,)).fetchone()
         if existing_user:
             flash("E-Mail bereits registriert.", "warning")
             return render_template("registrieren.html", error="E-Mail bereits registriert.", regionen=regionen)
 
-        # 5) Passwort hashen und User anlegen
         hashed_pw = generate_password_hash(password)
-        db.execute(
-            """
-            INSERT INTO users (
-                first_name, last_name, email,
-                password, region_id, phone
-            ) VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            (first_name, last_name, email, hashed_pw, region_id, phone)
-        )
+        db.execute("""
+            INSERT INTO users (first_name, last_name, email, password, region_id, phone)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (first_name, last_name, email, hashed_pw, region_id, phone))
         db.commit()
 
-        flash("Registrierung erfolgreich! Bitte melde dich an.", "success")
+        flash("Registrierung erfolgreich!", "success")
         return redirect(url_for("anmelden"))
 
-    # GET: Registrierungsformular anzeigen
     return render_template("registrieren.html", regionen=regionen)
 
 
@@ -176,20 +180,21 @@ def registrieren():
 def add_offer():
     db = get_db_con()
     categories = db.execute("SELECT * FROM category").fetchall()
-    regionen   = db.execute("SELECT * FROM region").fetchall()
+    regionen = db.execute("SELECT * FROM region").fetchall()
 
     if request.method == "POST":
-        title           = request.form["title"].strip()
-        description     = request.form.get("description", "").strip()
-        category_id     = request.form["category_id"]
-        region_id       = request.form["region_id"]
+        title       = request.form["title"].strip()
+        description = request.form.get("description", "").strip()
+        category_id = request.form["category_id"]
+        region_id   = request.form["region_id"]
         price_per_night = float(request.form["price_per_night"])
-        user_id         = session.get("user_id")
+        user_id = session.get("user_id")
 
         if not user_id:
             flash("Bitte melde dich zuerst an.", "warning")
             return redirect(url_for("anmelden"))
 
+        
         photo = request.files.get("photo")
         photo_path = None
         if photo and photo.filename:
@@ -198,57 +203,55 @@ def add_offer():
             photo.save(full_path)
             photo_path = os.path.join("uploads", filename)
 
-        db.execute(
-            """
+        #Angebot einfügen
+        cursor = db.execute("""
             INSERT INTO offers (
-                user_id, title, description,
-                category_id, region_id,
-                price_per_night, photo_path
+                user_id, title, description, category_id,
+                region_id, price_per_night, photo_path
             ) VALUES (?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                user_id, title, description,
-                category_id, region_id,
-                price_per_night, photo_path
-            )
-        )
+        """, (user_id, title, description, category_id, region_id, price_per_night, photo_path))
         db.commit()
+
+        offer_id = cursor.lastrowid
+
+        
+        features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
+        for feature in features:
+            value = request.form.get(feature["feature_name"])
+            if value:
+                db.execute("""
+                    INSERT INTO offer_features (offer_id, feature_id, value)
+                    VALUES (?, ?, ?)
+                """, (offer_id, feature["feature_id"], value))
+        db.commit()
+
         flash("Angebot erfolgreich erstellt!", "success")
         return redirect(url_for("index"))
 
-    return render_template(
-        "angebot_erstellen.html",
-        categories=categories,
-        regionen=regionen
-    )
+    return render_template("angebot_erstellen.html", categories=categories, regionen=regionen)
+
 
 @app.route("/profil")
 def profil():
     if "user_id" not in session:
         return redirect(url_for("anmelden"))
+
     db = get_db_con()
     user = db.execute("""
-    SELECT 
-      u.user_id,
-      u.first_name,
-      u.last_name,
-      u.email,
-      u.phone,
-      r.region_name
-    FROM users u
-    JOIN region r ON u.region_id = r.region_id
-    WHERE u.user_id = ?
-""", (session["user_id"],)).fetchone()
-    section = request.args.get("section","about")
+        SELECT u.user_id, u.first_name, u.last_name, u.email, u.phone, r.region_name
+        FROM users u
+        JOIN region r ON u.region_id = r.region_id
+        WHERE u.user_id = ?
+    """, (session["user_id"],)).fetchone()
+
+    section = request.args.get("section", "about")
     return render_template("profil.html", user=user, section=section)
-
-
-
 
 @app.route("/insert/sample")
 def insert_sample():
     insert_sample_data()
     return "Sample-Daten wurden eingefügt."
+
 
 if __name__ == "__main__":
     app.run(debug=True)
