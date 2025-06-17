@@ -29,7 +29,7 @@
         <label for="dest">Wohin</label>
         <select id="region_id" name="region_id">
           <option value="" disabled {{ not selected_region_id and 'selected' }}>
-            Wohin geht es
+            Wohin geht es?
           </option>
           {% for region in regionen %}
             <option value="{{ region.region_id }}"
