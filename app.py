@@ -274,7 +274,8 @@ def rental_form(offer_id):
             db.commit()
 
             return render_template("rental_confirm.html", offer=offer, start_date=start, end_date=end,
-                                   address=address, name_on_card=name)
+                       address=address, name_on_card=name, total_price=total_price, num_days=num_days)
+
 
         # Wenn nur "Preis berechnen" gedrückt wurde → einfach Formular anzeigen mit Preis
         return render_template("rental_form.html", offer=offer,

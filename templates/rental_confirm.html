@@ -10,7 +10,7 @@
       <p><strong>Produkt:</strong> {{ offer.title }}</p>
       <p><strong>Kategorie:</strong> {{ offer.category }}</p>
       <p><strong>Region:</strong> {{ offer.region }}</p>
-      <p><strong>Preis pro Nacht:</strong> {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</p>
+<p><strong>Gesamtpreis:</strong> {{ ('%.2f'|format(total_price)).replace('.', ',') }} €</p>
       <hr>
       <p><strong>Buchungszeitraum:</strong> {{ start_date }} bis {{ end_date }}</p>
       <p><strong>Lieferadresse:</strong> {{ address }}</p>
