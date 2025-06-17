@@ -194,7 +194,6 @@ def add_offer():
             flash("Bitte melde dich zuerst an.", "warning")
             return redirect(url_for("anmelden"))
 
-        
         photo = request.files.get("photo")
         photo_path = None
         if photo and photo.filename:
@@ -203,7 +202,6 @@ def add_offer():
             photo.save(full_path)
             photo_path = os.path.join("uploads", filename)
 
-        #Angebot einfügen
         cursor = db.execute("""
             INSERT INTO offers (
                 user_id, title, description, category_id,
@@ -214,7 +212,6 @@ def add_offer():
 
         offer_id = cursor.lastrowid
 
-        
         features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
         for feature in features:
             value = request.form.get(feature["feature_name"])
@@ -231,6 +228,57 @@ def add_offer():
     return render_template("angebot_erstellen.html", categories=categories, regionen=regionen)
 
 
+@app.route("/mieten/<int:offer_id>", methods=["GET", "POST"])
+def rental_form(offer_id):
+    if "user_id" not in session:
+        flash("Bitte zuerst anmelden.", "warning")
+        return redirect(url_for("anmelden"))
+
+    db = get_db_con()
+    offer = db.execute("""
+        SELECT o.*, r.region_name, c.category_name
+        FROM offers o
+        JOIN region r ON o.region_id = r.region_id
+        JOIN category c ON o.category_id = c.category_id
+        WHERE o.offer_id = ?
+    """, (offer_id,)).fetchone()
+
+    if not offer:
+        abort(404)
+
+    if request.method == "POST":
+        start = request.form["start_date"]
+        end = request.form["end_date"]
+        address = request.form["address"]
+        card = request.form["card_number"]
+        name = request.form["name_on_card"]
+
+        try:
+            start_date = datetime.strptime(start, "%Y-%m-%d")
+            end_date = datetime.strptime(end, "%Y-%m-%d")
+        except ValueError:
+            flash("Ungültige Datumsangabe.", "danger")
+            return redirect(request.url)
+
+        if end_date <= start_date:
+            flash("Enddatum muss nach Startdatum liegen.", "warning")
+            return redirect(request.url)
+
+        days = (end_date - start_date).days
+        total_price = days * offer["price_per_night"]
+
+        db.execute("""
+            INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
+            VALUES (?, ?, ?, ?, ?)
+        """, (offer_id, session["user_id"], start, end, total_price))
+        db.commit()
+
+        flash("Buchung erfolgreich!", "success")
+        return redirect(url_for("profil", section="booked"))
+
+    return render_template("rental_form.html", offer=offer)
+
+
 @app.route("/profil")
 def profil():
     if "user_id" not in session:
@@ -245,7 +293,19 @@ def profil():
     """, (session["user_id"],)).fetchone()
 
     section = request.args.get("section", "about")
-    return render_template("profil.html", user=user, section=section)
+
+    rentals = []
+    if section == "booked":
+        rentals = db.execute("""
+            SELECT r.*, o.title, o.photo_path
+            FROM rentals r
+            JOIN offers o ON r.offer_id = o.offer_id
+            WHERE r.user_id = ?
+            ORDER BY r.start_date DESC
+        """, (user["user_id"],)).fetchall()
+
+    return render_template("profil.html", user=user, section=section, rentals=rentals)
+
 
 @app.route("/insert/sample")
 def insert_sample():

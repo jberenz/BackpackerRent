@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Jetzt mieten – {{ offer.title }}{% endblock %}
+
+{% block content %}
+<section class="add-section">
+  <div class="add-container">
+    <h2 class="add-header">Jetzt mieten: {{ offer.title }}</h2>
+
+    <form method="post">
+      <!-- Zeitraum -->
+      <div class="add-row half">
+        <div class="add-col">
+          <label for="start_date">Startdatum</label>
+          <input type="date" name="start_date" required>
+        </div>
+        <div class="add-col">
+          <label for="end_date">Enddatum</label>
+          <input type="date" name="end_date" required>
+        </div>
+      </div>
+
+      <!-- Adresse -->
+      <div class="add-row full">
+        <div class="add-col">
+          <label for="address">Lieferadresse</label>
+          <input type="text" name="address" placeholder="Straße, PLZ, Ort" required>
+        </div>
+      </div>
+
+      <!-- Zahlungsinformationen -->
+      <div class="add-row">
+        <div class="add-col">
+          <label for="name_on_card">Name auf der Karte</label>
+          <input type="text" name="name_on_card" required>
+        </div>
+        <div class="add-col">
+          <label for="card_number">Kartennummer</label>
+          <input type="text" name="card_number" required>
+        </div>
+      </div>
+
+      <div class="add-row">
+        <div class="add-col" style="max-width: 100px;">
+          <label for="sec_code">Sec. Code</label>
+          <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" required>
+        </div>
+      </div>
+
+      <!-- Mieten-Button -->
+      <button type="submit" class="btn-create">Jetzt Mieten</button>
+    </form>
+
+    <div style="margin-top: 2rem;">
+      <a href="{{ url_for('angebot_details', offer_id=offer.offer_id) }}" style="color:#2563EB;">← Zurück zum Angebot</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
