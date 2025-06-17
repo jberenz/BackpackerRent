@@ -230,49 +230,58 @@ def rental_form(offer_id):
 
     db = get_db_con()
     offer = db.execute("""
-        SELECT o.*, c.category_name AS category, r.region_name AS region
+        SELECT o.*, r.region_name, c.category_name
         FROM offers o
+        JOIN region r ON o.region_id = r.region_id
         JOIN category c ON o.category_id = c.category_id
-        JOIN region   r ON o.region_id = r.region_id
         WHERE o.offer_id = ?
     """, (offer_id,)).fetchone()
 
     if not offer:
-        abort(404, "Angebot nicht gefunden")
+        abort(404)
+
+    total_price = None
+    num_days = None
 
     if request.method == "POST":
+        action = request.form.get("action")
         start = request.form["start_date"]
         end = request.form["end_date"]
-        address = request.form["address"]
-        name_on_card = request.form["name_on_card"]
-        card_number = request.form["card_number"]
-        sec_code = request.form.get("sec_code", "")
+        address = request.form.get("address")
+        name = request.form.get("name_on_card")
+        card = request.form.get("card_number")
+        sec = request.form.get("sec_code")
 
         try:
             start_date = datetime.strptime(start, "%Y-%m-%d")
             end_date = datetime.strptime(end, "%Y-%m-%d")
         except ValueError:
-            flash("Ungültige Datumsangabe.", "danger")
+            flash("Ungültiges Datum", "danger")
             return redirect(request.url)
 
         if end_date <= start_date:
-            flash("Enddatum muss nach Startdatum liegen.", "warning")
+            flash("Enddatum muss nach dem Startdatum liegen.", "warning")
             return redirect(request.url)
 
-        total_days = (end_date - start_date).days
-        total_price = total_days * offer["price_per_night"]
+        num_days = (end_date - start_date).days
+        total_price = num_days * offer["price_per_night"]
 
-        return render_template(
-            "rental_confirm.html",
-            offer=offer,
-            start_date=start,
-            end_date=end,
-            address=address,
-            name_on_card=name_on_card,
-            card_number=card_number,
-            sec_code=sec_code,
-            total_price=total_price
-        )
+        if action == "book":
+            db.execute("""
+                INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
+                VALUES (?, ?, ?, ?, ?)
+            """, (offer_id, session["user_id"], start, end, total_price))
+            db.commit()
+
+            return render_template("rental_confirm.html", offer=offer, start_date=start, end_date=end,
+                                   address=address, name_on_card=name)
+
+        # Wenn nur "Preis berechnen" gedrückt wurde → einfach Formular anzeigen mit Preis
+        return render_template("rental_form.html", offer=offer,
+                               start_date=start, end_date=end,
+                               address=address, name_on_card=name,
+                               card_number=card, sec_code=sec,
+                               total_price=total_price, num_days=num_days)
 
     return render_template("rental_form.html", offer=offer)
 

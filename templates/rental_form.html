@@ -7,48 +7,68 @@
     <h2 class="add-header">Jetzt mieten: {{ offer.title }}</h2>
 
 <form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) }}">
-      <!-- Zeitraum -->
-      <div class="add-row half">
-        <div class="add-col">
-          <label for="start_date">Startdatum</label>
-          <input type="date" name="start_date" required>
-        </div>
-        <div class="add-col">
-          <label for="end_date">Enddatum</label>
-          <input type="date" name="end_date" required>
-        </div>
-      </div>
+  <!-- Zeitraum -->
+  <div class="add-row half">
+    <div class="add-col">
+      <label for="start_date">Startdatum</label>
+      <input type="date" name="start_date" value="{{ start_date or '' }}" required>
+    </div>
+    <div class="add-col">
+      <label for="end_date">Enddatum</label>
+      <input type="date" name="end_date" value="{{ end_date or '' }}" required>
+    </div>
+  </div>
 
-      <!-- Adresse -->
-      <div class="add-row full">
-        <div class="add-col">
-          <label for="address">Lieferadresse</label>
-          <input type="text" name="address" placeholder="Straße, PLZ, Ort" required>
-        </div>
-      </div>
+  <!-- Adresse -->
+  <div class="add-row full">
+    <div class="add-col">
+      <label for="address">Lieferadresse</label>
+      <input type="text" name="address" placeholder="Straße, PLZ, Ort" value="{{ address or '' }}">
+    </div>
+  </div>
 
-      <!-- Zahlungsinformationen -->
-      <div class="add-row">
-        <div class="add-col">
-          <label for="name_on_card">Name auf der Karte</label>
-          <input type="text" name="name_on_card" required>
-        </div>
-        <div class="add-col">
-          <label for="card_number">Kartennummer</label>
-          <input type="text" name="card_number" required>
-        </div>
-      </div>
+  <!-- Zahlungsinformationen -->
+  <div class="add-row">
+    <div class="add-col">
+      <label for="name_on_card">Name auf der Karte</label>
+      <input type="text" name="name_on_card" value="{{ name_on_card or '' }}">
+    </div>
+    <div class="add-col">
+      <label for="card_number">Kartennummer</label>
+      <input type="text" name="card_number" value="{{ card_number or '' }}">
+    </div>
+  </div>
 
-      <div class="add-row">
-        <div class="add-col" style="max-width: 100px;">
-          <label for="sec_code">Sec. Code</label>
-          <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" required>
-        </div>
-      </div>
+  <div class="add-row">
+    <div class="add-col" style="max-width: 100px;">
+      <label for="sec_code">Sec. Code</label>
+      <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}">
+    </div>
+  </div>
 
-      <!-- Mieten-Button -->
-      <button type="submit" class="btn-create">Jetzt Mieten</button>
-    </form>
+  <!-- Preis-Anzeige -->
+  {% if total_price is defined %}
+    <div style="margin-top:1rem; font-weight:bold; color:#2563EB;">
+  Gesamtpreis für {{ num_days }} Nacht{{ 'e' if num_days > 1 else '' }}: {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
+</div>
+
+  {% endif %}
+
+  <!-- Buttons -->
+<!-- Buttons -->
+{% if total_price is defined %}
+  <div style="margin-top: 1.5rem;">
+    <button type="submit" name="action" value="book" class="btn-create" style="white-space: nowrap;">Jetzt Mieten</button>
+  </div>
+{% else %}
+  <div style="margin-top: 1.5rem;">
+    <button type="submit" name="action" value="calculate" class="btn-create" style="white-space: nowrap;">Preis berechnen</button>
+  </div>
+{% endif %}
+
+
+
+</form>
 
     <div style="margin-top: 2rem;">
       <a href="{{ url_for('angebot_details', offer_id=offer.offer_id) }}" style="color:#2563EB;">← Zurück zum Angebot</a>
