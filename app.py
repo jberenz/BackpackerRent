@@ -331,5 +331,91 @@ def profil():
         rentals=rentals,
         own_offers=own_offers
     )
+@app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
+def angebot_loeschen(offer_id):
+    if "user_id" not in session:
+        abort(403)
+
+    db = get_db_con()
+    offer = db.execute(
+        "SELECT * FROM offers WHERE offer_id = ? AND user_id = ?",
+        (offer_id, session["user_id"])
+    ).fetchone()
+
+    if not offer:
+        return "Nicht erlaubt", 403
+
+    db.execute("DELETE FROM offer_features WHERE offer_id = ?", (offer_id,))
+    db.execute("DELETE FROM offers WHERE offer_id = ?", (offer_id,))
+    db.commit()
+    flash("Angebot erfolgreich gelöscht.", "success")
+    return redirect(url_for("profil", section="own"))
 
 
+@app.route("/angebot_bearbeiten/<int:offer_id>", methods=["GET", "POST"])
+def edit_offer(offer_id):
+    if "user_id" not in session:
+        return redirect(url_for("anmelden"))
+
+    db = get_db_con()
+    offer = db.execute(
+        "SELECT * FROM offers WHERE offer_id = ? AND user_id = ?",
+        (offer_id, session["user_id"])
+    ).fetchone()
+
+    if not offer:
+        abort(404)
+
+    categories = db.execute("SELECT * FROM category").fetchall()
+    regionen = db.execute("SELECT * FROM region").fetchall()
+
+    if request.method == "POST":
+        title = request.form["title"].strip()
+        description = request.form.get("description", "").strip()
+        category_id = int(request.form["category_id"])
+        region_id = int(request.form["region_id"])
+        price_per_night = float(request.form["price_per_night"])
+
+        # optional neues Bild hochladen
+        photo = request.files.get("photo")
+        photo_path = offer["photo_path"]
+        if photo and photo.filename:
+            filename = secure_filename(f"{uuid.uuid4()}_{photo.filename}")
+            full_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            photo.save(full_path)
+            photo_path = os.path.join("uploads", filename).replace("\\", "/")
+
+        db.execute("""
+            UPDATE offers SET
+                title = ?, description = ?, category_id = ?,
+                region_id = ?, price_per_night = ?, photo_path = ?
+            WHERE offer_id = ? AND user_id = ?
+        """, (title, description, category_id, region_id, price_per_night, photo_path, offer_id, session["user_id"]))
+
+        db.execute("DELETE FROM offer_features WHERE offer_id = ?", (offer_id,))
+        features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
+        for feature in features:
+            value = request.form.get(feature["feature_name"])
+            if value:
+                db.execute("""
+                    INSERT INTO offer_features (offer_id, feature_id, value)
+                    VALUES (?, ?, ?)
+                """, (offer_id, feature["feature_id"], value))
+        db.commit()
+
+        flash("Angebot erfolgreich aktualisiert.", "success")
+        return redirect(url_for("profil", section="own"))
+
+    # Lade auch die Features mit vorhandenen Werten
+    feature_rows = db.execute("""
+        SELECT f.feature_id, f.feature_name, of.value
+        FROM features f
+        LEFT JOIN offer_features of ON f.feature_id = of.feature_id AND of.offer_id = ?
+        WHERE f.category_id = ?
+    """, (offer_id, offer["category_id"])).fetchall()
+
+    return render_template("angebot_erstellen.html",
+                           categories=categories,
+                           regionen=regionen,
+                           offer=offer,
+                           features=feature_rows)

@@ -1,17 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Neues Angebot hinzufügen – Backpacker Rent{% endblock %}
+{% block title %}{% if offer %}Angebot bearbeiten{% else %}Neues Angebot hinzufügen{% endif %} – Backpacker Rent{% endblock %}
 
 {% block content %}
 <section class="add-section">
   <div class="add-container">
-    <h2 class="add-header">Neues Angebot hinzufügen</h2>
-    <!-- WICHTIG: enctype für Datei-Upload -->
-    <form id="add-form" action="{{ url_for('add_offer') }}" method="post" enctype="multipart/form-data">
+    <h2 class="add-header">{% if offer %}Angebot bearbeiten{% else %}Neues Angebot hinzufügen{% endif %}</h2>
+
+    <form id="add-form"
+          action="{% if offer %}{{ url_for('edit_offer', offer_id=offer.offer_id) }}{% else %}{{ url_for('add_offer') }}{% endif %}"
+          method="post"
+          enctype="multipart/form-data">
+
+      {% if offer %}
+        <input type="hidden" name="editing" value="true">
+      {% endif %}
+
       <!-- Titel -->
       <div class="add-row full">
         <div class="add-col">
           <label for="title">Titel</label>
-          <input id="title" name="title" type="text" required>
+          <input id="title" name="title" type="text" required value="{{ offer.title if offer else '' }}">
         </div>
       </div>
 
@@ -20,26 +28,41 @@
         <div class="add-col">
           <label for="category_id">Kategorie</label>
           <select id="category_id" name="category_id" required>
-            <option value="" disabled selected>Bitte wählen</option>
+            <option value="" disabled {% if not offer %}selected{% endif %}>Bitte wählen</option>
             {% for cat in categories %}
-              <option value="{{ cat.category_id }}">{{ cat.category_name }}</option>
+              <option value="{{ cat.category_id }}"
+                {% if offer and cat.category_id == offer.category_id %}selected{% endif %}>
+                {{ cat.category_name }}
+              </option>
             {% endfor %}
           </select>
         </div>
         <div class="add-col">
-          <label for="photo">Foto hochladen</label>
+          <label for="photo">Foto hochladen {% if offer and offer.photo_path %}(optional){% endif %}</label>
           <input type="file" id="photo" name="photo" accept="image/*">
+          {% if offer and offer.photo_path %}
+            <p style="font-size: 0.9rem; color: #555;">Aktuelles Bild: <em>{{ offer.photo_path }}</em></p>
+          {% endif %}
         </div>
       </div>
 
-      <!-- Dynamische Merkmale (werden per JavaScript ergänzt) -->
-      <div id="features" class="features"></div>
+      <!-- Dynamische Merkmale (werden per JS ergänzt) -->
+      <div id="features" class="features">
+        {% if features %}
+          {% for f in features %}
+            <div class="feature-field">
+              <label for="{{ f.feature_name }}">{{ f.feature_name | replace('_', ' ') | capitalize }}</label>
+              <input type="text" id="{{ f.feature_name }}" name="{{ f.feature_name }}" value="{{ f.value or '' }}">
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
 
       <!-- Beschreibung -->
       <div class="add-row full">
         <div class="add-col">
           <label for="description">Beschreibung</label>
-          <textarea id="description" name="description" rows="5"></textarea>
+          <textarea id="description" name="description" rows="5">{{ offer.description if offer else '' }}</textarea>
         </div>
       </div>
 
@@ -48,10 +71,13 @@
         <div class="add-col">
           <label for="price_per_night">Preis pro Nacht (€)</label>
           <select id="price_per_night" name="price_per_night" required>
-            <option value="" disabled selected>Bitte wählen</option>
+            <option value="" disabled {% if not offer %}selected{% endif %}>Bitte wählen</option>
             {% for i in range(0, 401) %}
               {% set price = (i * 0.25) | round(2) %}
-              <option value="{{ price }}">{{ '%.2f' % price }} €</option>
+              <option value="{{ price }}"
+                {% if offer and offer.price_per_night == price %}selected{% endif %}>
+                {{ '%.2f' % price }} €
+              </option>
             {% endfor %}
           </select>
         </div>
@@ -62,16 +88,21 @@
         <div class="add-col">
           <label for="region_id">Region</label>
           <select id="region_id" name="region_id" required>
-            <option value="" disabled selected>Region wählen</option>
+            <option value="" disabled {% if not offer %}selected{% endif %}>Region wählen</option>
             {% for reg in regionen %}
-              <option value="{{ reg.region_id }}">{{ reg.region_name }}</option>
+              <option value="{{ reg.region_id }}"
+                {% if offer and reg.region_id == offer.region_id %}selected{% endif %}>
+                {{ reg.region_name }}
+              </option>
             {% endfor %}
           </select>
         </div>
       </div>
 
-      <!-- Angebot erstellen -->
-      <button type="submit" class="btn-create">Angebot erstellen</button>
+      <!-- Button -->
+      <button type="submit" class="btn-create">
+        {% if offer %}Änderungen speichern{% else %}Angebot erstellen{% endif %}
+      </button>
     </form>
   </div>
 </section>
@@ -140,12 +171,13 @@ const categoryKeyMap = {
 };
 
 const categorySelect = document.getElementById('category_id');
-const featuresDiv    = document.getElementById('features');
+const featuresDiv = document.getElementById('features');
 
 function renderFeatures(catId) {
   featuresDiv.innerHTML = '';
   const key = categoryKeyMap[catId];
-  if (!key) return;
+  if (!key || !featureSets[key]) return;
+
   featureSets[key].forEach(f => {
     const wrapper = document.createElement('div');
     wrapper.className = 'feature-field';
@@ -156,7 +188,7 @@ function renderFeatures(catId) {
 
     const inp = document.createElement('input');
     inp.type = 'text';
-    inp.id   = f.id;
+    inp.id = f.id;
     inp.name = f.id;
 
     wrapper.append(lbl, inp);
@@ -164,6 +196,8 @@ function renderFeatures(catId) {
   });
 }
 
-categorySelect.addEventListener('change', e => renderFeatures(parseInt(e.target.value)));
+{% if not features %}
+categorySelect?.addEventListener('change', e => renderFeatures(parseInt(e.target.value)));
+{% endif %}
 </script>
 {% endblock %}

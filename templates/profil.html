@@ -97,6 +97,18 @@
                 <h3 style="margin-top:1rem; font-size:1.1rem; color:#1e40af;">{{ offer.title }}</h3>
                 <p style="color:#6b7280;">{{ offer.category }} · {{ offer.region }}</p>
                 <p style="color:#2563EB; font-weight:bold;">{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € <span style="font-weight:normal;">p.N.</span></p>
+
+                <!-- Bearbeiten -->
+                <a href="{{ url_for('edit_offer', offer_id=offer.offer_id) }}" style="display:inline-block; margin-top:0.5rem; margin-right:0.5rem; padding:0.4rem 0.8rem; border:1px solid #2563EB; border-radius:4px; color:#2563EB; text-decoration:none; font-size:0.9rem;">
+                  Bearbeiten
+                </a>
+
+                <!-- Löschen -->
+                <form action="{{ url_for('angebot_loeschen', offer_id=offer.offer_id) }}" method="post" style="display:inline;">
+                  <input type="submit" value="Löschen" onclick="return confirm('Wirklich löschen?');"
+                         style="padding:0.4rem 0.8rem; border:1px solid #dc2626; background:#dc2626; color:white; border-radius:4px; font-size:0.9rem;">
+                </form>
+
               </div>
             {% endfor %}
           </div>
