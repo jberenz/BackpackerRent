@@ -51,14 +51,12 @@
     <!-- Main Content -->
     <div class="profile-content" style="background:#fef3ff; padding:2rem;">
       {% if section == 'about' %}
-        <!-- Header -->
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;">
           <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold;">Über mich</h2>
           <a href="#" class="btn-edit" style="padding:0.5rem 1rem; border:1px solid #2563EB; border-radius:4px; color:#2563EB; text-decoration:none;">
             Bearbeiten
           </a>
         </div>
-        <!-- Card -->
         <div class="profile-card" style="display:inline-block; background:white; border:1px solid #cbd5e1; border-radius:1.5rem; padding:2rem; text-align:center;">
           <div class="profile-avatar" style="width:80px; height:80px; border-radius:1rem; background:#f3d3eb; color:#ffffff; font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
             {{ user.first_name[0]|upper }}
@@ -75,15 +73,38 @@
 
       {% elif section == 'booked' %}
         <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Gebuchte Angebote</h2>
-        <!-- TODO: Liste deiner gebuchten Angebote hier -->
+        {% if rentals %}
+          <ul>
+            {% for rental in rentals %}
+              <li>{{ rental.title }} vom {{ rental.start_date }} bis {{ rental.end_date }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Du hast noch keine Angebote gebucht.</p>
+        {% endif %}
 
       {% elif section == 'own' %}
         <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Eigene Angebote</h2>
-        <!-- TODO: Liste deiner eigenen Angebote hier -->
-
+        {% if own_offers %}
+          <div class="offers-grid" style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            {% for offer in own_offers %}
+              <div class="offer-card" style="background: white; padding: 1rem; border-radius: 1rem; border: 1px solid #ccc;">
+                {% if offer.photo_path %}
+                  <img src="{{ url_for('static', filename=offer.photo_path) }}" alt="Foto: {{ offer.title }}" style="width:100%; height:150px; object-fit:cover; border-radius:0.5rem;">
+                {% else %}
+                  <div style="width:100%; height:150px; background:#eee; border-radius:0.5rem; display:flex; align-items:center; justify-content:center; color:#666;">Kein Bild</div>
+                {% endif %}
+                <h3 style="margin-top:1rem; font-size:1.1rem; color:#1e40af;">{{ offer.title }}</h3>
+                <p style="color:#6b7280;">{{ offer.category }} · {{ offer.region }}</p>
+                <p style="color:#2563EB; font-weight:bold;">{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € <span style="font-weight:normal;">p.N.</span></p>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>Du hast noch keine eigenen Angebote erstellt.</p>
+        {% endif %}
       {% endif %}
     </div>
-
   </div>
 </section>
 {% endblock %}

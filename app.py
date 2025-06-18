@@ -303,6 +303,8 @@ def profil():
     section = request.args.get("section", "about")
 
     rentals = []
+    own_offers = []
+
     if section == "booked":
         rentals = db.execute("""
             SELECT r.*, o.title, o.photo_path
@@ -312,12 +314,22 @@ def profil():
             ORDER BY r.start_date DESC
         """, (user["user_id"],)).fetchall()
 
-    return render_template("profil.html", user=user, section=section, rentals=rentals)
+    elif section == "own":
+        own_offers = db.execute("""
+            SELECT o.*, c.category_name AS category, r.region_name AS region
+            FROM offers o
+            JOIN category c ON o.category_id = c.category_id
+            JOIN region   r ON o.region_id = r.region_id
+            WHERE o.user_id = ?
+            ORDER BY o.created_at DESC
+        """, (user["user_id"],)).fetchall()
 
-@app.route("/insert/sample")
-def insert_sample():
-    insert_sample_data()
-    return "Sample-Daten wurden eingefügt."
+    return render_template(
+        "profil.html",
+        user=user,
+        section=section,
+        rentals=rentals,
+        own_offers=own_offers
+    )
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
