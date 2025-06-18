@@ -34,7 +34,7 @@ def index():
             o.offer_id,
             o.title,
             o.price_per_night,
-            o.photo_path,
+            o.photo_path AS photo,
             c.category_name AS category,
             r.region_name   AS region
         FROM offers o
@@ -195,7 +195,8 @@ def add_offer():
             filename = secure_filename(f"{uuid.uuid4()}_{photo.filename}")
             full_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             photo.save(full_path)
-            photo_path = os.path.join("uploads", filename)
+            photo_path = os.path.join("uploads", filename).replace("\\", "/")
+
 
         cursor = db.execute("""
             INSERT INTO offers (
