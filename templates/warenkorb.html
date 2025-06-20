@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Warenkorb{% endblock %}
+{% block content %}
+<section class="add-section">
+  <div class="add-container">
+    <h2 class="add-header">🧺 Dein Warenkorb</h2>
+
+    {% if offers %}
+      <ul style="list-style:none; padding:0;">
+        {% for offer in offers %}
+          <li style="margin-bottom: 2rem; padding:1rem; background:white; border-radius:1rem; border:1px solid #ccc;">
+            <h3>{{ offer.title }}</h3>
+            <p>{{ offer.category }} · {{ offer.region }}</p>
+            <p><strong>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</strong> pro Nacht</p>
+
+            <a href="{{ url_for('rental_form', offer_id=offer.offer_id) }}" class="btn-create" style="margin-right:1rem;">Jetzt mieten</a>
+
+            <form method="post" action="{{ url_for('remove_from_cart', offer_id=offer.offer_id) }}" style="display:inline;">
+              <button type="submit" style="padding:0.5rem 1rem; border:1px solid #dc2626; background:#dc2626; color:white; border-radius:4px;">
+                Entfernen
+              </button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Dein Warenkorb ist leer.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" style="display:inline-block; margin-top:2rem; color:#2563EB;">← Zurück zur Startseite</a>
+  </div>
+</section>
+{% endblock %}

@@ -419,3 +419,43 @@ def edit_offer(offer_id):
                            regionen=regionen,
                            offer=offer,
                            features=feature_rows)
+
+@app.route("/add_to_cart/<int:offer_id>", methods=["POST"])
+def add_to_cart(offer_id):
+    # 🧽 Leert zuerst den alten Warenkorb
+    session["cart"] = []
+
+    # 🛒 Fügt nur das aktuelle Produkt hinzu
+    session["cart"].append(offer_id)
+
+    flash("Zum Warenkorb hinzugefügt.", "success")
+    return redirect(url_for("warenkorb"))
+
+
+@app.route("/warenkorb")
+def warenkorb():
+    cart = session.get("cart", [])
+    if not cart:
+        flash("Dein Warenkorb ist leer.", "info")
+        return render_template("warenkorb.html", offers=[])
+
+    db = get_db_con()
+    placeholders = ','.join('?' for _ in cart)
+    offers = db.execute(f"""
+        SELECT o.*, c.category_name AS category, r.region_name AS region
+        FROM offers o
+        JOIN category c ON o.category_id = c.category_id
+        JOIN region   r ON o.region_id = r.region_id
+        WHERE o.offer_id IN ({placeholders})
+    """, cart).fetchall()
+
+    return render_template("warenkorb.html", offers=offers)
+
+@app.route("/remove_from_cart/<int:offer_id>", methods=["POST"])
+def remove_from_cart(offer_id):
+    cart = session.get("cart", [])
+    if offer_id in cart:
+        cart.remove(offer_id)
+        session["cart"] = cart
+        flash("Angebot aus dem Warenkorb entfernt.", "success")
+    return redirect(url_for("warenkorb"))

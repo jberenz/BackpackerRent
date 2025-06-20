@@ -45,7 +45,14 @@
 </a>
 
 </a>
-        <button style="padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:white;">In den Warenkorb</button>
+<form action="{{ url_for('add_to_cart', offer_id=offer.offer_id) }}" method="post">
+  <button type="submit" style="padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:white;">
+    In den Warenkorb
+  </button>
+</form>
+
+
+
         <button style="padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:white;">♡ Auf die Wunschliste</button>
         <a href="{{ url_for('index') }}" style="margin-top:1rem; display:inline-block; color:#1e3a8a;">← Zurück zur Übersicht</a>
       </div>
