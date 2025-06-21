@@ -422,14 +422,18 @@ def edit_offer(offer_id):
 
 @app.route("/add_to_cart/<int:offer_id>", methods=["POST"])
 def add_to_cart(offer_id):
-    # 🧽 Leert zuerst den alten Warenkorb
-    session["cart"] = []
-
-    # 🛒 Fügt nur das aktuelle Produkt hinzu
-    session["cart"].append(offer_id)
-
-    flash("Zum Warenkorb hinzugefügt.", "success")
+    cart = session.get("cart", [])
+    
+    # Füge nur hinzu, wenn nicht schon enthalten
+    if offer_id not in cart:
+        cart.append(offer_id)
+        session["cart"] = cart
+        flash("Zum Warenkorb hinzugefügt.", "success")
+    else:
+        flash("Dieses Produkt ist bereits im Warenkorb.", "info")
+    
     return redirect(url_for("warenkorb"))
+
 
 
 @app.route("/warenkorb")
