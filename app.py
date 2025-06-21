@@ -29,6 +29,12 @@ def index():
     max_price       = request.args.get("max_price", 50.0, type=float)
     selected_type   = request.args.get("type", "backpacker")
 
+    # Typabhängige erlaubte Kategorien
+    if selected_type == "radtour":
+        allowed_categories = ('Radtasche', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool')
+    else:
+        allowed_categories = ('Rucksack', 'Gaskocher', 'Schlafsack', 'Zelt', 'Luftmatratze', 'Multitool')
+
     sql = """
         SELECT
             o.offer_id,
@@ -43,6 +49,10 @@ def index():
     """
     filters = []
     params  = []
+
+    # Filter: nur erlaubte Kategorien (abhängig vom Typ)
+    filters.append("c.category_name IN ({})".format(','.join(['?'] * len(allowed_categories))))
+    params.extend(allowed_categories)
 
     if region_id:
         filters.append("o.region_id = ?")
@@ -62,16 +72,11 @@ def index():
     offers    = db.execute(sql, params).fetchall()
     regionen  = db.execute("SELECT * FROM region").fetchall()
 
-    if selected_type == "radtour":
-        categories = db.execute("""
-            SELECT * FROM category
-            WHERE category_name IN ('Radtasche','Gaskocher','Schlafsack','Zelt','Luftmatratze','Multitool')
-        """).fetchall()
-    else:
-        categories = db.execute("""
-            SELECT * FROM category
-            WHERE category_name IN ('Gaskocher','Schlafsack','Zelt','Luftmatratze','Rucksack','Multitool')
-        """).fetchall()
+    # Nur Kategorien laden, die auch für den Typ erlaubt sind
+    categories = db.execute(
+        "SELECT * FROM category WHERE category_name IN ({})".format(','.join(['?'] * len(allowed_categories))),
+        allowed_categories
+    ).fetchall()
 
     return render_template(
         "home.html",
@@ -82,6 +87,7 @@ def index():
         selected_region_id=region_id,
         selected_category_id=category_id
     )
+
 
 @app.route("/angebot/<int:offer_id>")
 def angebot_details(offer_id):

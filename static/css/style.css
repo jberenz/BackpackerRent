@@ -1,4 +1,4 @@
-/* === 0) Reset & Grund === */
+/* === 0) Reset & Grund (global)=== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,7 +15,7 @@ body {
   background-color: transparent;
 }
 
-/* === 1) Header === */
+/* === 1) Header (Navigationsleiste oben auf allen Seiten)*/
 .site-header {
   position: fixed;
   top: 0;
@@ -82,7 +82,11 @@ body {
   border-radius: 4px;
 }
 
-/* === 2) Hero === */
+/*
+==============================
+= 2) Hero-Bereich (Startbild) =
+==============================
+*/
 .hero {
   background: url("../images/mountains.jpeg") center/cover no-repeat;
   height: 60vh;
@@ -100,8 +104,11 @@ body {
   line-height: 1.1;
   font-weight: bold;
 }
-
-/* === 3) Such-Sektion mit Tabs === */
+/*
+==============================
+= 3) Such-Sektion mit Tabs (Home-Seite) =
+==============================
+*/
 .search-section {
   background: #fef3ff;
   border-top: 4px solid #A855F7;
@@ -131,7 +138,10 @@ body {
   border-color: #2563EB;
 }
 
-/* === 4) Such-Leiste === */
+/*
+= 4) Suchleiste + Preis-Range (Home-Seite) =
+==============================
+*/
 .search-bar {
   max-width: 900px;
   margin: 0 auto;
@@ -258,7 +268,11 @@ body {
   margin-top: 0.4rem;
 }
 
-/* === 5) Dynamische Filter === */
+/*
+==============================
+= 5) Dynamische Filter auf der Startseite =
+==============================
+*/
 .filters {
   max-width: 900px;
   margin: 16px auto;
@@ -286,30 +300,12 @@ body {
   cursor: pointer;
 }
 
-/* === 6) To-Do List === */
-.todo-section {
-  padding: 40px 0;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.todo-section h2 {
-  font-size: 24px;
-  margin-bottom: 16px;
-  color: #2563EB;
-}
-.todo-section ul {
-  list-style: none;
-}
-.todo-section li {
-  margin-bottom: 12px;
-  font-size: 18px;
-}
-.status {
-  margin-left: 8px;
-  color: #10B981;
-}
+/*
+==============================
+= 7) Auth-Seiten (Login / Registrierung) =
+==============================
+*/
 
-/* === Auth-Seite (Login / Registrieren) === */
 .auth-wrapper {
   padding: 120px 24px 40px;
   background-color: #fef3ff;
@@ -570,73 +566,13 @@ body {
   background-color: #6EE7B7;
 }
 
-/* === Kontakt-Bereich === */
-.contact-section {
-  background-color: #fef3ff;
-  font-family: Georgia, serif;
-  margin: 0;
-  padding: 0;
-}
 
-.contact-content {
-  display: flex;
-  justify-content: space-between;
-  padding: 64px 48px 32px;
-  flex-wrap: wrap;
-}
 
-.contact-info h2 {
-  font-size: 36px;
-  color: #2563EB;
-  margin-bottom: 16px;
-}
-
-.contact-info p {
-  font-size: 18px;
-  color: #1e1e88;
-  margin-bottom: 8px;
-}
-
-.contact-info a {
-  color: #1e1e88;
-  text-decoration: none;
-}
-
-.contact-action {
-  align-self: start;
-}
-
-.contact-btn {
-  border: 1px solid #2563EB;
-  color: #2563EB;
-  padding: 10px 20px;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  transition: all 0.2s ease-in-out;
-}
-
-.contact-btn:hover {
-  background-color: #e0d9ff;
-}
-
-.contact-image {
-  margin: 0;
-  padding: 0;
-}
-
-.contact-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-  border: none;
-  object-fit: cover;
-}
-
-/* === 1) Container + Überschrift zentrieren === */
+/*
+==============================
+= 8) Angebots-Karten auf der Startseite =
+==============================
+*/
 .offers-section {
   /* Abstand oben/unten, damit Sektion nicht direkt am Scroll-Rand klebt */
   padding: 2rem 0;
@@ -759,4 +695,70 @@ body {
 .offer-price .price-unit {
   font-weight: 400;   /* normal/dünn */
   color: #555;        /* optional: etwas dezenter */
+}
+
+/* === Kontakt-Bereich === */
+.contact-section {
+  background-color: #fef3ff;
+  font-family: Georgia, serif;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 64px 48px 32px;
+  flex-wrap: wrap;
+}
+
+.contact-info h2 {
+  font-size: 36px;
+  color: #2563EB;
+  margin-bottom: 16px;
+}
+
+.contact-info p {
+  font-size: 18px;
+  color: #1e1e88;
+  margin-bottom: 8px;
+}
+
+.contact-info a {
+  color: #1e1e88;
+  text-decoration: none;
+}
+
+.contact-action {
+  align-self: start;
+}
+
+.contact-btn {
+  border: 1px solid #2563EB;
+  color: #2563EB;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+}
+
+.contact-btn:hover {
+  background-color: #e0d9ff;
+}
+
+.contact-image {
+  margin: 0;
+  padding: 0;
+}
+
+.contact-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  object-fit: cover;
 }

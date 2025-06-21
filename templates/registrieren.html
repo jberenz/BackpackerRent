@@ -18,10 +18,8 @@
       {% endif %}
     {% endwith %}
 
-    {# Fehleranzeige (z. B. E-Mail schon vergeben) #}
-    {% if error %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
+    {# Fehleranzeige (z. B. E-Mail schon vergeben) befindet sich in der python route #}
+    
 
     <form class="auth-form" action="{{ url_for('registrieren') }}" method="post">
       <div class="input-group">
