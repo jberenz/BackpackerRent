@@ -395,64 +395,6 @@ body {
   text-decoration: underline;
 }
 
-/* === About Us Section === */
-.about-section {
-  background-color: #fef3ff;
-  padding: 80px 20px;
-  font-family: Georgia, 'Times New Roman', serif;
-  color: #1e1e88;
-}
-.about-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.about-heading {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 40px;
-}
-.about-icon {
-  width: 50px;
-  margin-bottom: 10px;
-}
-.about-content {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-.about-text {
-  font-size: 18px;
-  line-height: 1.8;
-}
-.about-text h3 {
-  font-size: 22px;
-  color: #2563EB;
-  margin-top: 24px;
-  margin-bottom: 12px;
-}
-.about-images {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-}
-.about-images img {
-  width: 100%;
-  max-width: 550px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-.about-heading h2 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: #2563EB;
-}
-.main-nav a.active {
-  font-weight: 800 !important;
-  color: #2563EB !important;
-}
 
 /* === Neuer Hinzufügen-Button === */
 .btn-add {
@@ -481,7 +423,7 @@ body {
   position: relative;       /* WICHTIG für den Button */
   max-width: 800px;
   margin: 0 auto;
-  background-color: #fff8ff;  /* leicht aufgehelltes Rosa statt purem Weiß */
+  background-color: #e7ecfb;  
   border: 2px solid #2563EB;
   border-radius: 24px;
   padding: 32px;
@@ -550,7 +492,7 @@ body {
 
 /* === Submit-Button fürs Add-Formular === */
 .btn-create {
-  position: absolute;       /* jetzt innerhalb des Fensters */
+  position: absolute;       
   bottom: 24px;
   right: 24px;
   background-color: #A7F3D0;
@@ -563,9 +505,8 @@ body {
   cursor: pointer;
 }
 .btn-create:hover {
-  background-color: #6EE7B7;
+  background-color: #6cba9b;
 }
-
 
 
 /*
@@ -695,6 +636,65 @@ body {
 .offer-price .price-unit {
   font-weight: 400;   /* normal/dünn */
   color: #555;        /* optional: etwas dezenter */
+}
+
+/* === About Us Section === */
+.about-section {
+  background-color: #fef3ff;
+  padding: 80px 20px;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1e1e88;
+}
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.about-icon {
+  width: 50px;
+  margin-bottom: 10px;
+}
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.about-text {
+  font-size: 18px;
+  line-height: 1.8;
+}
+.about-text h3 {
+  font-size: 22px;
+  color: #2563EB;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+.about-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+.about-images img {
+  width: 100%;
+  max-width: 550px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+.about-heading h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #2563EB;
+}
+.main-nav a.active {
+  font-weight: 800 !important;
+  color: #2563EB !important;
 }
 
 /* === Kontakt-Bereich === */
