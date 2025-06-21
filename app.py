@@ -463,3 +463,64 @@ def remove_from_cart(offer_id):
         session["cart"] = cart
         flash("Angebot aus dem Warenkorb entfernt.", "success")
     return redirect(url_for("warenkorb"))
+
+@app.route("/mieten", methods=["GET", "POST"])
+def mietseite():
+    if "user_id" not in session:
+        flash("Bitte zuerst anmelden.", "warning")
+        return redirect(url_for("anmelden"))
+
+    cart = session.get("cart", [])
+    if not cart:
+        flash("Dein Warenkorb ist leer.", "info")
+        return redirect(url_for("warenkorb"))
+
+    db = get_db_con()
+    placeholders = ','.join(['?'] * len(cart))
+    offers = db.execute(f"""
+        SELECT o.*, r.region_name, c.category_name
+        FROM offers o
+        JOIN region r ON o.region_id = r.region_id
+        JOIN category c ON o.category_id = c.category_id
+        WHERE o.offer_id IN ({placeholders})
+    """, cart).fetchall()
+
+    if request.method == "POST":
+        start = request.form["start_date"]
+        end = request.form["end_date"]
+        address = request.form.get("address")
+        name = request.form.get("name_on_card")
+        card = request.form.get("card_number")
+        sec = request.form.get("sec_code")
+
+        try:
+            start_date = datetime.strptime(start, "%Y-%m-%d")
+            end_date = datetime.strptime(end, "%Y-%m-%d")
+        except ValueError:
+            flash("Ungültiges Datum", "danger")
+            return redirect(request.url)
+
+        if end_date <= start_date:
+            flash("Enddatum muss nach dem Startdatum liegen.", "warning")
+            return redirect(request.url)
+
+        num_days = (end_date - start_date).days
+        total_price = sum([num_days * offer["price_per_night"] for offer in offers])
+
+        # Speichere alle Buchungen
+        for offer in offers:
+            db.execute("""
+                INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
+                VALUES (?, ?, ?, ?, ?)
+            """, (offer["offer_id"], session["user_id"], start, end, num_days * offer["price_per_night"]))
+        db.commit()
+
+        # Warenkorb leeren nach erfolgreicher Buchung
+        session["cart"] = []
+
+        return render_template("rental_confirm.html", offers=offers, start_date=start,
+                               end_date=end, address=address, name_on_card=name,
+                               total_price=total_price, num_days=num_days)
+
+    return render_template("rental_form.html", offers=offers)
+

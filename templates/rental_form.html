@@ -1,12 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Jetzt mieten – {{ offer.title }}{% endblock %}
+{% block title %}Jetzt mieten{% endblock %}
 
 {% block content %}
 <section class="add-section">
   <div class="add-container">
-    <h2 class="add-header">Jetzt mieten: {{ offer.title }}</h2>
+<h2 class="add-header">Jetzt mieten:
+  {% for offer in offers %}
+    {{ offer.title }}{% if not loop.last %}, {% endif %}
+  {% endfor %}
+</h2>
 
-<form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) }}">
+<form method="post" action="{{ url_for('mietseite') }}">
   <!-- Zeitraum -->
   <div class="add-row half">
     <div class="add-col">
@@ -46,33 +50,28 @@
     </div>
   </div>
 
-  <!-- Preis-Anzeige -->
   {% if total_price is defined %}
     <div style="margin-top:1rem; font-weight:bold; color:#2563EB;">
-  Gesamtpreis für {{ num_days }} Nacht{{ 'e' if num_days > 1 else '' }}: {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
-</div>
-
+      Gesamtpreis für {{ num_days }} Nacht{{ 'e' if num_days > 1 else '' }}:
+      {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
+    </div>
   {% endif %}
 
-  <!-- Buttons -->
-<!-- Buttons -->
-{% if total_price is defined %}
-  <div style="margin-top: 1.5rem;">
-    <button type="submit" name="action" value="book" class="btn-create" style="white-space: nowrap;">Jetzt Mieten</button>
-  </div>
-{% else %}
-  <div style="margin-top: 1.5rem;">
-    <button type="submit" name="action" value="calculate" class="btn-create" style="white-space: nowrap;">Preis berechnen</button>
-  </div>
-{% endif %}
-
-
-
+  {% if total_price is defined %}
+    <div style="margin-top: 1.5rem;">
+      <button type="submit" name="action" value="book" class="btn-create">Jetzt Mieten</button>
+    </div>
+  {% else %}
+    <div style="margin-top: 1.5rem;">
+      <button type="submit" name="action" value="calculate" class="btn-create">Preis berechnen</button>
+    </div>
+  {% endif %}
 </form>
 
-    <div style="margin-top: 2rem;">
-      <a href="{{ url_for('angebot_details', offer_id=offer.offer_id) }}" style="color:#2563EB;">← Zurück zum Angebot</a>
-    </div>
+<div style="margin-top: 2rem;">
+  <a href="{{ url_for('warenkorb') }}" style="color:#2563EB;">← Zurück zum Warenkorb</a>
+</div>
+
   </div>
 </section>
 {% endblock %}

@@ -13,8 +13,6 @@
             <p>{{ offer.category }} · {{ offer.region }}</p>
             <p><strong>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</strong> pro Nacht</p>
 
-            <a href="{{ url_for('rental_form', offer_id=offer.offer_id) }}" class="btn-create" style="margin-right:1rem;">Jetzt mieten</a>
-
             <form method="post" action="{{ url_for('remove_from_cart', offer_id=offer.offer_id) }}" style="display:inline;">
               <button type="submit" style="padding:0.5rem 1rem; border:1px solid #dc2626; background:#dc2626; color:white; border-radius:4px;">
                 Entfernen
@@ -23,6 +21,11 @@
           </li>
         {% endfor %}
       </ul>
+
+      <!-- Zentraler Mietbutton -->
+      <a href="{{ url_for('mietseite') }}" class="btn-create" style="margin-top: 2rem; display: inline-block;">
+        Alle Produkte jetzt mieten
+      </a>
     {% else %}
       <p>Dein Warenkorb ist leer.</p>
     {% endif %}
