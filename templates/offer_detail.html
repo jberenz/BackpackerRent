@@ -27,6 +27,76 @@
         <h3 style="margin-top:1.5rem; color:#1e40af;">Beschreibung</h3>
         <p>{{ offer.description }}</p>
       {% endif %}
+      {% if offer.category == "Rucksack" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Volumen:</strong> {{ features["Volumen (l)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
+            <li><strong>Maße:</strong> {{ features["Maße (H × B × T in cm)"] }}</li>
+            <li><strong>Material:</strong> {{ features["Material (z. B. Cordura)"] }}</li>
+            <li><strong>Tragesystem:</strong> {{ features["Tragesystem (z. B. Hüftgurt)"] }}</li>
+        </ul>
+
+      {% elif offer.category == "Zelt" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Kapazität:</strong> {{ features["Kapazität (z. B. 1–4 Personen)"] }}</li>
+            <li><strong>Packmaß:</strong> {{ features["Packmaß (L × B × H in cm)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
+            <li><strong>Wassersäule:</strong> {{ features["Wassersäule (mm)"] }}</li>
+            <li><strong>Material:</strong> {{ features["Material (z. B. Ripstop-Nylon)"] }}</li>
+    </ul>
+
+      {% elif offer.category == "Gaskocher" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Leistung:</strong> {{ features["Leistung (W)"] }}</li>
+            <li><strong>Brennstoffart:</strong> {{ features["Brennstoffart (z. B. Butan)"] }}</li>
+            <li><strong>Durchsatz:</strong> {{ features["Durchsatz (g/min)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (g)"] }}</li>
+            <li><strong>Abmessungen:</strong> {{ features["Abmessungen (B × T × H in cm)"] }}</li>
+        </ul>
+
+      {% elif offer.category == "Luftmatratze" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Abmessungen:</strong> {{ features["Abmessungen (L × B × H in cm)"] }}</li>
+            <li><strong>Dicke:</strong> {{ features["Dicke (cm)"] }}</li>
+            <li><strong>Material:</strong> {{ features["Material (z. B. PVC/TPU)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
+            <li><strong>Max. Belastung:</strong> {{ features["Max. Belastung (kg)"] }}</li>
+        </ul>
+
+      {% elif offer.category == "Multitool" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Funktionen:</strong> {{ features["Funktionen (z. B. 12-in-1)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (g)"] }}</li>
+            <li><strong>Material:</strong> {{ features["Material (z. B. Edelstahl)"] }}</li>
+            <li><strong>Klingenlänge:</strong> {{ features["Klingenlänge (cm)"] }}</li>
+            <li><strong>Maße zusammengeklappt:</strong> {{ features["Maße zusammengeklappt (L × B × T in cm)"] }}</li>
+        </ul>
+
+      {% elif offer.category == "Schlafsack" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Temperaturbereich:</strong> {{ features["Temperaturbereich (°C)"] }}</li>
+            <li><strong>Füllmaterial:</strong> {{ features["Füllmaterial (Daune/synt.)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
+            <li><strong>Packmaß:</strong> {{ features["Packmaß (L × Ø in cm)"] }}</li>
+            <li><strong>Form:</strong> {{ features["Form (Mumie/Decke)"] }}</li>
+        </ul>
+
+      {% elif offer.category == "Radtasche" %}
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+            <li><strong>Volumen:</strong> {{ features["Volumen (l)"] }}</li>
+            <li><strong>Material:</strong> {{ features["Material (z. B. Cordura)"] }}</li>
+            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
+            <li><strong>Wasserdicht:</strong> {{ features["Wasserdicht (ja/nein)"] }}</li>
+            <li><strong>Tragesystem:</strong> {{ features["Tragesystem (z. B. Schultergurt)"] }}</li>
+        </ul>
+      {% endif %}
 
       {% if features %}
         <h3 style="margin-top:1.5rem; color:#1e40af;">Merkmale</h3>
