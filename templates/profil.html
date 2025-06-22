@@ -99,16 +99,41 @@
         </div>
 
       {% elif section == 'booked' %}
-        <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Gebuchte Angebote</h2>
-        {% if rentals %}
-          <ul>
-            {% for rental in rentals %}
-              <li>{{ rental.title }} vom {{ rental.start_date }} bis {{ rental.end_date }}</li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p>Du hast noch keine Angebote gebucht.</p>
-        {% endif %}
+  <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Gebuchte Angebote</h2>
+  {% if rentals %}
+    <div class="offers-grid">
+      {% for rental in rentals %}
+        <div class="offer-card">
+          {% if rental.photo_path %}
+            <img
+              src="{{ url_for('static', filename=rental.photo_path) }}"
+              alt="Foto: {{ rental.title }}"
+              class="offer-image">
+          {% else %}
+            <div class="offer-placeholder">
+              <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
+                   stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <path d="M8 19l4-4 4 4"/>
+                <path d="M12 15V9"/>
+              </svg>
+            </div>
+          {% endif %}
+
+          <h3 class="offer-title">{{ rental.title }}</h3>
+          <p class="offer-meta">Gebucht vom {{ rental.start_date }} bis {{ rental.end_date }}</p>
+          <p class="offer-price">
+            <span class="price-amount">{{ ('%.2f'|format(rental.total_price)).replace('.', ',') }} €</span>
+            <span class="price-unit">gesamt</span>
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Du hast noch keine Angebote gebucht.</p>
+  {% endif %}
+
+
 
       {% elif section == 'own' %}
         <h2 style="color:#2563EB; font-size:1.5rem; font-weight:bold; margin-bottom:1rem;">Eigene Angebote</h2>
