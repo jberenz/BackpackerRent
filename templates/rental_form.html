@@ -10,7 +10,8 @@
   {% endfor %}
 </h2>
 
-<form method="post" action="{{ url_for('mietseite') }}">
+<form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) if offer else url_for('mietseite') }}">
+
   <!-- Zeitraum -->
   <div class="add-row half">
     <div class="add-col">
