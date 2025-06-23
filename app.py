@@ -25,7 +25,7 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.instance_path, exist_ok=True)
 
 init_app(app)
-
+@csrf.exempt
 @app.route("/")
 def index():
     db = get_db_con()
@@ -95,7 +95,7 @@ def index():
         selected_category_id=category_id
     )
 
-
+@csrf.exempt
 @app.route("/angebot/<int:offer_id>")
 def angebot_details(offer_id):
     db = get_db_con()
@@ -185,7 +185,7 @@ def registrieren():
         return redirect(url_for("anmelden"))
 
     return render_template("registrieren.html", regionen=regionen)
-
+@csrf.exempt
 @app.route("/angebot_erstellen", methods=["GET", "POST"])
 def add_offer():
     db = get_db_con()
@@ -237,7 +237,7 @@ def add_offer():
         return redirect(url_for("index"))
 
     return render_template("angebot_erstellen.html", categories=categories, regionen=regionen)
-
+@csrf.exempt
 @app.route("/mieten/<int:offer_id>", methods=["GET", "POST"])
 def rental_form(offer_id):
     if "user_id" not in session:
@@ -392,13 +392,13 @@ def edit_profile():
 
     return render_template('profile_edit.html', form=form)
 
-
+@csrf.exempt
 @app.route("/logout")
 def logout():
     session.clear()
     flash("Du wurdest abgemeldet.", "success")
     return redirect(url_for("index"))
-
+@csrf.exempt
 @app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
 def angebot_loeschen(offer_id):
     if "user_id" not in session:
@@ -419,7 +419,7 @@ def angebot_loeschen(offer_id):
     flash("Angebot erfolgreich gelöscht.", "success")
     return redirect(url_for("profil", section="own"))
 
-
+@csrf.exempt
 @app.route("/angebot_bearbeiten/<int:offer_id>", methods=["GET", "POST"])
 def edit_offer(offer_id):
     if "user_id" not in session:
@@ -487,7 +487,7 @@ def edit_offer(offer_id):
                            regionen=regionen,
                            offer=offer,
                            features=feature_rows)
-
+@csrf.exempt
 @app.route("/add_to_cart/<int:offer_id>", methods=["POST"])
 def add_to_cart(offer_id):
     cart = session.get("cart", [])
@@ -503,7 +503,7 @@ def add_to_cart(offer_id):
     return redirect(url_for("warenkorb"))
 
 
-
+@csrf.exempt
 @app.route("/warenkorb")
 def warenkorb():
     cart = session.get("cart", [])
@@ -522,7 +522,7 @@ def warenkorb():
     """, cart).fetchall()
 
     return render_template("warenkorb.html", offers=offers)
-
+@csrf.exempt
 @app.route("/remove_from_cart/<int:offer_id>", methods=["POST"])
 def remove_from_cart(offer_id):
     cart = session.get("cart", [])
@@ -531,7 +531,7 @@ def remove_from_cart(offer_id):
         session["cart"] = cart
         flash("Angebot aus dem Warenkorb entfernt.", "success")
     return redirect(url_for("warenkorb"))
-
+@csrf.exempt
 @app.route("/mieten", methods=["GET", "POST"])
 def mietseite():
     if "user_id" not in session:
