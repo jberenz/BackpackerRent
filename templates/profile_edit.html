@@ -2,24 +2,158 @@
 {% block title %}Profil bearbeiten – Backpacker Rent{% endblock %}
 
 {% block content %}
-<section class="edit-profile" style="max-width:600px; margin:2rem auto;">
-  <h2 style="color:#2563EB; font-size:1.5rem; margin-bottom:1rem;">Profil bearbeiten</h2>
-  <form method="post">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-      {{ form.first_name.label }}<br>{{ form.first_name(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.last_name.label }}<br>{{ form.last_name(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.phone.label }}<br>{{ form.phone(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.password.label }}<br>{{ form.password(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
-    <a href="{{ url_for('profil', section='about') }}" class="btn btn-secondary">Abbrechen</a>
-  </form>
+<section style="background:#fef3ff; min-height:100vh; padding: 6rem 0;">
+  <!-- Großer, zentrierter Titel -->
+  <h1 style="
+      text-align:center;
+      color:#2563EB;
+      font-size:2.25rem;
+      margin: 0 0 2.5rem; 
+    ">
+    Profil bearbeiten
+  </h1>
+
+  <!-- Rosa Karte mit blauem Rahmen -->
+  <div style="
+      background:#f3d3eb;
+      border:2px solid #2563EB;
+      border-radius:1.5rem;
+      max-width:720px;
+       margin: 2rem auto 0;
+      padding:2.5rem 2rem;
+      box-sizing:border-box;
+    ">
+    <form method="post" style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:1.5rem 2rem;
+      ">
+      {{ form.hidden_tag() }}
+
+      <!-- Vorname -->
+      <div>
+        <label for="{{ form.first_name.id }}"
+               style="color:#1e40af; font-weight:600; font-size:1.1rem;">
+          {{ form.first_name.label.text }}
+        </label><br>
+        {{ form.first_name(
+            class="form-control",
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:2px solid #2563EB;
+              border-radius:0.5rem;
+              font-size:1rem;
+              box-sizing:border-box;
+            "
+        ) }}
+      </div>
+
+      <!-- Nachname -->
+      <div>
+        <label for="{{ form.last_name.id }}"
+               style="color:#1e40af; font-weight:600; font-size:1.1rem;">
+          {{ form.last_name.label.text }}
+        </label><br>
+        {{ form.last_name(
+            class="form-control",
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:2px solid #2563EB;
+              border-radius:0.5rem;
+              font-size:1rem;
+              box-sizing:border-box;
+            "
+        ) }}
+      </div>
+
+      <!-- Telefon -->
+      <div>
+        <label for="{{ form.phone.id }}"
+               style="color:#1e40af; font-weight:600; font-size:1.1rem;">
+          {{ form.phone.label.text }}
+        </label><br>
+        {{ form.phone(
+            class="form-control",
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:2px solid #2563EB;
+              border-radius:0.5rem;
+              font-size:1rem;
+              box-sizing:border-box;
+            "
+        ) }}
+      </div>
+
+      <!-- Region -->
+  <div>
+    <label for="{{ form.region_id.id }}" style="color:#1e40af;font-weight:600;font-size:1.1rem;">
+      {{ form.region_id.label.text }}
+    </label><br>
+    {{ form.region_id(class="form-control", style="
+          width:100%;
+          padding:0.75rem;
+          border:2px solid #2563EB;
+          border-radius:0.5rem;
+          font-size:1rem;
+          box-sizing:border-box;
+        ") }}
+  </div>
+
+      <!-- Neues Passwort -->
+      <div>
+        <label for="{{ form.password.id }}"
+               style="color:#1e40af; font-weight:600; font-size:1.1rem;">
+          {{ form.password.label.text }}
+        </label><br>
+        {{ form.password(
+            class="form-control",
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:2px solid #2563EB;
+              border-radius:0.5rem;
+              font-size:1rem;
+              box-sizing:border-box;
+            "
+        ) }}
+      </div>
+
+      <!-- Buttons über beide Spalten -->
+      <div style="
+          grid-column:1/-1;
+          display:flex;
+          gap:1rem;
+          margin-top:2rem;
+        ">
+        <button type="submit" style="
+            background:#60a5fa;
+            border:none;
+            border-radius:0.75rem;
+            padding:0.75rem 2rem;
+            color:white;
+            font-size:1rem;
+            cursor:pointer;
+          ">
+          Speichern
+        </button>
+        <a href="{{ url_for('profil', section='about') }}"
+           style="
+             display:inline-block;
+             background:white;
+             border:2px solid #2563EB;
+             border-radius:0.75rem;
+             padding:0.75rem 2rem;
+             color:#2563EB;
+             text-decoration:none;
+             font-size:1rem;
+           ">
+          Abbrechen
+        </a>
+      </div>
+    </form>
+  </div>
 </section>
 {% endblock %}

@@ -359,22 +359,31 @@ def edit_profile():
     db = get_db_con()
     user = db.execute("SELECT * FROM users WHERE user_id = ?", (session['user_id'],)).fetchone()
 
+    # Regionsliste abrufen
+    regions = db.execute("SELECT region_id, region_name FROM region").fetchall()
     form = EditProfileForm()
+    # choices für das Dropdown: List[ (id, name), ... ]
+    form.region_id.choices = [(r['region_id'], r['region_name']) for r in regions]
+
     if request.method == "GET":
+        # Form mit aktuellen Werten vorbelegen
         form.first_name.data = user['first_name']
         form.last_name.data  = user['last_name']
         form.phone.data      = user['phone'] or ''
+        form.region_id.data  = user['region_id']
 
     if form.validate_on_submit():
         new_pw = generate_password_hash(form.password.data) if form.password.data else user['password']
         db.execute("""
-            UPDATE users SET first_name=?, last_name=?, phone=?, password=?
-            WHERE user_id=?
+            UPDATE users 
+            SET first_name = ?, last_name = ?, phone = ?, password = ?, region_id = ?
+            WHERE user_id = ?
         """, (
             form.first_name.data,
             form.last_name.data,
             form.phone.data or None,
             new_pw,
+            form.region_id.data,
             session['user_id']
         ))
         db.commit()
@@ -382,6 +391,7 @@ def edit_profile():
         return redirect(url_for('profil', section='about'))
 
     return render_template('profile_edit.html', form=form)
+
 
 @app.route("/logout")
 def logout():
