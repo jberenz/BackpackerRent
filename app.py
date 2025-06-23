@@ -14,6 +14,13 @@ app.config.from_mapping(
     UPLOAD_FOLDER=os.path.join("static", "uploads")
 )
 
+from flask_wtf import CSRFProtect
+
+
+app.config['WTF_CSRF_SECRET_KEY'] = 'noch-ein-geheimer-schluessel'
+csrf = CSRFProtect(app)
+
+
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.instance_path, exist_ok=True)
 
@@ -115,6 +122,7 @@ def angebot_details(offer_id):
 
     return render_template("offer_detail.html", offer=offer, features=features)
 
+@csrf.exempt
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
     if request.method == "POST":
@@ -132,6 +140,7 @@ def anmelden():
 
     return render_template("anmelden.html")
 
+@csrf.exempt
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     db = get_db_con()
@@ -338,6 +347,42 @@ def profil():
         own_offers=own_offers
 
     )
+
+from forms import EditProfileForm
+
+@app.route('/profil/bearbeiten', methods=['GET','POST'])
+def edit_profile():
+    if 'user_id' not in session:
+        flash("Bitte zuerst anmelden.", "warning")
+        return redirect(url_for('anmelden'))
+
+    db = get_db_con()
+    user = db.execute("SELECT * FROM users WHERE user_id = ?", (session['user_id'],)).fetchone()
+
+    form = EditProfileForm()
+    if request.method == "GET":
+        form.first_name.data = user['first_name']
+        form.last_name.data  = user['last_name']
+        form.phone.data      = user['phone'] or ''
+
+    if form.validate_on_submit():
+        new_pw = generate_password_hash(form.password.data) if form.password.data else user['password']
+        db.execute("""
+            UPDATE users SET first_name=?, last_name=?, phone=?, password=?
+            WHERE user_id=?
+        """, (
+            form.first_name.data,
+            form.last_name.data,
+            form.phone.data or None,
+            new_pw,
+            session['user_id']
+        ))
+        db.commit()
+        flash('Profil erfolgreich aktualisiert.', 'success')
+        return redirect(url_for('profil', section='about'))
+
+    return render_template('profile_edit.html', form=form)
+
 @app.route("/logout")
 def logout():
     session.clear()

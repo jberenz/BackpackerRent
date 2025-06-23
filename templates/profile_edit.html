@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Profil bearbeiten – Backpacker Rent{% endblock %}
+
+{% block content %}
+<section class="edit-profile" style="max-width:600px; margin:2rem auto;">
+  <h2 style="color:#2563EB; font-size:1.5rem; margin-bottom:1rem;">Profil bearbeiten</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.first_name.label }}<br>{{ form.first_name(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.last_name.label }}<br>{{ form.last_name(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.phone.label }}<br>{{ form.phone(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.password.label }}<br>{{ form.password(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+    <a href="{{ url_for('profil', section='about') }}" class="btn btn-secondary">Abbrechen</a>
+  </form>
+</section>
+{% endblock %}
