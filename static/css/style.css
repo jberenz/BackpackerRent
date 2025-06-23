@@ -782,3 +782,139 @@ body {
   border: none;
   object-fit: cover;
 }
+/* =========================================
+   Profil: Eigene/Gebuchte Angebote – Home-Style übernehmen
+   ========================================= */
+
+/* 1) Überschrift korrekt stylen */
+.profile-content h2.section-title {
+  color: #2563EB;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0rem 0 2rem; /* oben 1rem, unten 2rem */
+}
+
+/* 2) Grid wie auf der Startseite */
+.profile-content .offers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  align-items: start;
+  margin-top: 0;
+}
+
+.profile-content .offer-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  width: 100%;
+  max-width: 350px;
+  height: 360px;
+  position: relative;
+  transition: transform .2s, box-shadow .2s;
+}
+.profile-content .offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* 4) Bild-/Platzhalter-Höhe wie Home */
+.profile-content .offer-image,
+.profile-content .offer-placeholder {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.profile-content .offer-placeholder {
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 5) Titel-Clamping */
+.profile-content .offer-title {
+  font-size: 1.25rem;
+  margin: .75rem 1rem .25rem;
+  color: #333;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 6) Meta like Home */
+.profile-content .offer-meta {
+  font-size: .9rem;
+  color: #555;
+  margin: 0 1rem .75rem;
+}
+
+/* 7) Preis unten rechts */
+.profile-content .offer-price {
+  position: absolute;
+  bottom: .30rem;
+  right: .75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2563EB;
+}
+.profile-content .offer-price .price-unit {
+  font-weight: 400;
+  color: #555;
+}
+
+/* 8) Aktion-Buttons gleich breit nebeneinander */
+.profile-content .offer-actions {
+  display: flex;
+  gap: .5rem;
+  margin: 0 1rem 1rem;
+}
+
+
+.profile-content .offer-actions .btn-edit-offer,
+.profile-content .offer-actions .btn-delete-offer {
+  flex: none;            
+  width: 100px;          /* feste Breite */
+  height: 35px;          /* feste Höhe */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Bearbeiten */
+.profile-content .offer-actions .btn-edit-offer {
+  background: #fff;
+  color: #2563EB;
+  border-color: #2563EB;
+}
+.profile-content .offer-actions .btn-edit-offer:hover {
+  background: #f3d3eb;
+  color: #1e1e88;
+}
+
+/* Löschen */
+.profile-content .offer-actions .btn-delete-offer {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+.profile-content .offer-actions .btn-delete-offer:hover {
+  background: #b91c1c;
+}
