@@ -532,6 +532,8 @@ def remove_from_cart(offer_id):
         flash("Angebot aus dem Warenkorb entfernt.", "success")
     return redirect(url_for("warenkorb"))
 @csrf.exempt
+
+@csrf.exempt
 @app.route("/mieten", methods=["GET", "POST"])
 def mietseite():
     if "user_id" not in session:
@@ -553,42 +555,54 @@ def mietseite():
         WHERE o.offer_id IN ({placeholders})
     """, cart).fetchall()
 
-    if request.method == "POST":
-        start = request.form["start_date"]
-        end = request.form["end_date"]
-        address = request.form.get("address")
-        name = request.form.get("name_on_card")
-        card = request.form.get("card_number")
-        sec = request.form.get("sec_code")
+    # Nur GET → einfach Seite anzeigen
+    if request.method == "GET":
+        return render_template("rental_form.html", offers=offers)
 
-        try:
-            start_date = datetime.strptime(start, "%Y-%m-%d")
-            end_date = datetime.strptime(end, "%Y-%m-%d")
-        except ValueError:
-            flash("Ungültiges Datum", "danger")
-            return redirect(request.url)
+    # POST: Formular wurde abgeschickt
+    action = request.form.get("action", "calculate")  # Default: "calculate"
+    start = request.form.get("start_date", "")
+    end = request.form.get("end_date", "")
+    address = request.form.get("address", "")
+    name = request.form.get("name_on_card", "")
+    card = request.form.get("card_number", "")
+    sec = request.form.get("sec_code", "")
 
-        if end_date <= start_date:
-            flash("Enddatum muss nach dem Startdatum liegen.", "warning")
-            return redirect(request.url)
+    try:
+        start_date = datetime.strptime(start, "%Y-%m-%d")
+        end_date = datetime.strptime(end, "%Y-%m-%d")
+    except ValueError:
+        flash("Ungültiges Datum", "danger")
+        return redirect(request.url)
 
-        num_days = (end_date - start_date).days
-        total_price = sum([num_days * offer["price_per_night"] for offer in offers])
+    if end_date <= start_date:
+        flash("Enddatum muss nach dem Startdatum liegen.", "warning")
+        return redirect(request.url)
 
-        # Speichere alle Buchungen
+    num_days = (end_date - start_date).days
+    total_price = sum([num_days * offer["price_per_night"] for offer in offers])
+
+    if action == "book":
+        # Buchung speichern
         for offer in offers:
+            einzelpreis = num_days * offer["price_per_night"]
             db.execute("""
                 INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
                 VALUES (?, ?, ?, ?, ?)
-            """, (offer["offer_id"], session["user_id"], start, end, num_days * offer["price_per_night"]))
+            """, (offer["offer_id"], session["user_id"], start, end, einzelpreis))
         db.commit()
 
-        # Warenkorb leeren nach erfolgreicher Buchung
-        session["cart"] = []
+        session["cart"] = []  # Warenkorb leeren
 
         return render_template("rental_confirm.html", offers=offers, start_date=start,
                                end_date=end, address=address, name_on_card=name,
                                total_price=total_price, num_days=num_days)
 
-    return render_template("rental_form.html", offers=offers)
+    # Wenn nur "Preis berechnen" gedrückt wurde
+    return render_template("rental_form.html", offers=offers, start_date=start,
+                           end_date=end, address=address, name_on_card=name,
+                           card_number=card, sec_code=sec,
+                           total_price=total_price, num_days=num_days)
+
+
 
