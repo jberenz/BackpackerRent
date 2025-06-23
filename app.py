@@ -336,7 +336,14 @@ def profil():
         section=section,
         rentals=rentals,
         own_offers=own_offers
+
     )
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Du wurdest abgemeldet.", "success")
+    return redirect(url_for("index"))
+
 @app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
 def angebot_loeschen(offer_id):
     if "user_id" not in session:
