@@ -27,15 +27,19 @@
       <div class="add-row">
         <div class="add-col">
           <label for="category_id">Kategorie</label>
-          <select id="category_id" name="category_id" required onchange="this.form.submit()">
-            <option value="" disabled {% if not offer and not selected_category_id %}selected{% endif %}>Bitte wählen</option>
-            {% for cat in categories %}
-              <option value="{{ cat.category_id }}"
-                {% if (offer and cat.category_id == offer.category_id) or (selected_category_id and cat.category_id == selected_category_id) %}selected{% endif %}>
-                {{ cat.category_name }}
-              </option>
-            {% endfor %}
-          </select>
+      <select id="category_id" name="category_id" required>
+        <option value="" disabled {% if not offer and not selected_category_id %}selected{% endif %}>
+          Bitte wählen
+        </option>
+        {% for cat in categories %}
+          <option value="{{ cat.category_id }}"
+            {% if (offer and cat.category_id == offer.category_id) 
+               or (selected_category_id and cat.category_id == selected_category_id) %}selected{% endif %}>
+            {{ cat.category_name }}
+          </option>
+        {% endfor %}
+      </select>
+
         </div>
         <div class="add-col">
           <label for="photo">Foto hochladen {% if offer and offer.photo_path %}(optional){% endif %}</label>
