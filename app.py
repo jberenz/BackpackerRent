@@ -25,6 +25,7 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.instance_path, exist_ok=True)
 
 init_app(app)
+
 @csrf.exempt
 @app.route("/")
 def index():
@@ -35,6 +36,8 @@ def index():
     min_price       = request.args.get("min_price",  0.0, type=float)
     max_price       = request.args.get("max_price", 50.0, type=float)
     selected_type   = request.args.get("type", "backpacker")
+    start           = request.args.get("start_date")
+    end             = request.args.get("end_date")
 
     # Typabhängige erlaubte Kategorien
     if selected_type == "radtour":
@@ -71,15 +74,24 @@ def index():
     filters.append("o.price_per_night BETWEEN ? AND ?")
     params.extend([min_price, max_price])
 
+    # Zeitraumfilter: Angebote ausschließen, die im Zeitraum vermietet sind
+    if start and end:
+        filters.append("""
+            o.offer_id NOT IN (
+                SELECT offer_id FROM rentals
+                WHERE start_date <= ? AND end_date >= ?
+            )
+        """)
+        params.extend([end, start])
+
     if filters:
         sql += " WHERE " + " AND ".join(filters)
 
     sql += " ORDER BY o.created_at DESC"
 
-    offers    = db.execute(sql, params).fetchall()
-    regionen  = db.execute("SELECT * FROM region").fetchall()
+    offers = db.execute(sql, params).fetchall()
+    regionen = db.execute("SELECT * FROM region").fetchall()
 
-    # Nur Kategorien laden, die auch für den Typ erlaubt sind
     categories = db.execute(
         "SELECT * FROM category WHERE category_name IN ({})".format(','.join(['?'] * len(allowed_categories))),
         allowed_categories
@@ -92,8 +104,11 @@ def index():
         categories=categories,
         selected_type=selected_type,
         selected_region_id=region_id,
-        selected_category_id=category_id
+        selected_category_id=category_id,
+        start_date=start,
+        end_date=end
     )
+
 
 @csrf.exempt
 @app.route("/angebot/<int:offer_id>")

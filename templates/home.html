@@ -56,13 +56,14 @@
       </div>
 
       <div class="input-group">
-        <label for="start">Start Date</label>
-        <input id="start" name="start" type="date" value="{{ request.args.get('start','') }}">
+        <label for="Startdatum">Start Date</label>
+        <input id="start" name="start_date" type="date" value="{{ request.args.get('start_date','') }}">
+
       </div>
 
       <div class="input-group">
-        <label for="end">End Date</label>
-        <input id="end" name="end" type="date" value="{{ request.args.get('end','') }}">
+        <label for="Enddatum">End Date</label>
+        <input id="end" name="end_date" type="date" value="{{ request.args.get('end_date','') }}">
       </div>
 
       <button type="submit" class="search-button" aria-label="Suchen">
