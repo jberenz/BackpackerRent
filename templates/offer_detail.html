@@ -4,8 +4,7 @@
 {% block content %}
 <section class="detail-section" style="display:flex; justify-content:center; align-items:center; background:#fef3ff; padding:2rem; min-height:100vh;">
   <div class="detail-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:2rem; background:white; padding:2rem; border-radius:2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width:960px; width:100%;">
-    
-    
+
     <div>
       {% if offer.photo_path %}
         <img src="{{ url_for('static', filename=offer.photo_path) }}" alt="{{ offer.title }}" style="max-width:100%; border-radius:1rem;">
@@ -16,7 +15,6 @@
       {% endif %}
     </div>
 
-    
     <div>
       <h2 style="font-size:1.75rem; color:#1e3a8a; margin-bottom:0.5rem;">{{ offer.title }}</h2>
       <p><strong>Kategorie:</strong> {{ offer.category }}</p>
@@ -27,101 +25,31 @@
         <h3 style="margin-top:1.5rem; color:#1e40af;">Beschreibung</h3>
         <p>{{ offer.description }}</p>
       {% endif %}
-      {% if offer.category == "Rucksack" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Volumen:</strong> {{ features["Volumen (l)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
-            <li><strong>Maße:</strong> {{ features["Maße (H × B × T in cm)"] }}</li>
-            <li><strong>Material:</strong> {{ features["Material (z. B. Cordura)"] }}</li>
-            <li><strong>Tragesystem:</strong> {{ features["Tragesystem (z. B. Hüftgurt)"] }}</li>
-        </ul>
-
-      {% elif offer.category == "Zelt" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Kapazität:</strong> {{ features["Kapazität (z. B. 1–4 Personen)"] }}</li>
-            <li><strong>Packmaß:</strong> {{ features["Packmaß (L × B × H in cm)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
-            <li><strong>Wassersäule:</strong> {{ features["Wassersäule (mm)"] }}</li>
-            <li><strong>Material:</strong> {{ features["Material (z. B. Ripstop-Nylon)"] }}</li>
-    </ul>
-
-      {% elif offer.category == "Gaskocher" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Leistung:</strong> {{ features["Leistung (W)"] }}</li>
-            <li><strong>Brennstoffart:</strong> {{ features["Brennstoffart (z. B. Butan)"] }}</li>
-            <li><strong>Durchsatz:</strong> {{ features["Durchsatz (g/min)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (g)"] }}</li>
-            <li><strong>Abmessungen:</strong> {{ features["Abmessungen (B × T × H in cm)"] }}</li>
-        </ul>
-
-      {% elif offer.category == "Luftmatratze" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Abmessungen:</strong> {{ features["Abmessungen (L × B × H in cm)"] }}</li>
-            <li><strong>Dicke:</strong> {{ features["Dicke (cm)"] }}</li>
-            <li><strong>Material:</strong> {{ features["Material (z. B. PVC/TPU)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
-            <li><strong>Max. Belastung:</strong> {{ features["Max. Belastung (kg)"] }}</li>
-        </ul>
-
-      {% elif offer.category == "Multitool" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Funktionen:</strong> {{ features["Funktionen (z. B. 12-in-1)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (g)"] }}</li>
-            <li><strong>Material:</strong> {{ features["Material (z. B. Edelstahl)"] }}</li>
-            <li><strong>Klingenlänge:</strong> {{ features["Klingenlänge (cm)"] }}</li>
-            <li><strong>Maße zusammengeklappt:</strong> {{ features["Maße zusammengeklappt (L × B × T in cm)"] }}</li>
-        </ul>
-
-      {% elif offer.category == "Schlafsack" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Temperaturbereich:</strong> {{ features["Temperaturbereich (°C)"] }}</li>
-            <li><strong>Füllmaterial:</strong> {{ features["Füllmaterial (Daune/synt.)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
-            <li><strong>Packmaß:</strong> {{ features["Packmaß (L × Ø in cm)"] }}</li>
-            <li><strong>Form:</strong> {{ features["Form (Mumie/Decke)"] }}</li>
-        </ul>
-
-      {% elif offer.category == "Radtasche" %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
-        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
-            <li><strong>Volumen:</strong> {{ features["Volumen (l)"] }}</li>
-            <li><strong>Material:</strong> {{ features["Material (z. B. Cordura)"] }}</li>
-            <li><strong>Gewicht:</strong> {{ features["Gewicht (kg)"] }}</li>
-            <li><strong>Wasserdicht:</strong> {{ features["Wasserdicht (ja/nein)"] }}</li>
-            <li><strong>Tragesystem:</strong> {{ features["Tragesystem (z. B. Schultergurt)"] }}</li>
-        </ul>
-      {% endif %}
 
       {% if features %}
-        <h3 style="margin-top:1.5rem; color:#1e40af;">Merkmale</h3>
-        <ul style="list-style:none; padding:0;">
-          {% for key, val in features.items() %}
-            <li><strong>{{ key }}:</strong> {{ val }}</li>
+        <h3 style="margin-top:1.5rem; color:#1e40af;">Eigenschaften</h3>
+        <ul style="list-style:none; padding:0; margin-bottom:1rem;">
+          {% for f in features %}
+            <li>
+              <strong>{{ f.feature_name | replace('_', ' ') | capitalize }}:</strong>
+              {{ f.value if f.value else "nicht angegeben" }}
+            </li>
           {% endfor %}
         </ul>
       {% endif %}
 
-      
       <div style="margin-top:2rem; display:flex; flex-direction:column; gap:1rem;">
-<a href="{{ url_for('rental_form', offer_id=offer.offer_id) }}" style="display:block; padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:#e9a8cf; color:white; text-align:center; text-decoration:none; font-weight:bold;">
-  Sofort-Mieten
-</a>
-<form action="{{ url_for('add_to_cart', offer_id=offer.offer_id) }}" method="post">
-  <button type="submit" style="display:block; width:100%; padding:0.75rem; border:2px solid #2563EB; border-radius:2rem; background:white; font-weight:bold; color:#2563EB; text-align:center;">
-    In den Warenkorb
-  </button>
-</form>
-
-
-
+        <a href="{{ url_for('rental_form', offer_id=offer.offer_id) }}" style="display:block; padding:0.75rem; border:2px solid #e9a8cf; border-radius:2rem; background:#e9a8cf; color:white; text-align:center; text-decoration:none; font-weight:bold;">
+          Sofort-Mieten
+        </a>
+        <form action="{{ url_for('add_to_cart', offer_id=offer.offer_id) }}" method="post">
+          <button type="submit" style="display:block; width:100%; padding:0.75rem; border:2px solid #2563EB; border-radius:2rem; background:white; font-weight:bold; color:#2563EB; text-align:center;">
+            In den Warenkorb
+          </button>
+        </form>
         <a href="{{ url_for('index') }}" style="margin-top:1rem; display:inline-block; color:#1e3a8a;">← Zurück zur Übersicht</a>
       </div>
+
     </div>
   </div>
 </section>

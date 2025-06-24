@@ -115,6 +115,7 @@ def index():
 def angebot_details(offer_id):
     db = get_db_con()
 
+    # Das Angebot mit Kategorie und Region laden
     offer = db.execute("""
         SELECT o.*, c.category_name AS category, r.region_name AS region
         FROM offers o
@@ -126,16 +127,26 @@ def angebot_details(offer_id):
     if offer is None:
         return "Angebot nicht gefunden", 404
 
+    # Features + Werte laden (immer alle Features der Kategorie, auch wenn kein Wert vorhanden)
     features_rows = db.execute("""
-        SELECT f.feature_name, of.value
-        FROM offer_features of
-        JOIN features f ON of.feature_id = f.feature_id
-        WHERE of.offer_id = ?
-    """, (offer_id,)).fetchall()
+        SELECT f.feature_name, f.feature_id, f.category_id, of.value
+        FROM features f
+        LEFT JOIN offer_features of 
+            ON f.feature_id = of.feature_id AND of.offer_id = ?
+        WHERE f.category_id = ?
+    """, (offer_id, offer["category_id"])).fetchall()
 
-    features = {row["feature_name"]: row["value"] for row in features_rows} if features_rows else {}
+    # Features als Liste von Dicts (leichter fürs Template)
+    features = [
+        {
+            "feature_name": row["feature_name"],
+            "value": row["value"]
+        }
+        for row in features_rows
+    ]
 
     return render_template("offer_detail.html", offer=offer, features=features)
+
 
 @csrf.exempt
 @app.route("/anmelden", methods=["GET", "POST"])
@@ -240,7 +251,7 @@ def add_offer():
 
         features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
         for feature in features:
-            value = request.form.get(feature["feature_name"])
+            value = request.form.get(f"feature_{feature['feature_id']}")
             if value:
                 db.execute("""
                     INSERT INTO offer_features (offer_id, feature_id, value)
@@ -491,7 +502,7 @@ def edit_offer(offer_id):
         db.execute("DELETE FROM offer_features WHERE offer_id = ?", (offer_id,))
         features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
         for feature in features:
-            value = request.form.get(feature["feature_name"])
+            value = request.form.get(f"feature_{feature['feature_id']}")
             if value:
                 db.execute("""
                     INSERT INTO offer_features (offer_id, feature_id, value)

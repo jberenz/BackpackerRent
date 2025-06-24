@@ -48,15 +48,16 @@
 
       <!-- Dynamische Merkmale (werden per JS ergänzt) -->
       <div id="features" class="features">
-        {% if features %}
-          {% for f in features %}
-            <div class="feature-field">
-              <label for="{{ f.feature_name }}">{{ f.feature_name | replace('_', ' ') | capitalize }}</label>
-              <input type="text" id="{{ f.feature_name }}" name="{{ f.feature_name }}" value="{{ f.value or '' }}">
-            </div>
-          {% endfor %}
-        {% endif %}
+  {% if features %}
+    {% for f in features %}
+      <div class="feature-field">
+        <label for="feature_{{ f.feature_id }}">{{ f.feature_name | replace('_', ' ') | capitalize }}</label>
+        <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}" value="{{ f.value or '' }}">
       </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
 
       <!-- Beschreibung -->
       <div class="add-row full">
@@ -183,13 +184,13 @@ function renderFeatures(catId) {
     wrapper.className = 'feature-field';
 
     const lbl = document.createElement('label');
-    lbl.htmlFor = f.id;
+    lbl.htmlFor = `feature_${f.id}`;
     lbl.textContent = f.label;
 
     const inp = document.createElement('input');
     inp.type = 'text';
-    inp.id = f.id;
-    inp.name = f.id;
+    inp.id = `feature_${f.id}`;
+    inp.name = `feature_${f.id}`;
 
     wrapper.append(lbl, inp);
     featuresDiv.append(wrapper);

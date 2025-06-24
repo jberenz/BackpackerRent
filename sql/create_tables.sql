@@ -52,6 +52,62 @@ CREATE TABLE IF NOT EXISTS features (
   category_id INTEGER NOT NULL,
   FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE
 );
+-- Zelt (1)
+INSERT INTO features (feature_name, category_id) VALUES
+('Kapazität (z. B. 1–4 Personen)', 1),
+('Packmaß (L × B × H in cm)', 1),
+('Gewicht (kg)', 1),
+('Wassersäule (mm)', 1),
+('Material (z. B. Ripstop-Nylon)', 1);
+
+-- Rucksack (2)
+INSERT INTO features (feature_name, category_id) VALUES
+('Volumen (l)', 2),
+('Gewicht (kg)', 2),
+('Maße (H × B × T in cm)', 2),
+('Material (z. B. Cordura)', 2),
+('Tragesystem (z. B. Hüftgurt)', 2);
+
+-- Multitool (3)
+INSERT INTO features (feature_name, category_id) VALUES
+('Funktionen (z. B. 12-in-1)', 3),
+('Gewicht (g)', 3),
+('Material (z. B. Edelstahl)', 3),
+('Klingenlänge (cm)', 3),
+('Maße zusammengeklappt (L × B × T in cm)', 3);
+
+-- Schlafsack (4)
+INSERT INTO features (feature_name, category_id) VALUES
+('Temperaturbereich (°C)', 4),
+('Füllmaterial (Daune/synt.)', 4),
+('Gewicht (kg)', 4),
+('Packmaß (L × Ø in cm)', 4),
+('Form (Mumie/Decke)', 4);
+
+-- Luftmatratze (5)
+INSERT INTO features (feature_name, category_id) VALUES
+('Abmessungen (L × B × H in cm)', 5),
+('Dicke (cm)', 5),
+('Material (z. B. PVC/TPU)', 5),
+('Gewicht (kg)', 5),
+('Max. Belastung (kg)', 5);
+
+-- Radtasche (6)
+INSERT INTO features (feature_name, category_id) VALUES
+('Volumen (l)', 6),
+('Material (z. B. Cordura)', 6),
+('Gewicht (kg)', 6),
+('Wasserdicht (ja/nein)', 6),
+('Tragesystem (z. B. Schultergurt)', 6);
+
+-- Gaskocher (7)
+INSERT INTO features (feature_name, category_id) VALUES
+('Leistung (W)', 7),
+('Brennstoffart (z. B. Butan)', 7),
+('Durchsatz (g/min)', 7),
+('Gewicht (g)', 7),
+('Abmessungen (B × T × H in cm)', 7);
+
 
 -- ===========================================
 -- Tabelle: Offers (Angebote zur Ausleihe)
