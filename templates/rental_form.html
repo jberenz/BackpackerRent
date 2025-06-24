@@ -32,7 +32,7 @@
       <div class="add-row full">
         <div class="add-col">
           <label for="address">Lieferadresse</label>
-          <input type="text" name="address" placeholder="Straße, PLZ, Ort" value="{{ address or '' }}">
+         <input type="text" name="address" placeholder="Straße, PLZ, Ort" value="{{ address or '' }}" required>
         </div>
       </div>
 
@@ -40,18 +40,18 @@
       <div class="add-row">
         <div class="add-col">
           <label for="name_on_card">Name auf der Karte</label>
-          <input type="text" name="name_on_card" value="{{ name_on_card or '' }}">
+         <input type="text" name="name_on_card" value="{{ name_on_card or '' }}" required>
         </div>
         <div class="add-col">
           <label for="card_number">Kartennummer</label>
-          <input type="text" name="card_number" value="{{ card_number or '' }}">
+         <input type="text" name="card_number" value="{{ card_number or '' }}" required>
         </div>
       </div>
 
       <div class="add-row">
         <div class="add-col" style="max-width: 100px;">
           <label for="sec_code">Sec. Code</label>
-          <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}">
+        <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}" required>
         </div>
       </div>
 
