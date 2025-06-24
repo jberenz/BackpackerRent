@@ -27,11 +27,11 @@
       <div class="add-row">
         <div class="add-col">
           <label for="category_id">Kategorie</label>
-          <select id="category_id" name="category_id" required>
-            <option value="" disabled {% if not offer %}selected{% endif %}>Bitte wählen</option>
+          <select id="category_id" name="category_id" required onchange="this.form.submit()">
+            <option value="" disabled {% if not offer and not selected_category_id %}selected{% endif %}>Bitte wählen</option>
             {% for cat in categories %}
               <option value="{{ cat.category_id }}"
-                {% if offer and cat.category_id == offer.category_id %}selected{% endif %}>
+                {% if (offer and cat.category_id == offer.category_id) or (selected_category_id and cat.category_id == selected_category_id) %}selected{% endif %}>
                 {{ cat.category_name }}
               </option>
             {% endfor %}
@@ -46,18 +46,17 @@
         </div>
       </div>
 
-      <!-- Dynamische Merkmale (werden per JS ergänzt) -->
-      <div id="features" class="features">
-  {% if features %}
-    {% for f in features %}
-      <div class="feature-field">
-        <label for="feature_{{ f.feature_id }}">{{ f.feature_name | replace('_', ' ') | capitalize }}</label>
-        <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}" value="{{ f.value or '' }}">
-      </div>
-    {% endfor %}
-  {% endif %}
-</div>
-
+      <!-- Dynamische Merkmale -->
+      {% if features %}
+        <div id="features" class="features">
+          {% for f in features %}
+            <div class="feature-field">
+              <label for="feature_{{ f.feature_id }}">{{ f.feature_name }}</label>
+              <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}" value="{{ f.value or '' }}">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
       <!-- Beschreibung -->
       <div class="add-row full">
@@ -107,98 +106,4 @@
     </form>
   </div>
 </section>
-
-<script>
-const featureSets = {
-  zelt: [
-    { id: 'kapazitaet',   label: 'Kapazität (z. B. 1–4 Personen)' },
-    { id: 'packmass',     label: 'Packmaß (L × B × H in cm)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'wassersaeule', label: 'Wassersäule (mm)' },
-    { id: 'material',     label: 'Material (z. B. Ripstop-Nylon)' }
-  ],
-  rucksack: [
-    { id: 'volumen',      label: 'Volumen (l)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'masse',        label: 'Maße (H × B × T in cm)' },
-    { id: 'material',     label: 'Material (z. B. Cordura)' },
-    { id: 'tragesystem',  label: 'Tragesystem (z. B. Hüftgurt)' }
-  ],
-  multitool: [
-    { id: 'funktionen',   label: 'Funktionen (z. B. 12-in-1)' },
-    { id: 'gewicht',      label: 'Gewicht (g)' },
-    { id: 'material',     label: 'Material (z. B. Edelstahl)' },
-    { id: 'klingenlaenge',label: 'Klingenlänge (cm)' },
-    { id: 'masse',        label: 'Maße zusammengeklappt (L × B × T in cm)' }
-  ],
-  schlafsack: [
-    { id: 'temperatur',   label: 'Temperaturbereich (°C)' },
-    { id: 'fuellmaterial',label: 'Füllmaterial (Daune/synt.)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'packmass',     label: 'Packmaß (L × Ø in cm)' },
-    { id: 'form',         label: 'Form (Mumie/Decke)' }
-  ],
-  luftmatratze: [
-    { id: 'abmessungen',  label: 'Abmessungen (L × B × H in cm)' },
-    { id: 'dicke',        label: 'Dicke (cm)' },
-    { id: 'material',     label: 'Material (z. B. PVC/TPU)' },
-    { id: 'gewicht',      label: 'Gewicht (kg)' },
-    { id: 'maxbelast',    label: 'Max. Belastung (kg)' }
-  ],
-  radtasche: [
-    { id: 'volumen_rt',     label: 'Volumen (l)' },
-    { id: 'material_rt',    label: 'Material (z. B. Cordura)' },
-    { id: 'gewicht_rt',     label: 'Gewicht (kg)' },
-    { id: 'wasserdicht_rt', label: 'Wasserdicht (ja/nein)' },
-    { id: 'tragesystem_rt', label: 'Tragesystem (z. B. Schultergurt)' }
-  ],
-  gaskocher: [
-    { id: 'leistung_gk',     label: 'Leistung (W)' },
-    { id: 'brennstoff_gk',   label: 'Brennstoffart (z. B. Butan)' },
-    { id: 'durchsatz_gk',    label: 'Durchsatz (g/min)' },
-    { id: 'gewicht_gk',      label: 'Gewicht (g)' },
-    { id: 'abmessungen_gk',  label: 'Abmessungen (B × T × H in cm)' }
-  ]
-};
-
-const categoryKeyMap = {
-  1: 'zelt',
-  2: 'rucksack',
-  3: 'multitool',
-  4: 'schlafsack',
-  5: 'luftmatratze',
-  6: 'radtasche',
-  7: 'gaskocher'
-};
-
-const categorySelect = document.getElementById('category_id');
-const featuresDiv = document.getElementById('features');
-
-function renderFeatures(catId) {
-  featuresDiv.innerHTML = '';
-  const key = categoryKeyMap[catId];
-  if (!key || !featureSets[key]) return;
-
-  featureSets[key].forEach(f => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'feature-field';
-
-    const lbl = document.createElement('label');
-    lbl.htmlFor = `feature_${f.id}`;
-    lbl.textContent = f.label;
-
-    const inp = document.createElement('input');
-    inp.type = 'text';
-    inp.id = `feature_${f.id}`;
-    inp.name = `feature_${f.id}`;
-
-    wrapper.append(lbl, inp);
-    featuresDiv.append(wrapper);
-  });
-}
-
-{% if not features %}
-categorySelect?.addEventListener('change', e => renderFeatures(parseInt(e.target.value)));
-{% endif %}
-</script>
 {% endblock %}

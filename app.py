@@ -218,18 +218,32 @@ def add_offer():
     categories = db.execute("SELECT * FROM category").fetchall()
     regionen = db.execute("SELECT * FROM region").fetchall()
 
-    if request.method == "POST":
-        title       = request.form["title"].strip()
-        description = request.form.get("description", "").strip()
-        category_id = request.form["category_id"]
-        region_id   = request.form["region_id"]
-        price_per_night = float(request.form["price_per_night"])
-        user_id = session.get("user_id")
+    selected_category_id = None
+    features = []
 
+    if request.method == "POST":
+        user_id = session.get("user_id")
         if not user_id:
             flash("Bitte melde dich zuerst an.", "warning")
             return redirect(url_for("anmelden"))
 
+        title = request.form.get("title", "").strip()
+        description = request.form.get("description", "").strip()
+        category_id = int(request.form.get("category_id", 0))
+        region_id = int(request.form.get("region_id", 0))
+        price_str = request.form.get("price_per_night", "").strip()
+
+        selected_category_id = category_id
+        features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
+
+        if not title or not price_str:
+            flash("Bitte fülle alle Pflichtfelder aus.", "warning")
+            return render_template("angebot_erstellen.html", categories=categories, regionen=regionen,
+                                   features=features, selected_category_id=selected_category_id)
+
+        price_per_night = float(price_str)
+
+        # Foto
         photo = request.files.get("photo")
         photo_path = None
         if photo and photo.filename:
@@ -238,7 +252,7 @@ def add_offer():
             photo.save(full_path)
             photo_path = os.path.join("uploads", filename).replace("\\", "/")
 
-
+        # Angebot
         cursor = db.execute("""
             INSERT INTO offers (
                 user_id, title, description, category_id,
@@ -246,12 +260,11 @@ def add_offer():
             ) VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (user_id, title, description, category_id, region_id, price_per_night, photo_path))
         db.commit()
-
         offer_id = cursor.lastrowid
 
-        features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
+        # Features
         for feature in features:
-            value = request.form.get(f"feature_{feature['feature_id']}")
+            value = request.form.get(f"feature_{feature['feature_id']}", "").strip()
             if value:
                 db.execute("""
                     INSERT INTO offer_features (offer_id, feature_id, value)
@@ -262,7 +275,8 @@ def add_offer():
         flash("Angebot erfolgreich erstellt!", "success")
         return redirect(url_for("index"))
 
-    return render_template("angebot_erstellen.html", categories=categories, regionen=regionen)
+    return render_template("angebot_erstellen.html", categories=categories, regionen=regionen, features=features, selected_category_id=selected_category_id)
+
 @csrf.exempt
 @app.route("/mieten/<int:offer_id>", methods=["GET", "POST"])
 def rental_form(offer_id):
