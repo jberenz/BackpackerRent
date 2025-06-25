@@ -1,0 +1,6 @@
+{% for f in features %}
+<div class="feature-field">
+  <label for="feature_{{ f.feature_id }}">{{ f.feature_name }}</label>
+  <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}">
+</div>
+{% endfor %}

@@ -27,7 +27,7 @@
       <div class="add-row">
         <div class="add-col">
           <label for="category_id">Kategorie</label>
-      <select id="category_id" name="category_id" required>
+      <select id="category_id" name="category_id" required onchange="loadFeatures(this.value)">
         <option value="" disabled {% if not offer and not selected_category_id %}selected{% endif %}>
           Bitte wählen
         </option>
@@ -51,16 +51,17 @@
       </div>
 
       <!-- Dynamische Merkmale -->
-      {% if features %}
-        <div id="features" class="features">
-          {% for f in features %}
-            <div class="feature-field">
-              <label for="feature_{{ f.feature_id }}">{{ f.feature_name }}</label>
-              <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}" value="{{ f.value or '' }}">
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+      <div id="features" class="features">
+  {% if features %}
+    {% for f in features %}
+      <div class="feature-field">
+        <label for="feature_{{ f.feature_id }}">{{ f.feature_name }}</label>
+        <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}" value="{{ f.value or '' }}">
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
 
       <!-- Beschreibung -->
       <div class="add-row full">
@@ -111,3 +112,29 @@
   </div>
 </section>
 {% endblock %}
+
+{% block scripts %}
+<script>
+function loadFeatures(categoryId) {
+  if (!categoryId) {
+    document.getElementById('features').innerHTML = '';
+    return;
+  }
+
+  fetch('/features_for_category/' + categoryId)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Features konnten nicht geladen werden');
+      }
+      return response.text();
+    })
+    .then(html => {
+      document.getElementById('features').innerHTML = html;
+    })
+    .catch(error => {
+      console.error('Fehler beim Laden der Features:', error);
+    });
+}
+</script>
+{% endblock %}
+

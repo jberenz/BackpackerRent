@@ -667,5 +667,15 @@ def mietseite():
                            card_number=card, sec_code=sec,
                            total_price=total_price, num_days=num_days)
 
+@app.route('/features_for_category/<int:category_id>')
+def features_for_category(category_id):
+    db = get_db_con()
+    features = db.execute(
+        "SELECT feature_id, feature_name FROM features WHERE category_id = ?",
+        (category_id,)
+    ).fetchall()
+    return render_template('partials/_features.html', features=features)
+
+
 
 
