@@ -24,31 +24,31 @@ nav_order: 3
 {: toc }
 </details>
 
-## [Section / module]
+## Home
 
-### `function_definition()`
+### `index()`
 
-**Route:** `/route/`
-
-**Methods:** `POST` `GET` `PATCH` `PUT` `DELETE`
-
-**Purpose:** [Short explanation of what the function does and why]
-
-**Sample output:**
-
-[Show an image, string output, or similar illustration -- or write NONE if function generates no output]
-
----
-
-## [Example, delete this section] Show to-do lists
-
-### `get_lists()`
-
-**Route:** `/lists/`
+**Route:** `/`
 
 **Methods:** `GET`
 
-**Purpose:** Show all to-do lists.
+**Purpose:** Render the home page and display available offers based on optional filters: region, category, price range, type (e.g., backpacker, radtour), and rental period. Filters out offers that are already rented in the specified period. The function dynamically limits categories depending on the selected type (e.g., "backpacker" or "radtour").
+
+**Sample output:**
+
+Renders home.html with a list of offers, regions, and categories.
+
+---
+
+## Angebote
+
+### `angebot_details(offer_id)`
+
+**Route:** `/angebot/<int:offer_id>`
+
+**Methods:** `GET`
+
+**Purpose:** Render the detail page for a specific offer. Loads the offer with its category and region, as well as all features of the offer’s category (including features without assigned values). Returns a 404 page if the offer does not exist.
 
 **Sample output:**
 
@@ -56,13 +56,13 @@ nav_order: 3
 
 ---
 
-### `get_list_todos(list_id)`
+### `anmelden()`
 
-**Route:** `/lists/<int:list_id>`
+**Route:** `/anmelden", methods=["GET", "POST"]`
 
-**Methods:** `GET`
+**Methods:** `GET` `POST`
 
-**Purpose:** Retrieve all to-do items of to-do list with ID `list_id` from database and present to user.
+**Purpose:** Handle user login. On GET, render the login form. On POST, validate credentials (email and password). If valid, create a session and redirect to the home page; if invalid, redisplay the form with an error message.
 
 **Sample output:**
 
@@ -71,14 +71,13 @@ nav_order: 3
 
 ## [Example, delete this section] Insert sample data
 
-### `run_insert_sample()`
+### `registrieren()`
 
-**Route:** `/insert/sample`
+**Route:** `/registrieren", methods=["GET", "POST"]`
 
-**Methods:** `GET`
+**Methods:** `GET` `POST`
 
-**Purpose:** Flush the database and insert sample data set
+**Purpose:** Handle user registration. On GET, render the registration form with available regions. On POST, validate input (region, email uniqueness, etc.), create a new user with hashed password, and store it in the database. Redirects to the login page upon success; otherwise, redisplays the form with error messages.
 
 **Sample output:**
 
-Browser shows: `Database flushed and populated with some sample data.`
