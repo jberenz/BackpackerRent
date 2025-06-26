@@ -17,7 +17,7 @@ nav_order: 2
 
 # Data model picture
 
-![Datenmodell Backpacker Rent](../assets/images/Datamodel.png)
+![Datenmodell Backpacker Rent](../assets/images/Datamodel_BR.png)
 
 Im Mittelpunkt steht die Tabelle User, in der alle Nutzer der Plattform gespeichert sind. Jeder Nutzer kann sich registrieren und wählt eine Region zugeordnet, damit der User lokale Angebote finden kann.
 
