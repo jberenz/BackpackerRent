@@ -39,14 +39,7 @@
       </nav>
 
       <div class="header-actions">
-        <button class="icon-btn" aria-label="Suche öffnen">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-               stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </button>
-
+        
         <!-- Profil-Icon rechts -->
         {% if session.user_id %}
         <a href="{{ url_for('profil') }}" class="icon-btn profile-btn" title="Mein Profil">
