@@ -70,12 +70,15 @@ Einige wichtige technische Aspekte für das Verständnis der Codebasis:
   - Buchungs-Logik prüft immer auf Terminüberschneidungen mit bestehenden Rentals.
   - Viele Aktionen (z. B. Angebote löschen/bearbeiten) sind zusätzlich gegen Missbrauch durch ID-Prüfungen geschützt (z. B. nur der Eigentümer darf löschen).
 
-- **Datenmodell**
+-**Datenmodell**
   - Die Datenbank folgt einer klaren Normalisierung:
     - `users` enthält Nutzerdaten mit Region-Relation.
     - `offers` verknüpft Angebote mit User, Kategorie, Region.
     - `features` + `offer_features` bilden eine n:m-Relation, um Angebote flexibel zu erweitern.
     - `rentals` hält alle Buchungen inkl. Start-/Enddatum und Gesamtpreis.
+    - `category` speichert die verschiedenen Angebotskategorien und dient als Basis für Features.
+    - `region` enthält die geografischen Gebiete, denen Nutzer und Angebote zugeordnet sind.
+
 
 - **Warenkorb-Mechanismus**
   - Der Warenkorb wird session-basiert gespeichert, ohne persistente Speicherung in der Datenbank.
