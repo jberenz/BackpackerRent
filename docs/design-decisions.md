@@ -4,7 +4,7 @@ nav_order: 3
 ---
 
 {: .label }
-[Jane Dane]
+[Backpacker Rent Team]
 
 {: .no_toc }
 # Design decisions
@@ -16,77 +16,160 @@ nav_order: 3
 {: toc }
 </details>
 
-## 01: [Title]
+## 01: Datenmodellierung mit relationaler DB + Feature-Zuordnung
 
 ### Meta
 
-Status
-: **Work in progress** - Decided - Obsolete
+Status  
+: **Decided**
 
-Updated
-: DD-MMM-YYYY
+Updated  
+: 26-Jun-2025
 
 ### Problem statement
 
-[Describe the problem to be solved or the goal to be achieved. Include relevant context information.]
+Wie sollen Angebote (Offers) und deren dynamische Eigenschaften (Features) strukturiert werden, sodass neue Kategorien und deren spezifische Merkmale flexibel erweiterbar bleiben?  
+Ziel: Vermeidung redundanter Spalten, gute Erweiterbarkeit (z. B. neue Kategorien + neue Features).
 
 ### Decision
 
-[Describe **which** design decision was taken for **what reason** and by **whom**.]
+Wir haben uns entschieden, eine relationale Datenbankstruktur mit separaten Tabellen für `offers`, `features` und einer Verknüpfungstabelle `offer_features` zu nutzen.  
+Dadurch bleiben wir flexibel bei neuen Kategorien und Features, und die Daten bleiben sauber normalisiert.  
+
+*Decision was taken by:* team/backpackerrent
 
 ### Regarded options
 
-[Describe any possible design decision that will solve the problem. Assess these options, e.g., via a simple pro/con list.]
+| Criterion | Eigene Spalten je Kategorie | JSON-Feld in `offers` | **Separate Features-Tabelle + Verknüpfung** |
+| --- | --- | --- | --- |
+| **Flexibilität** | ❌ Neue Spalten nötig | ✔️ Dynamisch | ✔️ Dynamisch |
+| **SQL-Filterbarkeit** | ✔️ Einfach | ❌ Komplex (nur JSON-Funktionen) | ✔️ Einfach |
+| **Erweiterbarkeit** | ❌ Schema-Änderung nötig | ✔️ Ohne Schema-Änderung | ✔️ Ohne Schema-Änderung |
+| **Komplexität** | ✔️ Einfach | ❔ Mittel | ❌ Höher (mehr Tabellen) |
 
 ---
 
-## [Example, delete this section] 01: How to access the database - SQL or SQLAlchemy 
+## 02: Authentifizierung mit Session-basiertem Login statt Tokens
 
 ### Meta
 
-Status
-: Work in progress - **Decided** - Obsolete
+Status  
+: **Decided**
 
-Updated
-: 30-Jun-2024
+Updated  
+: 26-Jun-2025
 
 ### Problem statement
 
-Should we perform database CRUD (create, read, update, delete) operations by writing plain SQL or by using SQLAlchemy as object-relational mapper?
-
-Our web application is written in Python with Flask and connects to an SQLite database. To complete the current project, this setup is sufficient.
-
-We intend to scale up the application later on, since we see substantial business value in it.
-
-
-
-Therefore, we will likely:
-Therefore, we will likely:
-Therefore, we will likely:
-
-+ Change the database schema multiple times along the way, and
-+ Switch to a more capable database system at some point.
+Wie sollen Nutzer authentifiziert bleiben, um eine Session zwischen Anfragen sicher aufrechtzuerhalten (z. B. beim Mieten, im Profil)?  
+Ziel: Einfache Umsetzung für Web-Umgebung, ohne komplexe Token-Logik.
 
 ### Decision
 
-We stick with plain SQL.
+Wir nutzen serverseitig gespeicherte Session-Daten mit dem Flask-Session-Mechanismus.  
+Dadurch wird die Authentifizierung einfach umgesetzt, ohne dass komplexe Token- oder API-Logik erforderlich ist.
 
-Our team still has to come to grips with various technologies new to us, like Python and CSS. Adding another element to our stack will slow us down at the moment.
-
-Also, it is likely we will completely re-write the app after MVP validation. This will create the opportunity to revise tech choices in roughly 4-6 months from now.
-*Decision was taken by:* github.com/joe, github.com/jane, github.com/maxi
+*Decision was taken by:* team/backpackerrent
 
 ### Regarded options
 
-We regarded two alternative options:
-
-+ Plain SQL
-+ SQLAlchemy
-
-| Criterion | Plain SQL | SQLAlchemy |
+| Criterion | **Session (gewählt)** | Token (z. B. JWT) |
 | --- | --- | --- |
-| **Know-how** | ✔️ We know how to write SQL | ❌ We must learn ORM concept & SQLAlchemy |
-| **Change DB schema** | ❌ SQL scattered across code | ❔ Good: classes, bad: need Alembic on top |
-| **Switch DB engine** | ❌ Different SQL dialect | ✔️ Abstracts away DB engine |
+| **Einfachheit** | ✔️ Einfach zu implementieren | ❌ Komplexer (Token-Handling, Blacklist) |
+| **API-Tauglichkeit** | ❌ Nicht geeignet für reine API | ✔️ Gut für APIs |
+| **Security (CSRF)** | ✔️ CSRF-Schutz nativ machbar | ❔ Eigene Maßnahmen nötig |
+| **Overhead** | ✔️ Kein Overhead | ❌ Mehr Aufwand im Backend + Frontend |
 
 ---
+
+## 03: Filterung von Angeboten in SQL statt in Python
+
+### Meta
+
+Status  
+: **Decided**
+
+Updated  
+: 26-Jun-2025
+
+### Problem statement
+
+Sollen Angebotsfilter (Preis, Kategorie, Region, Verfügbarkeit) in SQL oder nachträglich im Python-Backend umgesetzt werden?  
+Ziel: Effiziente Filterung auch bei großen Datenmengen.
+
+### Decision
+
+Die Filterlogik wird direkt in SQL umgesetzt.  
+So wird nur die benötigte Datenmenge überhaupt vom DB-Server an das Backend übergeben, was die Performance verbessert.
+
+*Decision was taken by:* team/backpackerrent
+
+### Regarded options
+
+| Criterion | **SQL-Filterung (gewählt)** | Python-Filterung |
+| --- | --- | --- |
+| **Performance** | ✔️ DB-seitig effizient, nutzt Indexe | ❌ Hoher Overhead im Backend |
+| **Komplexität** | ❔ Komplexere SQL-Statements | ✔️ Einfacher Python-Code |
+| **Wartbarkeit** | ✔️ Queries direkt filternd | ❌ Schwer nachzuvollziehen bei größerem Datenvolumen |
+
+---
+
+## 04: Verwendung von Flask-WTF für Formulare
+
+### Meta
+
+Status  
+: **Decided**
+
+Updated  
+: 26-Jun-2025
+
+### Problem statement
+
+Wie sollen Formulare validiert und gegen CSRF abgesichert werden? Ziel: Wenig Boilerplate, saubere Validierung, integrierter CSRF-Schutz.
+
+### Decision
+
+Wir verwenden Flask-WTF + WTForms, um deklarativ Formulare zu definieren und serverseitig validieren zu lassen, inklusive CSRF-Absicherung.
+
+*Decision was taken by:* team/backpackerrent
+
+### Regarded options
+
+| Criterion | **Flask-WTF (gewählt)** | Plain HTML + eigene Prüfung |
+| --- | --- | --- |
+| **Sicherheit** | ✔️ CSRF-Schutz integriert | ❌ Muss selbst implementiert werden |
+| **Wartbarkeit** | ✔️ DRY, klar strukturiert | ❌ Viel redundanter Code |
+| **Flexibilität** | ✔️ Viele Features, einfach erweiterbar | ❔ Volle Freiheit, aber mehr Aufwand |
+
+---
+
+## 05: Keine Verwendung von JavaScript für Hauptfunktionen
+
+### Meta
+
+Status  
+: **Decided**
+
+Updated  
+: 26-Jun-2025
+
+### Problem statement
+
+Sollen Kernfunktionen (z. B. Angebote erstellen/bearbeiten, mieten) auch ohne JavaScript funktionieren?  
+Ziel: Barrierefreiheit und Kompatibilität sicherstellen.
+
+### Decision
+
+Die Hauptfunktionen sind vollständig serverseitig umgesetzt. JS wird nur für Komfort-Features (z. B. dynamisches Nachladen von Features) genutzt.  
+Dadurch bleibt die Anwendung barrierefrei und funktioniert auch ohne aktiviertes JS.
+
+*Decision was taken by:* team/backpackerrent
+
+### Regarded options
+
+| Criterion | **Server-seitige Umsetzung (gewählt)** | Voll-JavaScript-Lösung |
+| --- | --- | --- |
+| **Barrierefreiheit** | ✔️ Hohe | ❌ Gering ohne JS |
+| **Komplexität** | ✔️ Einfacher | ❌ Komplexere Architektur |
+| **User Experience** | ❔ Weniger dynamisch | ✔️ Sehr dynamisch |
