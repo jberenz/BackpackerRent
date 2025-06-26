@@ -108,7 +108,8 @@
                   </div>
                 {% endif %}
                 <h3 class="offer-title">{{ rental.title }}</h3>
-                <p class="offer-meta">Gebucht vom {{ rental.start_date }} bis {{ rental.end_date }}</p>
+                <p class="offer-meta">Gebucht vom {{ rental.start_date.strftime('%d.%m.%Y') }} bis {{ rental.end_date.strftime('%d.%m.%Y') }}
+
                 <p class="offer-price">
                   <span class="price-amount">{{ ('%.2f'|format(rental.total_price)).replace('.', ',') }} €</span>
                   <span class="price-unit">gesamt</span>
