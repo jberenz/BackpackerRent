@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort #https://flask.palletsprojects.com/en/stable/api/#flask.flash 
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime #https://docs.python.org/3/library/datetime.html #datetime.datetime.strptime
@@ -21,7 +21,7 @@ app.config['WTF_CSRF_SECRET_KEY'] = 'noch-ein-geheimer-schluessel'
 csrf = CSRFProtect(app)
 
 
-os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True) # https://docs.python.org/3/library/os.html#os.makedirs
 os.makedirs(app.instance_path, exist_ok=True)
 
 init_app(app)
@@ -31,7 +31,7 @@ init_app(app)
 def index():
     db = get_db_con()
 
-    region_id       = request.args.get("region_id",       type=int)
+    region_id       = request.args.get("region_id",       type=int) #https://flask.palletsprojects.com/en/stable/api/#flask.Request.args
     category_id     = request.args.get("category_filter", type=int)
     min_price       = request.args.get("min_price",  0.0, type=float)
     max_price       = request.args.get("max_price", 50.0, type=float)
@@ -151,9 +151,9 @@ def angebot_details(offer_id):
 @csrf.exempt
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
-    if request.method == "POST":
-        email = request.form["email"].strip()
-        password = request.form["password"].strip()
+    if request.method == "POST": # Gibt die HTTP-Methode der aktuellen Anfrage zurück (z.B. "GET" oder "POST"): https://flask.palletsprojects.com/en/stable/api/#flask.Request.method
+        email = request.form["email"].strip() # request.form ist ein MultiDict, der die Formulardaten enthält, die per POST gesendet wurden. Mit request.form["email"] greift man auf das Feld email zu: https://flask.palletsprojects.com/en/stable/api/#flask.Request.form
+        password = request.form["password"].strip() # strip() entfernt Leerzeichen: https://docs.python.org/3/library/stdtypes.html#str.strip
         db = get_db_con()
         user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
@@ -178,7 +178,7 @@ def registrieren():
         email      = request.form["email"].strip()
         password   = request.form["password"].strip()
         region_id_str = request.form.get("region_id", "").strip()
-        phone = request.form.get("phone", "").strip() or None
+        phone = request.form.get("phone", "").strip() or None # Gibt den Wert für "region_id" zurück, oder den leeren String, falls das Feld nicht existiert: https://werkzeug.palletsprojects.com/en/stable/datastructures/#werkzeug.datastructures.MultiDict.get
 
         if not region_id_str:
             flash("Bitte wähle eine Region aus.", "warning")
@@ -296,7 +296,7 @@ def rental_form(offer_id):
     """, (offer_id,)).fetchone()
 
     if not offer:
-        abort(404)
+        abort(404) #https://flask.palletsprojects.com/en/stable/api/#flask.abort
 
     total_price = None
     num_days = None
@@ -450,9 +450,10 @@ def edit_profile():
 @csrf.exempt
 @app.route("/logout")
 def logout():
-    session.clear()
+    session.clear() #Löscht alle Daten aus der aktuellen Benutzersitzung (Session), z.B. um einen Benutzer vollständig abzumelden: https://docs.python.org/3/library/stdtypes.html#dict.clear
     flash("Du wurdest abgemeldet.", "success")
     return redirect(url_for("index"))
+
 @csrf.exempt
 @app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
 def angebot_loeschen(offer_id):
