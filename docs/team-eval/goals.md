@@ -18,7 +18,7 @@ nav_order: 1
 | **Stadtauswahl über Suchleiste** | Stadt kann direkt eingegeben und gefiltert werden. |
 | **Preisspanne-Filter** | Angebote lassen sich über einen Preis-Slider filtern. |
 | **Angebot erstellen** | Nutzer können Angebote mit Bild, Kategorie, Region und Preis erstellen. |
-| **Angebote anklicken & mieten** | Angebote können per „Sofort Mieten“ oder „In den Warenkorb“ gemietet werden. Zudem werden die angegebenen Kategorien vom erstellten Angebot hier angezeigt.   |
+| **Angebote anklicken & mieten** | Angebote können per „Sofort Mieten“ oder „In den Warenkorb“ gemietet werden. Zudem werden die angegebenen Kategorien vom erstellten Angebot hier angezeigt. |
 | **Buchungsbestätigung** | Nutzer erhalten eine Bestätigung nach Buchung. |
 | **Warenkorb mit mehreren Produkten** | Mehrere Produkte können gleichzeitig in den Warenkorb gelegt und gemietet werden. |
 | **Login & Registrierung** | Nutzer können sich registrieren und einloggen. |
@@ -28,7 +28,7 @@ nav_order: 1
 
 ## Goals missed
 
-| *Feature* | *Grund, warum nicht umgesetzt* |
+| **Feature** | **Grund, warum nicht umgesetzt** |
 |-------------|-----------------------------------|
-| *Bewertungen für Produkte* | Diese Funktion wurde nicht umgesetzt, da wir den Aufwand zur Umsetzung unterschätzt haben. |
-| *Favoriten-Button im Offer Detail* | Der Favoriten-Button wurde nicht implementiert, da wir den Umfang und die Komplexität dieser Funktion unterschätzt haben. |
+| **Bewertungen für Produkte** | Diese Funktion wurde nicht umgesetzt, da wir den Aufwand zur Umsetzung unterschätzt haben. |
+| **Favoriten-Button im Offer Detail** | Der Favoriten-Button wurde nicht implementiert, da wir den Umfang und die Komplexität dieser Funktion unterschätzt haben. |
