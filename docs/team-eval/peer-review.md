@@ -20,13 +20,14 @@ nav_order: 3
 **Jelena Berenz – Review 1**
 
 **My observation (Wahrnehmung)**
--
+Während des Projekts habe ich versucht, immer den Überblick zu behalten und verlässlich an meinen Aufgaben zu arbeiten. Besonders beim Aufbau und der  Organisation der Aufgaben im Team habe ich Verantwortung übernommen und klare Vorschläge gemacht, wie wir erfolgreich voranschreiten können.
 
 **Effect on me (Wirkung)**
--
+Diese strukturierte Herangehensweise hat mir geholfen, meine Aufgaben verlässlich und termingerecht abzuschließen und das Team zu unterstützen, wenn es Bedarf oder offene Fragen gab. Es war ein gutes Gefühl, den Fortschritt im Blick zu behalten und zu wissen, dass wir uns gegenseitig gut abstimmen können und auch offen über Herausforderungen oder Unsicherheiten sprechen.
+Darüber hinaus hat es mir Spaß gemacht, die Datenbank aufzubauen – vor allem, weil mir das Thema mit der Backpacker-Rent-Plattform persönlich zugesagt hat. Ich konnte dabei nicht nur meine praktischen Datenbankkenntnisse anwenden, sondern auch meine Python-Skills weiterentwickeln, was sich durch die projektnahe Arbeit ganz natürlich ergeben hat.
 
 **Tip for the future (Wunsch)**
--
+Für zukünftige Projekte möchte ich regelmäßige kurze Team-Abstimmungen einplanen, um den aktuellen Stand zu teilen, offene Punkte schneller zu klären und noch besser im Team zusammenzuarbeiten.
 
 **Aleyna Nur Özdemir – Review 2**
 
