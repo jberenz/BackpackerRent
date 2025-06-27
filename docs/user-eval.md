@@ -41,6 +41,7 @@ Einige Nutzer fanden die Suchleiste zur Filterung von Angeboten etwas unübersic
 
 ### Implications
 
-[What did you learn from this evaluation and what will you change to improve? Example: "We aim to decrease the drop-out rate by not asking for a birth date. We will re-run this evaluation to measure the impact."]
+Wir haben die Seite zum Erstellen eines Angebots vereinfacht und benutzerfreundlicher gestaltet, indem wir die Reihenfolge der Eingabefelder optimiert haben, um den Prozess effizienter zu machen.
+Zusätzlich haben wir die Suchleiste verbessert, indem wir Kategorien zur Auswahl integriert haben (z.B. „Zelt“, „Rucksack“, „Kocher“), sodass Nutzer ihre Suche gezielt eingrenzen können. Dies soll die Benutzerfreundlichkeit erhöhen und die Orientierung im Buchungsprozess erleichtern.
 
 ---
