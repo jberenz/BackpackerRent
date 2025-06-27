@@ -12,8 +12,8 @@ nav_order: 2
 
 ## Improvements for Next Time
 
-### Bessere Aufgaben- und Zeitplanung
-Wir würden beim nächsten Mal zu Beginn eine genauere Aufgabenverteilung im Team durchführen, um Überschneidungen zu vermeiden und Deadlines besser einzuhalten.
+### Keine Überschneidung der Aufgaben 
+Wir haben gelernt, dass eine klare Aufgabenverteilung im Team wichtig ist, um Überschneidungen zu vermeiden und effizienter zu arbeiten.
 
 ### Regelmäßige Usability-Tests
 Wir haben gemerkt, dass Tests mit echten Nutzer helfen, frühzeitig Usability-Probleme zu erkennen. In einem zukünftigen Projekt würden wir regelmäßige Tests einplanen, bevor wir Features fertigstellen.
