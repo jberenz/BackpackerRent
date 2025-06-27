@@ -28,7 +28,7 @@ Updated
 
 ### Goal
 
-[Describe the goal of this evaluation, for example as a research question like: "How long does it take to register a new account and what is the drop-out rate?"]
+Wir wollten herausfinden, wie lange Nutzer benötigen, um sich bei Backpacker Rent zu registrieren, ein Angebot zu erstellen und anschließend ein anderes Angebot zu mieten. Ziel war es zu überprüfen, ob der gesamte Ablauf reibungslos verläuft und welche potenziellen Hindernisse es dabei geben könnte.
 
 ### Method
 
