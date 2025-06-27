@@ -17,7 +17,7 @@ nav_order: 1
 | **Startseite mit Kategorien** | Nutzer können auf der Startseite zwischen „Backpacker“ und „Radtour“ wählen. |
 | **Stadtauswahl über Suchleiste** | Stadt kann direkt eingegeben und gefiltert werden. |
 | **Preisspanne-Filter** | Angebote lassen sich über einen Preis-Slider filtern. |
-| **Angebot erstellen** | Nutzer können Angebote mit Bild, Kategorie Standort und Preis erstellen. |
+| **Angebot erstellen** | Nutzer können Angebote mit Bild, Kategorie, Region und Preis erstellen. |
 | **Angebote anklicken & mieten** | Angebote können per „Sofort Mieten“ oder „In den Warenkorb“ gemietet werden. Zudem werden die angegebenen Kategorien vom erstellten Angebot hier angezeigt.   |
 | **Buchungsbestätigung** | Nutzer erhalten eine Bestätigung nach Buchung. |
 | **Warenkorb mit mehreren Produkten** | Mehrere Produkte können gleichzeitig in den Warenkorb gelegt und gemietet werden. |
