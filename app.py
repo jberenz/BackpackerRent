@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime #https://docs.python.org/3/library/datetime.html #datetime.datetime.strptime
 import os
 import uuid
 
@@ -157,7 +157,7 @@ def anmelden():
         db = get_db_con()
         user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
-        if user and check_password_hash(user["password"], password):
+        if user and check_password_hash(user["password"], password): #https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash 
             session["user_id"] = user["user_id"]
             flash(f"Willkommen zurück, {user['first_name']}!", "success")
             return redirect(url_for("index"))
@@ -200,7 +200,7 @@ def registrieren():
             flash("E-Mail bereits registriert.", "warning")
             return render_template("registrieren.html", error="E-Mail bereits registriert.", regionen=regionen)
 
-        hashed_pw = generate_password_hash(password)
+        hashed_pw = generate_password_hash(password) # https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.generate_password_hash 
         db.execute("""
             INSERT INTO users (first_name, last_name, email, password, region_id, phone)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -244,13 +244,15 @@ def add_offer():
         price_per_night = float(price_str)
 
         # Foto
-        photo = request.files.get("photo")
-        photo_path = None
+        photo = request.files.get("photo") #https://flask.palletsprojects.com/en/stable/api/#flask.Request.files
+        photo_path = None #request.files ist ein MultiDict mit allen hochgeladenen Dateien. Mit .get("photo") wird die Datei mit dem Feldnamen "photo" abgerufen.
         if photo and photo.filename:
-            filename = secure_filename(f"{uuid.uuid4()}_{photo.filename}")
-            full_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            photo.save(full_path)
-            photo_path = os.path.join("uploads", filename).replace("\\", "/")
+            filename = secure_filename(f"{uuid.uuid4()}_{photo.filename}") # secure_filename(filename) sichert Dateinamen, indem es unerwünschte oder gefährliche Zeichen entfernt, um sichere Dateinamen für das Speichern auf dem Server zu erzeugen. https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.utils.secure_filename 
+            full_path = os.path.join(app.config["UPLOAD_FOLDER"], filename) # uuid.uuid4() erzeugt eine zufällige UUID (Universally Unique Identifier), die hier genutzt wird, um Dateinamen eindeutig zu machen und Kollisionen zu vermeiden.https://docs.python.org/3/library/uuid.html#uuid.uuid4 
+            # os.path.join verbindet mehrere Pfadbestandteile zu einem vollständigen Pfad, passend zum Betriebssystem. #https://docs.python.org/3/library/os.path.html#os.path.join
+            photo.save(full_path) #photo ist ein FileStorage-Objekt, das eine hochgeladene Datei repräsentiert. Die Methode .save(path) speichert die Datei im angegebenen Pfad. https://flask.palletsprojects.com/en/stable/api/#flask.Request.files
+
+            photo_path = os.path.join("uploads", filename).replace("\\", "/") #Ersetzen von Backslashes durch Slashes sorgt für plattformunabhängige Pfadangaben, insbesondere für Webpfade
 
         # Angebot
         cursor = db.execute("""
