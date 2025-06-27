@@ -32,7 +32,7 @@ Wir wollten herausfinden, wie lange Nutzer benötigen, um sich bei Backpacker Re
 
 ### Method
 
-[Describe how you proceed to achieve your evaluation goal. Be as specific as possible: others should be able to replicate your evaluation by following the description on this section.]
+Wir haben vier Nutzer (2 weiblich, 2 männlich, Alter 21-26) gebeten, sich bei Backpacker Rent zu registrieren, ein eigenes Angebot (z.B. Zelt oder Rucksack) zu erstellen und anschließend ein anderes Angebot zu mieten. Die Tests wurden im persönlichen Gespräch und per Videochat durchgeführt, um auftretende Fragen direkt zu dokumentieren. Durchschnittliche Testdauer: 10-15 Minuten pro Person.
 
 ### Results
 
