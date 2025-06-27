@@ -36,7 +36,8 @@ Wir haben vier Nutzer (2 weiblich, 2 männlich, Alter 21-26) gebeten, sich bei B
 
 ### Results
 
-[Present the main results of your evaluation, for example: "On average, users need 3 min to register. The drop-out rate was 70%. Users that didn't complete provided the following reasons: ..."]
+Der gesamte Ablauf verlief reibungslos. Alle vier Nutzer konnten sich erfolgreich registrieren, ein Angebot erstellen und ein anderes Angebot mieten. Es kam zu keinen Abbrüchen. Zwei Nutzer benötigten etwas länger beim Erstellen eines Angebots, da sie die Bildauswahl und Preisgestaltung genauer prüfen wollten. Die durchschnittliche Dauer für den gesamten Ablauf lag bei ca. 7 Minuten pro Nutzer.
+Einige Nutzer fanden die Suchleiste zur Filterung von Angeboten etwas unübersichtlich, insbesondere da es keine Kategorien zur Eingrenzung gab und sie nicht wussten, wie sie gezielt nach einem bestimmten Artikel suchen sollten.
 
 ### Implications
 
