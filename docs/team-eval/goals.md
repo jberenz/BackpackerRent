@@ -12,7 +12,7 @@ nav_order: 1
 
 ## Goals achieved
 
-| **Feature** | **Beschreibung** |
+| **Feature** | **Beschreibung** |  <!--https://www.markdownguide.org/extended-syntax/#tables -->
 |------------|------------------|
 | **Startseite mit Kategorien** | Nutzer können auf der Startseite zwischen „Backpacker“ und „Radtour“ wählen. |
 | **Stadtauswahl über Suchleiste** | Stadt kann direkt eingegeben und gefiltert werden. |
@@ -25,11 +25,4 @@ nav_order: 1
 | **Profilbereich** | Nutzer sehen erstellte & gebuchte Angebote, können eigene Angebote bearbeiten/löschen, inkl. Logout-Funktion. |
 | **About Us Bereich** | „Über uns“-Seite wurde erfolgreich implementiert. |
 | **Kontaktbereich** | Kontaktseite für Nutzeranfragen erfolgreich eingebaut. |
-
-## Goals missed
-
-| **Feature** | **Grund, warum nicht umgesetzt** |
-|-------------|-----------------------------------|
-| **Bewertungen für Produkte** | Diese Funktion wurde nicht umgesetzt, da wir den Aufwand zur Umsetzung unterschätzt haben. |
-| **Favoriten-Button im Offer Detail** | Der Favoriten-Button wurde nicht implementiert, da wir den Umfang und die Komplexität dieser Funktion unterschätzt haben. |
 

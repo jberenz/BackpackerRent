@@ -158,7 +158,7 @@ def anmelden():
         user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
         if user and check_password_hash(user["password"], password): #https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash 
-            session["user_id"] = user["user_id"]
+            session["user_id"] = user["user_id"] # https://flask.palletsprojects.com/en/stable/api/#flask.session
             flash(f"Willkommen zurück, {user['first_name']}!", "success")
             return redirect(url_for("index"))
         else:
