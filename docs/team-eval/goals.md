@@ -26,3 +26,10 @@ nav_order: 1
 | **About Us Bereich** | „Über uns“-Seite wurde erfolgreich implementiert. |
 | **Kontaktbereich** | Kontaktseite für Nutzeranfragen erfolgreich eingebaut. |
 
+## Goals missed
+
+| **Feature** | **Grund, warum nicht umgesetzt** |
+|-------------|-----------------------------------|
+| **Bewertungen für Produkte** | Diese Funktion wurde nicht umgesetzt, da wir den Aufwand zur Umsetzung unterschätzt haben. |
+| **Favoriten-Button im Offer Detail** | Der Favoriten-Button wurde nicht implementiert, da wir den Umfang und die Komplexität dieser Funktion unterschätzt haben. |
+
