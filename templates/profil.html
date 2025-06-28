@@ -107,13 +107,20 @@
                     </svg>
                   </div>
                 {% endif %}
-                <h3 class="offer-title">{{ rental.title }}</h3>
-                <p class="offer-meta">Gebucht vom {{ rental.start_date.strftime('%d.%m.%Y') }} bis {{ rental.end_date.strftime('%d.%m.%Y') }}
-
-                <p class="offer-price">
-                  <span class="price-amount">{{ ('%.2f'|format(rental.total_price)).replace('.', ',') }} €</span>
-                  <span class="price-unit">gesamt</span>
-                </p>
+                
+                <!-- Verbessert: mehr Luft bei Titel, Datum, Preis -->
+                <div style="padding: 1rem;">
+                  <h3 class="offer-title" style="margin: 0.75rem 0 0.5rem 0; font-weight: bold; font-size: 1.05rem;">
+                    {{ rental.title }}
+                  </h3>
+                  <p style="margin: 0.5rem 0; font-size: 1rem; color: #000;">
+                    Gebucht vom {{ rental.start_date.strftime('%d.%m.%Y') }} bis {{ rental.end_date.strftime('%d.%m.%Y') }}
+                  </p>
+                  <p style="margin: 0.5rem 0; font-size: 1rem; font-weight: bold; color: #2563EB; text-align: right;">
+                    {{ ('%.2f'|format(rental.total_price)).replace('.', ',') }}€
+                    <span style="color: #000; font-weight: normal;">gesamt</span>
+                  </p>
+                </div>
               </div>
             {% endfor %}
           </div>
