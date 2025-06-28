@@ -12,14 +12,22 @@
     <ul>
       {% for offer in offers %}
         <li>
-          {{ offer.title }} ({{ offer.category }} · {{ offer.region }})<br>
+{% set parts = [] %}
+{% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
+{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %}
+{{ offer.title }}{% if parts %} ({{ parts | join(' · ') }}){% endif %}<br>
           {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht
         </li>
       {% endfor %}
     </ul>
   {% elif offer %}
     <p><strong>Produkt:</strong> {{ offer.title }}</p>
-    <p>{{ offer.category }} · {{ offer.region }}</p>
+{% set parts = [] %}
+{% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
+{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %}
+{% if parts %}
+    <p>({{ parts | join(' · ') }})</p>
+{% endif %}
     <p>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht</p>
   {% endif %}
 
