@@ -57,7 +57,7 @@
 
       {% if total_price is defined %}
         <div style="margin-top:1rem; font-weight:bold; color:#2563EB;">
-          Gesamtpreis für {{ num_days }} Nacht{{ 'e' if num_days > 1 else '' }}:
+         Gesamtpreis für {{ num_days }} {{ 'Nacht' if num_days == 1 else 'Nächte' }}:
           {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
         </div>
       {% endif %}
