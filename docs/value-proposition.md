@@ -3,8 +3,6 @@ title: Value Proposition
 nav_order: 1
 ---
 
-{: .label }
-
 
 {: .no_toc }
 # Value proposition

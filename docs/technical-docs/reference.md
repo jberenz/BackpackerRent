@@ -7,8 +7,6 @@ nav_order: 3
 {: .no_toc }
 # Reference documentation
 
-{: .attention }
-> This page collects internal functions, routes with their functions, and APIs (if any).
 
 <details open markdown="block">
 {: .text-delta }
