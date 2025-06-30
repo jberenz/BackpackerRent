@@ -4,9 +4,6 @@ parent: Technical Docs
 nav_order: 1
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # Architecture
 

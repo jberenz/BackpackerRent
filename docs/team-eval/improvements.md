@@ -8,7 +8,7 @@ nav_order: 2
 
 ## Improvements for Next Time
 
-• Zeitliche Überschneidungen vermeiden, sodass es nicht zu Verlust von Daten komm
-• Commit-Nachrichten deutlicher formulieren, um die Zusammenarbeit zu verbessern
-• Einsatz von SQLAlchemy für eine saubere und flexible Datenbankanbindung
+- Zeitliche Überschneidungen vermeiden, sodass es nicht zu Verlust von Daten komm
+- Commit-Nachrichten deutlicher formulieren, um die Zusammenarbeit zu verbessern
+- Einsatz von SQLAlchemy für eine saubere und flexible Datenbankanbindung
 
