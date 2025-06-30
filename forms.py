@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField
 from wtforms.validators import DataRequired, Length, Optional
 
-class EditProfileForm(FlaskForm):
+class EditProfileForm(FlaskForm): #https://wtforms.readthedocs.io/en/3.0.x/fields/#wtforms.fields.DateField
     first_name = StringField(
         'Vorname',
         validators=[DataRequired(), Length(min=1, max=64)]

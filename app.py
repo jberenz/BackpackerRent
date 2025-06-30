@@ -6,7 +6,7 @@ import os
 import uuid
 from functools import wraps
 
-def login_required(view):
+def login_required(view): # https://flask.palletsprojects.com/en/latest/tutorial/views/#require-authentication-in-other-views
     @wraps(view)
     def wrapped_view(*args, **kwargs):
         if "user_id" not in session:
@@ -224,6 +224,7 @@ def registrieren():
     return render_template("registrieren.html", regionen=regionen)
 @csrf.exempt
 @app.route("/angebot_erstellen", methods=["GET", "POST"])
+@login_required
 def add_offer():
     db = get_db_con()
     categories = db.execute("SELECT * FROM category").fetchall()
@@ -468,6 +469,7 @@ def logout():
 
 @csrf.exempt
 @app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
+@login_required
 def angebot_loeschen(offer_id):
     if "user_id" not in session:
         abort(403)
@@ -489,6 +491,7 @@ def angebot_loeschen(offer_id):
 
 @csrf.exempt
 @app.route("/angebot_bearbeiten/<int:offer_id>", methods=["GET", "POST"])
+@login_required
 def edit_offer(offer_id):
     if "user_id" not in session:
         return redirect(url_for("anmelden"))
@@ -542,7 +545,7 @@ def edit_offer(offer_id):
         flash("Angebot erfolgreich aktualisiert.", "success")
         return redirect(url_for("profil", section="own"))
 
-    # Lade auch die Features mit vorhandenen Werten
+    # Lädt auch die Features mit vorhandenen Werten
     feature_rows = db.execute("""
         SELECT f.feature_id, f.feature_name, of.value
         FROM features f
