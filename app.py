@@ -32,16 +32,17 @@ csrf = CSRFProtect(app)
 
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True) # https://docs.python.org/3/library/os.html#os.makedirs
-os.makedirs(app.instance_path, exist_ok=True)
+os.makedirs(app.instance_path, exist_ok=True) # Erstellt notwendige Ordner (Uploads, Instanzordner), falls sie noch nicht existieren.
 
 init_app(app)
 
-@csrf.exempt
+@csrf.exempt # nicht notwendig, weil Home Seite nichts zurückgibt (kein [POST]), aber kein Risiko es drin zu lassen
 @app.route("/")
-def index():
-    db = get_db_con()
+def index(): # View Funktion: enthält die Logik zum Laden und Filtern von Angeboten
+    db = get_db_con() # Verbindung zur SQLite DB, gibt sqlite3.Connection-Objekt zurück ( instance/backpacker.sqlite)
 
-    region_id       = request.args.get("region_id",       type=int) #https://flask.palletsprojects.com/en/stable/api/#flask.Request.args
+    # Holt GET-Parameter aus der URL
+    region_id       = request.args.get("region_id",       type=int) # https://flask.palletsprojects.com/en/stable/api/#flask.Request.args
     category_id     = request.args.get("category_filter", type=int)
     min_price       = request.args.get("min_price",  0.0, type=float)
     max_price       = request.args.get("max_price", 50.0, type=float)
@@ -70,18 +71,18 @@ def index():
     filters = []
     params  = []
 
-    # Filter: nur erlaubte Kategorien (abhängig vom Typ)
-    filters.append("c.category_name IN ({})".format(','.join(['?'] * len(allowed_categories))))
-    params.extend(allowed_categories)
+    # Filter: nur erlaubte Kategorien (abhängig vom Typ) 
+    filters.append("c.category_name IN ({})".format(','.join(['?'] * len(allowed_categories)))) # https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders (Platzhalter)
+    params.extend(allowed_categories) # https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
 
     if region_id:
-        filters.append("o.region_id = ?")
+        filters.append("o.region_id = ?") # Falls region_id gesetzt ist: Filter auf diese Region
         params.append(region_id)
     if category_id:
-        filters.append("o.category_id = ?")
+        filters.append("o.category_id = ?") # Falls category_id gesetzt ist: Filter auf diese Kategorie                                       
         params.append(category_id)
 
-    filters.append("o.price_per_night BETWEEN ? AND ?")
+    filters.append("o.price_per_night BETWEEN ? AND ?") # Filtert nur Angebote im Preisbereich
     params.extend([min_price, max_price])
 
     # Zeitraumfilter: Angebote ausschließen, die im Zeitraum vermietet sind
@@ -97,14 +98,15 @@ def index():
     if filters:
         sql += " WHERE " + " AND ".join(filters)
 
-    sql += " ORDER BY o.created_at DESC"
+    sql += " ORDER BY o.created_at DESC" # (neuste zuerst)
 
-    offers = db.execute(sql, params).fetchall()
-    regionen = db.execute("SELECT * FROM region").fetchall()
+    offers = db.execute(sql, params).fetchall() # Führt die SQL-Abfrage mit den gesetzten Parametern aus
+    regionen = db.execute("SELECT * FROM region").fetchall() # fetchall() gibt eine Liste aller passenden Angebote zurück, Quelle: https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchall
+    # Lädt alle Regionen für das Dropdown-Menü in der UI
 
     categories = db.execute(
         "SELECT * FROM category WHERE category_name IN ({})".format(','.join(['?'] * len(allowed_categories))),
-        allowed_categories
+        allowed_categories # Lädt Kategorien abhämgig vom Typ Radtour oder Backpacker
     ).fetchall()
 
     return render_template(
@@ -117,7 +119,7 @@ def index():
         selected_category_id=category_id,
         start_date=start,
         end_date=end
-    )
+    ) # ermöglicht Vorbelegen von Filterfeldern im Frontend
 
 
 @csrf.exempt
@@ -158,7 +160,7 @@ def angebot_details(offer_id):
     return render_template("offer_detail.html", offer=offer, features=features)
 
 
-@csrf.exempt
+
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
     next_url = request.args.get("next", url_for("index"))
@@ -166,18 +168,18 @@ def anmelden():
         email = request.form["email"].strip() # request.form ist ein MultiDict, der die Formulardaten enthält, die per POST gesendet wurden. Mit request.form["email"] greift man auf das Feld email zu: https://flask.palletsprojects.com/en/stable/api/#flask.Request.form
         password = request.form["password"].strip() # strip() entfernt Leerzeichen: https://docs.python.org/3/library/stdtypes.html#str.strip
         db = get_db_con()
-        user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+        user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone() # sucht angegebene email in DB
 
         if user and check_password_hash(user["password"], password): #https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash 
-            session["user_id"] = user["user_id"] # https://flask.palletsprojects.com/en/stable/api/#flask.session
+            session["user_id"] = user["user_id"] # Speichert die Nutzer-ID in der Session für spätere Authentifizierung. https://flask.palletsprojects.com/en/stable/api/#flask.session
             flash(f"Willkommen zurück, {user['first_name']}!", "success")
-            return redirect(next_url)
+            return redirect(next_url) # leitet zur Startseite
         else:
-            return render_template("anmelden.html", error="Ungültige Anmeldedaten")
+            return render_template("anmelden.html", error="Ungültige Anmeldedaten")# teigt login nochmal an mit Fehlermeldung
 
     return render_template("anmelden.html", next=next_url)
 
-@csrf.exempt
+
 @app.route("/registrieren", methods=["GET", "POST"])
 def registrieren():
     db = get_db_con()
@@ -206,12 +208,12 @@ def registrieren():
             flash("Region existiert nicht.", "danger")
             return render_template("registrieren.html", error="Region existiert nicht.", regionen=regionen)
 
-        existing_user = db.execute("SELECT 1 FROM users WHERE email = ?", (email,)).fetchone()
+        existing_user = db.execute("SELECT 1 FROM users WHERE email = ?", (email,)).fetchone() # prüft on email bereits registriert ist
         if existing_user:
             flash("E-Mail bereits registriert.", "warning")
             return render_template("registrieren.html", error="E-Mail bereits registriert.", regionen=regionen)
 
-        hashed_pw = generate_password_hash(password) # https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.generate_password_hash 
+        hashed_pw = generate_password_hash(password) # Erstellt sicheren hash für Passwort. https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.generate_password_hash 
         db.execute("""
             INSERT INTO users (first_name, last_name, email, password, region_id, phone)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -219,21 +221,23 @@ def registrieren():
         db.commit()
 
         flash("Registrierung erfolgreich!", "success")
-        return redirect(url_for("anmelden"))
+        return redirect(url_for("anmelden")) # Leitete nach Erfolg zum Login
 
     return render_template("registrieren.html", regionen=regionen)
-@csrf.exempt
+
+
+
 @app.route("/angebot_erstellen", methods=["GET", "POST"])
 @login_required
 def add_offer():
     db = get_db_con()
-    categories = db.execute("SELECT * FROM category").fetchall()
-    regionen = db.execute("SELECT * FROM region").fetchall()
+    categories = db.execute("SELECT * FROM category").fetchall() 
+    regionen = db.execute("SELECT * FROM region").fetchall() # Lädt Kategorien und Regionen für die Dropdowns
 
     selected_category_id = None
-    features = []
+    features = [] # Initialisiert die Liste der Features
 
-    if request.method == "POST":
+    if request.method == "POST": # Abschicken des Formulars
         user_id = session.get("user_id")
         if not user_id:
             flash("Bitte melde dich zuerst an.", "warning")
@@ -266,7 +270,7 @@ def add_offer():
 
             photo_path = os.path.join("uploads", filename).replace("\\", "/") #Ersetzen von Backslashes durch Slashes sorgt für plattformunabhängige Pfadangaben, insbesondere für Webpfade
 
-        # Angebot
+        # Angebot wird in DB gespeichert
         cursor = db.execute("""
             INSERT INTO offers (
                 user_id, title, description, category_id,

@@ -22,6 +22,7 @@
     
 
     <form class="auth-form" action="{{ url_for('registrieren') }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="input-group">
         <label for="last_name">Name</label>
         <input
