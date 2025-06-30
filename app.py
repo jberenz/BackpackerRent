@@ -4,6 +4,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime #https://docs.python.org/3/library/datetime.html #datetime.datetime.strptime
 import os
 import uuid
+from functools import wraps
+
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if "user_id" not in session:
+            flash("Bitte zuerst anmelden.", "warning")
+            return redirect(url_for("anmelden", next=request.path))
+        return view(*args, **kwargs)
+    return wrapped_view
 
 from db import get_db_con, insert_sample_data, init_app
 
@@ -151,6 +161,7 @@ def angebot_details(offer_id):
 @csrf.exempt
 @app.route("/anmelden", methods=["GET", "POST"])
 def anmelden():
+    next_url = request.args.get("next", url_for("index"))
     if request.method == "POST": # Gibt die HTTP-Methode der aktuellen Anfrage zurück (z.B. "GET" oder "POST"): https://flask.palletsprojects.com/en/stable/api/#flask.Request.method
         email = request.form["email"].strip() # request.form ist ein MultiDict, der die Formulardaten enthält, die per POST gesendet wurden. Mit request.form["email"] greift man auf das Feld email zu: https://flask.palletsprojects.com/en/stable/api/#flask.Request.form
         password = request.form["password"].strip() # strip() entfernt Leerzeichen: https://docs.python.org/3/library/stdtypes.html#str.strip
@@ -160,11 +171,11 @@ def anmelden():
         if user and check_password_hash(user["password"], password): #https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash 
             session["user_id"] = user["user_id"] # https://flask.palletsprojects.com/en/stable/api/#flask.session
             flash(f"Willkommen zurück, {user['first_name']}!", "success")
-            return redirect(url_for("index"))
+            return redirect(next_url)
         else:
             return render_template("anmelden.html", error="Ungültige Anmeldedaten")
 
-    return render_template("anmelden.html")
+    return render_template("anmelden.html", next=next_url)
 
 @csrf.exempt
 @app.route("/registrieren", methods=["GET", "POST"])
@@ -358,6 +369,7 @@ def rental_form(offer_id):
 
 
 @app.route("/profil")
+@login_required
 def profil():
     if "user_id" not in session:
         return redirect(url_for("anmelden"))

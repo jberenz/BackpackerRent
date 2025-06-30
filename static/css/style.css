@@ -918,3 +918,19 @@ body {
 .profile-content .offer-actions .btn-delete-offer:hover {
   background: #b91c1c;
 }
+.cart-btn {
+  position: relative;
+  margin-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.cart-count {
+  background-color: #2563EB;
+  color: white;
+  border-radius: 9999px;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}

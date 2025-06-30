@@ -44,14 +44,14 @@
         </div>
         <div class="add-col">
           <label for="card_number">Kartennummer</label>
-         <input type="text" name="card_number" value="{{ card_number or '' }}" required>
+          <input type="text" name="card_number" value="{{ card_number or '' }}" pattern="\d{16}" maxlength="16" required>
         </div>
       </div>
 
       <div class="add-row">
         <div class="add-col" style="max-width: 100px;">
           <label for="sec_code">Sec. Code</label>
-        <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}" required>
+          <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}" required>
         </div>
       </div>
 

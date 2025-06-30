@@ -107,7 +107,12 @@
 <section class="offers-section">
   <div class="offers-container">
     {% if offers|length == 0 %}
-      <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
+  {% if selected_region_id or selected_category_id or start_date or end_date %}
+    <p class="no-offers">Leider keine Angebote mit diesen Filtern gefunden.</p>
+  {% else %}
+    <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
+  {% endif %}
+
     {% else %}
       <div class="offers-grid">
         {% for offer in offers %}

@@ -30,7 +30,8 @@
             </a>
           </li>
           <li>
-            <a href="{{ url_for('anmelden') }}"
+            <a href="{{ url_for('anmelden', next=request.full_path) }}"
+
                class="nav-signin{% if request.endpoint == 'anmelden' %} active{% endif %}">
               Sign In
             </a>
@@ -41,6 +42,13 @@
       <div class="header-actions">
         
         <!-- Profil-Icon rechts -->
+        <a href="{{ url_for('warenkorb') }}" class="icon-btn cart-btn" title="Warenkorb">
+          🧺
+          <span class="cart-count">
+          {{ session.cart | length if session.cart is defined else 0 }}
+          </span>
+        </a>
+
         {% if session.user_id %}
         <a href="{{ url_for('profil') }}" class="icon-btn profile-btn" title="Mein Profil">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
