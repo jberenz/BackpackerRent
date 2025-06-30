@@ -1,4 +1,4 @@
-{% extends "base.html" %} #https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms
+{% extends "base.html" %} <!-- https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms -->
 {% block title %}{% if offer %}Angebot bearbeiten{% else %}Neues Angebot hinzufügen{% endif %} – Backpacker Rent{% endblock %}
 
 {% block content %}
@@ -27,7 +27,7 @@
       <div class="add-row">
         <div class="add-col">
           <label for="category_id">Kategorie</label>
-      <select id="category_id" name="category_id" required onchange="loadFeatures(this.value)"> #https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select
+      <select id="category_id" name="category_id" required onchange="loadFeatures(this.value)"> <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select -->
         <option value="" disabled {% if not offer and not selected_category_id %}selected{% endif %}>
           Bitte wählen
         </option>
@@ -43,7 +43,7 @@
         </div>
         <div class="add-col">
           <label for="photo">Foto hochladen {% if offer and offer.photo_path %}(optional){% endif %}</label>
-          <input type="file" id="photo" name="photo" accept="image/*"> #https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input
+          <input type="file" id="photo" name="photo" accept="image/*"> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input-->
           {% if offer and offer.photo_path %}
             <p style="font-size: 0.9rem; color: #555;">Aktuelles Bild: <em>{{ offer.photo_path }}</em></p>
           {% endif %}
@@ -77,7 +77,7 @@
           <label for="price_per_night">Preis pro Nacht (€)</label>
           <select id="price_per_night" name="price_per_night" required>
             <option value="" disabled {% if not offer %}selected{% endif %}>Bitte wählen</option>
-            {% for i in range(0, 401) %} #https://jinja.palletsprojects.com/en/stable/templates/#for
+            {% for i in range(0, 201) %} <!-- https://jinja.palletsprojects.com/en/stable/templates/#for -->
               {% set price = (i * 0.25) | round(2) %}
               <option value="{{ price }}"
                 {% if offer and offer.price_per_night == price %}selected{% endif %}>
@@ -113,7 +113,7 @@
 </section>
 {% endblock %}
 
-{% block scripts %} # https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch, https://flask.palletsprojects.com/en/latest/patterns/javascript/
+{% block scripts %} <!-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch, https://flask.palletsprojects.com/en/latest/patterns/javascript/ -->
 <script>
 function loadFeatures(categoryId) {
   if (!categoryId) {

@@ -4,9 +4,6 @@ parent: Team Evaluation
 nav_order: 3
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # Peer review
 
