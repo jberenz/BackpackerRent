@@ -17,17 +17,27 @@ nav_order: 3
 {: toc }
 </details>
 
-**Jelena Berenz – Review 1**
+**[Jelena Berenz] – Review Panahiotis T.**
 
 **My observation (Wahrnehmung)**
-Während des Projekts habe ich versucht, immer den Überblick zu behalten und verlässlich an meinen Aufgaben zu arbeiten. Besonders beim Aufbau und der  Organisation der Aufgaben im Team habe ich Verantwortung übernommen und klare Vorschläge gemacht, wie wir erfolgreich voranschreiten können.
+Zu Beginn des Projekts ist mir aufgefallen, dass Panagiotis Aufgaben eher kurzfristig anging und dadurch manchmal den Überblick über Fristen verlor. Das haben wir jedoch im Team offen angesprochen und gemeinsam reflektiert – seitdem hat sich sein Arbeitsstil spürbar verbessert. Besonders positiv hervorheben möchte ich, dass er sich stark mit dem Design-Thinking-Ansatz und dem Nutzen für die User beschäftigt hat. In diesen Punkten hat er das Team sehr bereichert und mich persönlich gut ergänzt – insbesondere beim Hinterfragen von Funktionen aus Sicht der Nutzer.
 
 **Effect on me (Wirkung)**
-Diese strukturierte Herangehensweise hat mir geholfen, meine Aufgaben verlässlich und termingerecht abzuschließen und das Team zu unterstützen, wenn es Bedarf oder offene Fragen gab. Es war ein gutes Gefühl, den Fortschritt im Blick zu behalten und zu wissen, dass wir uns gegenseitig gut abstimmen können und auch offen über Herausforderungen oder Unsicherheiten sprechen.
-Darüber hinaus hat es mir Spaß gemacht, die Datenbank aufzubauen – vor allem, weil mir das Thema mit der Backpacker-Rent-Plattform persönlich zugesagt hat. Ich konnte dabei nicht nur meine praktischen Datenbankkenntnisse anwenden, sondern auch meine Python-Skills weiterentwickeln, was sich durch die projektnahe Arbeit ganz natürlich ergeben hat.
+Durch seinen Fokus auf Nutzerbedürfnisse und seine Kreativität im konzeptionellen Denken hat Panagiotis dem Projekt eine wichtige Perspektive gegeben. Das hat mir geholfen, manche Entscheidungen bewusster zu treffen und funktionale Aspekte noch stärker an den tatsächlichen Anwendungsfällen auszurichten. Auch sein offenes Feedback im Teamgespräch hat dazu beigetragen, dass wir unsere Zusammenarbeit gut abstimmen konnten.
 
 **Tip for the future (Wunsch)**
-Für zukünftige Projekte möchte ich regelmäßige kurze Team-Abstimmungen einplanen, um den aktuellen Stand zu teilen, offene Punkte schneller zu klären und noch besser im Team zusammenzuarbeiten.
+Ich wünsche mir, dass Panagiotis seine Begeisterung für Design und nutzerzentriertes Denken beibehält. Wenn er auch zukünftig frühzeitig mit der Umsetzung beginnt und klare Prioritäten setzt, kann er seine Ideen noch gezielter einbringen und das Team gut unterstützen.
+
+**[Jelena Berenz] – Review Aleyna Nur Ö.**
+
+**My observation (Wahrnehmung)**
+Zu Beginn des Projekts hatte Aleyna mit einigen technischen Schwierigkeiten zu kämpfen, die ihre Mitarbeit an den Aufgaben erschwert haben. Dadurch mussten anfangs Aufgaben im Team umverteilt werden, und ich habe einige ihrer Aufgaben mitübernommen. Zudem war ihre Arbeitsweise teilweise recht last-minute, was die Abstimmung im Team gelegentlich erschwert hat. Gleichzeitig war zu erkennen, dass sie viel Einsatz gezeigt hat und bereit war, Zeit zu investieren.
+
+**Effect on me (Wirkung)**
+Ihre anfänglichen Schwierigkeiten haben dazu geführt, dass ich in bestimmten Projektphasen mehr Verantwortung übernehmen musste, was zusätzlichen Koordinationsaufwand bedeutete. Dennoch habe ich ihre Offenheit für Rückmeldungen und ihren Einsatz geschätzt. Sie hat stets versucht, ihre Aufgaben gewissenhaft umzusetzen und war bemüht, dazuzulernen.
+
+**Tip for the future (Wunsch)**
+Für zukünftige Projekte wünsche ich mir, dass Aleyna ihre Energie gezielter einsetzt, um effizienter arbeiten zu können. Weniger Zeitaufwand bei gleichzeitig klarerem Fokus auf Lösungsstrategien könnte helfen, schneller zu Ergebnissen zu kommen. Wenn sie zusätzlich etwas frühzeitiger an die Aufgaben herangeht, kann sie ihre Motivation und ihren Lerneifer noch wirkungsvoller ins Team einbringen.
 
 **Aleyna Nur Özdemir – Review 2**
 

@@ -8,27 +8,32 @@ nav_order: 1
 [Jane Dane]
 
 {: .no_toc }
-# Goals achieved and missed
+## Allgemeine Projektziele
 
-## Goals achieved
+• Eine funktionierende App entwickeln, die das definierte Problem löst – `achieved`  
+• Ein visuell ansprechendes und benutzerfreundliches Design umsetzen – `achieved`  
+• Entwicklung mit dem Tech-Stack: Python, Flask und SQLite3 – `achieved`  
+• Praxiserfahrung in Backend- und Frontend-Entwicklung sammeln – `achieved`  
+• Den Umgang mit APIs erlernen – `achieved`
 
-| **Feature** | **Beschreibung** |  <!--https://www.markdownguide.org/extended-syntax/#tables -->
-|------------|------------------|
-| **Startseite mit Kategorien** | Nutzer können auf der Startseite zwischen „Backpacker“ und „Radtour“ wählen. |
-| **Stadtauswahl über Suchleiste** | Stadt kann direkt eingegeben und gefiltert werden. |
-| **Preisspanne-Filter** | Angebote lassen sich über einen Preis-Slider filtern. |
-| **Angebot erstellen** | Nutzer können Angebote mit Bild, Kategorie, Region und Preis erstellen. |
-| **Angebote anklicken & mieten** | Angebote können per „Sofort Mieten“ oder „In den Warenkorb“ gemietet werden. Zudem werden die angegebenen Kategorien vom erstellten Angebot hier angezeigt. |
-| **Buchungsbestätigung** | Nutzer erhalten eine Bestätigung nach Buchung. |
-| **Warenkorb mit mehreren Produkten** | Mehrere Produkte können gleichzeitig in den Warenkorb gelegt und gemietet werden. |
-| **Login & Registrierung** | Nutzer können sich registrieren und einloggen. |
-| **Profilbereich** | Nutzer sehen erstellte & gebuchte Angebote, können eigene Angebote bearbeiten/löschen, inkl. Logout-Funktion. |
-| **About Us Bereich** | „Über uns“-Seite wurde erfolgreich implementiert. |
-| **Kontaktbereich** | Kontaktseite für Nutzeranfragen erfolgreich eingebaut. |
 
-## Goals missed
+**Jelena Berenz**
 
-| **Feature** | **Grund, warum nicht umgesetzt** |
-|-------------|-----------------------------------|
-| **Bewertungen für Produkte** | Diese Funktion wurde nicht umgesetzt, da wir den Aufwand zur Umsetzung unterschätzt haben. |
-| **Favoriten-Button im Offer Detail** | Der Favoriten-Button wurde nicht implementiert, da wir den Umfang und die Komplexität dieser Funktion unterschätzt haben. |
+• Backend-Logik selbstständig umsetzen (Python) – `achieved`
+• Kenntnisse in Datenbankanbindung & -pflege vertiefen – `achieved`
+• Mit Visual Studio Code und GitHub vertraut machen – `achieved`
+• Kreativität im UI-Design verwirklichen unter Berücksichtigung der Prinzipien des Design Thinkings – `achieved`
+• Teamfähigkeit durch aktives Feedback & Austausch stärken – `achieved`
+ 
+**Panagiotis Tsangarakis**
+
+- Python-Grundlagen erlernen und anwenden
+- Eigenständig Webanwendungen mit Python entwickeln
+- Umgang mit Datenbanken lernen & pflegen
+
+**Aleyna Nur Özdemir**
+
+- Python-Kenntnisse vertiefen
+- Bessere Teamkommunikation erleben und mitgestalten
+- Zusammenarbeit im Team als Stärke aufbauen
+

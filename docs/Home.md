@@ -3,37 +3,24 @@ title: Home
 nav_order: 0
 ---
 
-{: .attention }
-> Any text enclosed by `[ ]` are placeholders, including the opening and closing brackets.
->
-> You may delete this `attention` box.
 
 # Backpacker Rent
 
-[Project description]
+Backpacker Rent ist eine Webseite, auf der Reisende Reiseausrüstung mieten und vermieten können
 
 ## Team members
 
 ### Jelena Berenz
-
-About
-: Some info about Jane
 
 Matr.-Nr.
 77212023030
 
 ### Panagiotis Tsangarakis
 
-About
-: Some info about Joe
-
 Matr.-Nr.
 : 77212023098
 
 ### Aleyna Nur Özdemir
-
-About
-: Some info about Joe
 
 Matr.-Nr.
 : 77212024903
