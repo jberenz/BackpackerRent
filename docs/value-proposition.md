@@ -22,10 +22,24 @@ Reisende und Backpacker benötigen passende Ausrüstung für ihre Unternehmungen
 
 
 ## Our solution
-Eine Plattform, auf der User Reise-Equipment wie Rucksäcke, Zelte, Powerbanks, Kameras usw. lokal mieten können -> einfach, flexibel und nachhaltig.
+
+Eine Webseite, auf der Nutzer lokal Reise-Equipment wie:
+- Rucksäcke
+- Zelte
+- Luftmatratzen
+- Schlafsäcke
+- Multitools
+- Radtaschen
+- Gaskocher
+... mieten und vermieten können.
+
 
 
 ## Target user
-Reisende und Backpacker, die temporär Ausrüstung benötigen, ohne sie dauerhaft besitzen zu müssen.
+
+Reisende, Backpacker, Outdoor-Fans und minimalistische Abenteurer, die…
+- kurzfristig Ausrüstung benötigen
+- evtl. kein eigenes Equipment transportieren möchten
+- bewusst konsumieren & nachhaltig reisen wollen
 
 

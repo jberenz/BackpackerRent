@@ -20,12 +20,12 @@ nav_order: 4
 **Jelena Berenz**
 
 **Contributions:**
-- Projektstruktur aufgesetzt und base.html sowie home.html implementiert
+- Projektstruktur aufgesetzt und base.html sowie home.html implementiert (Offers Ansicht, Search-section, Angebot hinzufügen Button, Profil-Link/Icon)
 - Angebot erstellen Seite mit Features (Bild, Preis, Kategorie) programmiert
 - Datenbankanbindung und Models aufgesetzt
 - Profilseite inklusive Bearbeiten- und Löschen-Funktion umgesetzt
-- GitHub eingerichtet und für die Veröffentlichung aktueller Projektergebnisse genutzt
-- GitHub Pages aktiv zur Dokumentation des Projekts genutzt und aktualisert 
+- GitHub eingerichtet
+- GitHub Pages: Datamodel, Architecture, Reference, meine Peer Reviews, Teil der Design Decisions
 
 **Aleyna Nur Özdemir**
 

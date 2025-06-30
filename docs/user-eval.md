@@ -3,9 +3,6 @@ title: User Evaluation
 nav_order: 4
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # User evaluation
 
