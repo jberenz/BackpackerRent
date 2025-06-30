@@ -385,12 +385,12 @@ def profil():
         FROM users u
         JOIN region r ON u.region_id = r.region_id
         WHERE u.user_id = ?
-    """, (session["user_id"],)).fetchone()
+    """, (session["user_id"],)).fetchone() # holt alle Daten aus user nur die des jeweiligen users werden zurückgegeben
 
-    section = request.args.get("section", "about")
+    section = request.args.get("section", "about") # Standard section ist 'about'
 
     rentals = []
-    own_offers = []
+    own_offers = [] # Listen werden befüllt je nach section
 
     if section == "booked":
         rentals = db.execute("""
@@ -399,7 +399,7 @@ def profil():
             JOIN offers o ON r.offer_id = o.offer_id
             WHERE r.user_id = ?
             ORDER BY r.start_date DESC
-        """, (user["user_id"],)).fetchall()
+        """, (user["user_id"],)).fetchall() # wenn section 'booked' werden alle Mietbuchungen des Users geholt
 
     elif section == "own":
         own_offers = db.execute("""
@@ -409,14 +409,14 @@ def profil():
             JOIN region   r ON o.region_id = r.region_id
             WHERE o.user_id = ?
             ORDER BY o.created_at DESC
-        """, (user["user_id"],)).fetchall()
+        """, (user["user_id"],)).fetchall()# wenn section 'own' alle offers des users geholt
 
     return render_template(
         "profil.html",
         user=user,
         section=section,
         rentals=rentals,
-        own_offers=own_offers
+        own_offers=own_offers # Daten werden an profil.html übergeben
 
     )
 
@@ -429,22 +429,22 @@ def edit_profile():
         return redirect(url_for('anmelden'))
 
     db = get_db_con()
-    user = db.execute("SELECT * FROM users WHERE user_id = ?", (session['user_id'],)).fetchone()
+    user = db.execute("SELECT * FROM users WHERE user_id = ?", (session['user_id'],)).fetchone()# holt Daten
 
     # Regionsliste abrufen
     regions = db.execute("SELECT region_id, region_name FROM region").fetchall()
-    form = EditProfileForm()
+    form = EditProfileForm() # Erstellt ein neues Formularobjekt
     # choices für das Dropdown: List[ (id, name), ... ]
     form.region_id.choices = [(r['region_id'], r['region_name']) for r in regions]
 
     if request.method == "GET":
-        # Form mit aktuellen Werten vorbelegen
+        # Form mit aktuellen Werten gefüllt
         form.first_name.data = user['first_name']
         form.last_name.data  = user['last_name']
         form.phone.data      = user['phone'] or ''
         form.region_id.data  = user['region_id']
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): # Ob alle Validierungen erfolgreich sind (z. B. Pflichtfelder ausgefüllt)
         new_pw = generate_password_hash(form.password.data) if form.password.data else user['password']
         db.execute("""
             UPDATE users 
@@ -458,7 +458,7 @@ def edit_profile():
             form.region_id.data,
             session['user_id']
         ))
-        db.commit()
+        db.commit() # Aktualisierung der DB wenn neue Einträge
         flash('Profil erfolgreich aktualisiert.', 'success')
         return redirect(url_for('profil', section='about'))
 
@@ -517,7 +517,7 @@ def edit_offer(offer_id):
         description = request.form.get("description", "").strip()
         category_id = int(request.form["category_id"])
         region_id = int(request.form["region_id"])
-        price_per_night = float(request.form["price_per_night"])
+        price_per_night = float(request.form["price_per_night"]) # Holt Werte aus dem HTML Formular
 
         # optional neues Bild hochladen
         photo = request.files.get("photo")
@@ -528,12 +528,12 @@ def edit_offer(offer_id):
             photo.save(full_path)
             photo_path = os.path.join("uploads", filename).replace("\\", "/")
 
-        db.execute("""
+        db.execute(""" 
             UPDATE offers SET
                 title = ?, description = ?, category_id = ?,
                 region_id = ?, price_per_night = ?, photo_path = ?
             WHERE offer_id = ? AND user_id = ?
-        """, (title, description, category_id, region_id, price_per_night, photo_path, offer_id, session["user_id"]))
+        """, (title, description, category_id, region_id, price_per_night, photo_path, offer_id, session["user_id"])) # Werte überschieben
 
         db.execute("DELETE FROM offer_features WHERE offer_id = ?", (offer_id,))
         features = db.execute("SELECT feature_id, feature_name FROM features WHERE category_id = ?", (category_id,)).fetchall()
@@ -689,13 +689,13 @@ def mietseite():
                            card_number=card, sec_code=sec,
                            total_price=total_price, num_days=num_days)
 
-@app.route('/features_for_category/<int:category_id>')
+@app.route('/features_for_category/<int:category_id>') # Route wird uafgerufen, wenn im Frontend eine Kategorie ausgewählt wurde
 def features_for_category(category_id):
     db = get_db_con()
     features = db.execute(
         "SELECT feature_id, feature_name FROM features WHERE category_id = ?",
         (category_id,)
-    ).fetchall()
+    ).fetchall() # Holt alle Features-Namen und IDs zur gewählten Kategorie
     return render_template('partials/_features.html', features=features)
 
 
