@@ -156,16 +156,15 @@
   </div>
 </section>
 
-<!-- ================= -->
 <!-- About-Us-Bereich -->
-<!-- ================= -->
-<section class="about-section" id="aboutus">
-  <div class="about-container">
-    <div class="about-heading">
-      <h2>About us</h2>
+<section class="about-section" id="aboutus"> <!-- Startet einen neuen Bereich auf der Webseite für den About-Us-Text.--> 
+<!-- id="aboutus" macht es möglich, von der Navigation direkt zu diesem Bereich zu springen -->
+  <div class="about-container"> <!-- Ein Container, der den gesamten Inhalt in diesem Bereich zentriert und bündelt.-->
+    <div class="about-heading"> <!-- für Styling-->
+      <h2>About us</h2> <!-- Überschrift „About us“ (wird auf der Seite angezeigt).--> 
     </div>
-    <div class="about-content">
-      <div class="about-text">
+    <div class="about-content"> <!-- Container für den Inhalt des About-Us-Bereichs, bestehend aus Text und Bildern.--> 
+      <div class="about-text"> <!-- Bereich für den Textteil des About-Us-Bereichs.--> 
         <p>
           Wir sind <strong>Jelena Berenz, Aleyna Nur Özdemir</strong> und <strong>Panagiotis Tsangarakis</strong>. 
           Ein engagiertes Team mit einer gemeinsamen Vision: Das Reisen einfacher, nachhaltiger und flexibler 
@@ -181,30 +180,29 @@
           Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
         </p>
       </div>
-      <div class="about-images">
-        <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See">
-        <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese">
+      <div class="about-images"> <!-- Container für die Bilder im About-Us-Bereich.--> 
+        <img src="{{ url_for('static', filename='images/tent.jpg') }}" alt="Zelten am See"> <!-- Fügt ein Bild „tent.jpg“ aus dem Ordner static/images hinzu. --> 
+        <img src="{{ url_for('static', filename='images/cow-field.jpg') }}" alt="Kuh auf Blumenwiese"> <!-- Fügt ein weiteres Bild „cow-field.jpg“ hinzu mit dem Alternativtext „Kuh auf Blumenwiese“.--> 
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= -->
+
 <!-- Kontakt-Bereich -->
-<!-- ================= -->
-<section class="contact-section">
-  <div class="contact-content">
-    <div class="contact-info">
-      <h2>Kontakt</h2>
-      <p>Backpackstraße 123, 12345 Berlin</p>
-      <p><a href="mailto:hallo@backpackerrent.de">support@backpackerrent.com</a></p>
+<section class="contact-section"> <!-- Startet den Kontakt-Bereich der Seite -->
+  <div class="contact-content"> <!-- Container für Text und Button im Kontaktbereich -->
+    <div class="contact-info"> <!-- Container für die Kontaktinformationen -->
+      <h2>Kontakt</h2> <!-- Überschrift des Kontakt-Bereichs -->
+      <p>Backpackstraße 123, 12345 Berlin</p> <!-- Adresse--> 
+      <p><a href="mailto:hallo@backpackerrent.de">support@backpackerrent.com</a></p> <!-- Klickbarer E-Mail-Link -->
     </div>
-    <div class="contact-action">
-      <a href="mailto:hallo@backpackerrent.de" class="contact-btn">E-Mail</a>
+    <div class="contact-action"> <!-- Container für den Kontakt-Button -->
+      <a href="mailto:hallo@backpackerrent.de" class="contact-btn">E-Mail</a> <!-- Button zum Öffnen des E-Mail-Programms -->
     </div>
   </div>
-  <div class="contact-image">
-    <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft">
+  <div class="contact-image"> <!-- Container für das Kontakt-Bild -->
+    <img src="{{ url_for('static', filename='images/contact-forest.jpg') }}" alt="Waldlandschaft"> <!-- Bild im Kontaktbereich--> 
   </div>
 </section>
 {% endblock %}

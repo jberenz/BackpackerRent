@@ -598,11 +598,11 @@ def warenkorb():
 
     return render_template("warenkorb.html", offers=offers)
 @csrf.exempt
-@app.route("/remove_from_cart/<int:offer_id>", methods=["POST"])
+@app.route("/remove_from_cart/<int:offer_id>", methods=["POST"]) # Hier wird vom Warenkorb der Artikel gelöscht
 def remove_from_cart(offer_id):
     cart = session.get("cart", [])
-    if offer_id in cart:
-        cart.remove(offer_id)
+    if offer_id in cart: # Prüft, ob die offer_id in der Liste ist.
+        cart.remove(offer_id) # Entfernt diese offer_id aus dem Warenkorb.
         session["cart"] = cart
         flash("Angebot aus dem Warenkorb entfernt.", "success")
     return redirect(url_for("warenkorb"))
@@ -610,7 +610,7 @@ def remove_from_cart(offer_id):
 
 @csrf.exempt
 @app.route("/mieten", methods=["GET", "POST"])
-def mietseite():
+def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, falls der Nutzer nicht ein spezifisches Angebot direkt mietet
     if "user_id" not in session:
         flash("Bitte zuerst anmelden.", "warning")
         return redirect(url_for("anmelden"))

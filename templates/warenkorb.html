@@ -1,36 +1,37 @@
-{% extends "base.html" %}
-{% block title %}Warenkorb{% endblock %}
+{% extends "base.html" %} <!-- Dieses Template erbt das Grundlayout, die Navigation und Struktur von base.html-->
+{% block title %}Warenkorb{% endblock %} <!-- Setzt den Titel im Browser-Tab auf „Warenkorb“.--> 
 {% block content %}
 <section class="add-section">
-  <div class="add-container">
-    <h2 class="add-header">🧺 Dein Warenkorb</h2>
+  <div class="add-container"> <!-- Erstellt einen zentrierten Container mit Padding und Styling für die Seite.--> 
+    <h2 class="add-header">🧺 Dein Warenkorb</h2> <!-- Überschrift mit Emoji, zeigt „🧺 Dein Warenkorb“ an, wie im Screenshot sichtbar--> 
 
-    {% if offers %}
-      <ul style="list-style:none; padding:0;">
-        {% for offer in offers %}
-          <li style="margin-bottom: 2rem; padding:1rem; background:white; border-radius:1rem; border:1px solid #ccc;">
-            <h3>{{ offer.title }}</h3>
-            <p>{{ offer.category }} · {{ offer.region }}</p>
-            <p><strong>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</strong> pro Nacht</p>
+    {% if offers %} <!--Falls die Variable offers existiert (Liste mit Artikeln im Warenkorb), wird der folgende Block ausgeführt. Ansonsten Warenkorb leer --> 
+      <ul style="list-style:none; padding:0;"> <!-- Erstellt eine Liste ohne Punkte oder Einrückungen.--> 
+        {% for offer in offers %} <!-- Für jedes Angebot in der Liste offers wird ein Listenelement erstellt.--> 
+          <li style="margin-bottom: 2rem; padding:1rem; background:white; border-radius:1rem; border:1px solid #ccc;"> <!-- Erstellt weiße Karten mit runden Ecken und grauem Rand für jedes Produkt, wie im Screenshot zu sehen.--> 
+            <h3>{{ offer.title }}</h3> <!-- Zeigt den Titel des Produkts an (z.B. „Gaskocher“).-->
+            <p>{{ offer.category }} · {{ offer.region }}</p> <!-- Zeigt Kategorie und Region des Produkts an (z.B. „Rucksack · Berlin“).--> 
+            <p><strong>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €</strong> pro Nacht</p> <!-- Zeigt den Preis pro Nacht fettgedruckt mit Komma als Dezimalzeichen an.--> 
 
-            <form method="post" action="{{ url_for('remove_from_cart', offer_id=offer.offer_id) }}" style="display:inline;">
-              <button type="submit" style="padding:0.5rem 1rem; border:1px solid #dc2626; background:#dc2626; color:white; border-radius:4px;">
+            <form method="post" action="{{ url_for('remove_from_cart', offer_id=offer.offer_id) }}" style="display:inline;"> <!-- Wenn der Nutzer auf diesen Button klickt, wird eine POST-Anfrage an deinen Server geschickt, um genau dieses Produkt aus dem Warenkorb zu entfernen.--> 
+            <!-- Es ruft die Flask-Route remove_from_cart mit der entsprechenden offer_id auf.--> 
+              <button type="submit" style="padding:0.5rem 1rem; border:1px solid #dc2626; background:#dc2626; color:white; border-radius:4px;"> <!-- Roter Button mit der Aufschrift „Entfernen“ zum Entfernen des Artikels.--> 
                 Entfernen
               </button>
             </form>
           </li>
-        {% endfor %}
+        {% endfor %} <!-- Schließt das Listenelement und wiederholt diesen Block für jedes Produkt im Warenkorb.--> 
       </ul>
 
       <!-- Zentraler Mietbutton -->
       <a href="{{ url_for('mietseite') }}" class="btn-create" style="margin-top: 2rem; display: inline-block;">
-        Alle Produkte jetzt mieten
+        Alle Produkte jetzt mieten <!-- Fügt einen grünen Button ein, der zur Route mietseite führt, um alle Produkte im Warenkorb gleichzeitig zu mieten--> 
       </a>
     {% else %}
-      <p>Dein Warenkorb ist leer.</p>
+      <p>Dein Warenkorb ist leer.</p> <!-- Falls keine Artikel im Warenkorb sind, wird angezeigt: „Dein Warenkorb ist leer.“--> 
     {% endif %}
 
-    <a href="{{ url_for('index') }}" style="display:inline-block; margin-top:2rem; color:#2563EB;">← Zurück zur Startseite</a>
+    <a href="{{ url_for('index') }}" style="display:inline-block; margin-top:2rem; color:#2563EB;">← Zurück zur Startseite</a> <!-- Blauer Link unten zur Rückkehr auf die Startseite.--> 
   </div>
 </section>
-{% endblock %}
+{% endblock %} <!-- Schließt den Container, den Abschnitt und den content Block.--> 
