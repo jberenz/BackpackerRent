@@ -38,9 +38,12 @@ nav_order: 4
 **Panagiotis Tsangarakis**
 
 **Contributions:**
-- Kontaktseite und About Us Seite programmiert
-- „Sofort mieten“ und „In den Warenkorb“-Button in Offer-Detail-Seite integriert + programmiert 
-- Warenkorb, Buchungsbestätigung und Buchungslogik umgesetzt/programmiert
-- Sign-In Logik mitimplementiert
-- GitHub für Projektergebnisse genutzt  
-- GitHub Pages aktiv zur Dokumentation des Projekts genutzt und aktualisert
+- Kontaktseite programmiert, inklusive der Einbindung einer Adresse sowie eines funktionierenden E-Mail-Buttons, der direkt eine E-Mail öffnet, sobald man darauf klickt.
+- About Us Seite umgesetzt und mit einem emotionalen Text versehen, der die Motivation und Werte unseres Teams vermittelt.
+- Auf der Offer-Detail-Seite die Buttons „Sofort mieten“ und „In den Warenkorb“ funktionsfähig gestaltet, sodass diese direkt Buchungsaktionen auslösen.
+- Warenkorb so programmiert, dass Nutzer mehrere Artikel gleichzeitig buchen können.
+- Buchungsbestätigung implementiert, die alle gebuchten Artikel übersichtlich anzeigt und als Bestätigung für die Nutzer dient.
+- Buchungslogik umgesetzt, inklusive automatischer Preisberechnung und Verarbeitung der Buchungsdaten.
+- Sign-In-Logik (nur am Anfang) mitimplementiert und so gestaltet, dass das Login-Formular mittig auf der Seite angezeigt wird und nutzerfreundlich bleibt.
+- GitHub aktiv zur Verwaltung und Dokumentation der Projektergebnisse genutzt.
+-  GitHub Pages: UI-Components (mit Bildern unserer Website), Team Evaluation, Goals achieved/missed, Improvements, meinem Teil des Peer Reviews, Contributions sowie Teilen der Design Decisions.
