@@ -173,3 +173,171 @@ Dadurch bleibt die Anwendung barrierefrei und funktioniert auch ohne aktiviertes
 | **Barrierefreiheit** | ✔️ Hohe | ❌ Gering ohne JS |
 | **Komplexität** | ✔️ Einfacher | ❌ Komplexere Architektur |
 | **User Experience** | ❔ Weniger dynamisch | ✔️ Sehr dynamisch |
+
+
+## 06: Direkter Checkout mit „Sofort-Mieten“ neben Warenkorb
+
+### Meta
+
+Status: **Decided**
+
+Updated
+:21-Jun-2025
+
+### Problem statement
+
+Wie können wir Nutzern ermöglichen, Angebote direkt zu buchen, ohne den Umweg über den Warenkorb zu gehen, insbesondere wenn sie nur ein einzelnes Produkt mieten möchten?
+
+Ziel:
+
+- Verkürzung des Checkout-Prozesses für Einzelnutzer
+- Beibehaltung der Möglichkeit, mehrere Produkte gleichzeitig zu buchen (über den Warenkorb)
+- Verbesserung der Nutzererfahrung durch flexible Buchungsoptionen
+
+### Decision
+
+Wir haben uns entschieden, einen „Sofort-Mieten“-Button in der offer_detail.html anzubieten, der Nutzer direkt zur rental_form.html weiterleitet, um die Buchung sofort abzuschließen, ohne den Warenkorb zu nutzen.
+
+Gleichzeitig bleibt der „In den Warenkorb“-Button bestehen, damit Nutzer weiterhin mehrere Produkte sammeln und gemeinsam buchen können.
+
+Dadurch bieten wir beiden Nutzertypen (sofort buchen vs. sammeln) eine passende Lösung und halten unseren Checkout-Prozess flexibel und effizient.
+
+Decision was taken by: team/backpackerrent
+
+
+### Regarded options
+
+| Criterion | Nur Warenkorb | Nur Sofort-Mieten | Beide Optionen (Warenkorb und Sofort-Mieten) |
+|---|---|---|---|
+| **Usability** | Umständlich für Einzelbuchung | Kein Sammeln möglich |  Flexibel für beide Nutzergruppen |
+| **Implementierungsaufwand** | Einfach | Einfach |  Mittel (Routing und Logik für beide Pfade) |
+| **Flexibilität** | Sammelbuchung + Einzelbuchung möglich | Nur Einzelbuchung |  Beides möglich |
+
+
+## 07: Datumsauswahl direkt im Rental Form
+
+## Meta
+
+Status: **Decided**
+
+Updated
+: 01-Jul-2025
+
+### Problem statement
+Wie ermöglichen wir es Nutzern, das Mietdatum individuell und spontan direkt beim Buchungsprozess anzupassen, ohne:
+
+- zurück zur Angebotsseite oder Warenkorb navigieren zu müssen,
+- die Seite neu aufzuschlagen,
+- den Buchungsfluss zu unterbrechen?
+
+Ziel:
+
+- Verbesserte Nutzerfreundlichkeit, indem Nutzer das Start- und Enddatum direkt im Buchungsformular (rental_form.html) ändern können.
+- Reduktion von Frustration durch unnötige Navigation.
+- Flexibilität bei kurzfristigen Planänderungen.
+
+### Decision
+Wir haben uns entschieden, zwei Datumseingabefelder (Startdatum und Enddatum) direkt im rental_form.html zu integrieren, sodass Nutzer vor der Preisberechnung und Buchung das gewünschte Datum anpassen können.
+
+Dies ermöglicht es Nutzern, den Buchungszeitraum spontan zu ändern, ohne:
+
+- die Angebotsübersicht erneut aufrufen zu müssen,
+- den Warenkorb anzupassen,
+- den Buchungsprozess zu verlassen.
+
+Decision was taken by: team/backpackerrent
+
+### Regarded options
+
+| Criterion | Datum vorher wählen | Datum im Rental Form (gewählt) |
+|---|---|---|
+| **Usability** | Nutzer muss zurück navigieren, wenn sich der Zeitraum ändert |  Nutzer kann Datum direkt im Buchungsprozess ändern |
+| **Flexibilität** | Datum ist fix und muss im Warenkorb oder Detail erneut angepasst werden |  Spontane Planänderung möglich ohne Navigation |
+| **Implementierungsaufwand** | Einfach, da Datum fix übergeben wird |  Einfach, nur zwei Felder im Template erforderlich |
+| **Flow-Unterbrechung** | Hoch (erneutes Laden oder Navigieren nötig) |  Keine Unterbrechung, direkt im Prozess anpassbar |
+
+## 08: Gebuchte Angebote im Profil anzeigen
+
+### Meta
+
+Status: **Decided**
+
+Updated
+: 21-Jun-2025
+
+### Problem statement
+Nach einer Buchung benötigen Nutzer einen klaren Ort, an dem sie ihre gebuchten Angebote jederzeit einsehen können, um:
+
+- den Überblick zu behalten, welche Produkte sie wann gebucht haben,
+- ihre Ausgaben nachzuverfolgen,
+
+Ziel:
+
+- Nutzerfreundlichkeit durch eine transparente Übersicht über eigene Buchungen.
+- Vermeidung von Verwirrung und Unsicherheit, ob eine Buchung erfolgreich war.
+- Zentrale Verwaltung aller Buchungen innerhalb des Profils, ohne separate Seiten oder E-Mails durchsuchen zu müssen.
+
+### Decision
+Wir haben uns entschieden, im Profilbereich eine eigene Kategorie „Gebuchte Angebote“ (section=booked) einzurichten, in der Nutzer alle ihre gebuchten Produkte inkl. Titel, Buchungszeitraum und Gesamtpreis sehen können.
+
+Dazu nutzen wir das bereits bestehende profil.html-Template, erweitern dieses jedoch um eine dynamische Abfrage des section-Parameters und eine saubere Kartenansicht für gebuchte Angebote.
+
+Decision was taken by: team/backpackerrent
+
+### Regarded options
+
+| Criterion | Keine Übersicht im Profil | Übersicht „Gebuchte Angebote“ im Profil (gewählt) |
+|---|---|---|
+| **Usability** | Nutzer muss Buchungen anderweitig prüfen |  Nutzer sieht alle Buchungen direkt im Profil |
+| **Transparenz** | Keine Einsicht in Buchungshistorie |  Vollständige Übersicht über Buchungen vorhanden |
+| **Implementierungsaufwand** | Kein Aufwand |  Einfach durch Erweiterung der bestehenden Profilseite |
+| **Planbarkeit** | Nutzer kann keine Planungen auf Basis von Buchungen vornehmen |  Nutzer kann geplante Zeiträume nachvollziehen |
+
+## 09: About Us und Kontaktbereich auf der Startseite
+
+### Meta
+
+Status: **Decided**
+
+Updated
+: 25-Jun-2025
+
+### Problem statement
+
+Eine funktionale Plattform alleine reicht nicht aus, um Nutzer langfristig zu binden. Nutzer möchten wissen:
+
+- Wer steckt hinter der Plattform?
+- Wie kann ich die Betreiber kontaktieren, wenn ich Fragen oder Probleme habe?
+
+Ziel:
+
+- Seriosität und Vertrauen aufbauen.
+- Nutzer einen klaren Anlaufpunkt für Fragen und Support geben.
+- Die Plattform persönlicher und menschlicher wirken lassen.
+- Vollständigkeit der Seite sicherstellen, auch wenn es kein technisches Muss ist.
+
+### Decision
+
+Wir haben uns entschieden, einen „About Us“-Bereich und einen Kontaktbereich direkt auf der Startseite (home.html) zu integrieren.
+
+Der About Us-Bereich informiert Nutzer darüber:
+- Wer das Team ist (mit Namen),
+- welche Werte und Motivation hinter Backpacker Rent stehen (Nachhaltigkeit, eigene Erfahrung).
+- Dies vermittelt Persönlichkeit und Vertrauen.
+
+Der Kontaktbereich bietet:
+- Klare Kontaktmöglichkeiten (Adresse, E-Mail),
+- einen direkten Anlaufpunkt für Supportanfragen,
+- eine Möglichkeit, unkompliziert mit uns in Verbindung zu treten.
+- Dadurch wird die Seite vertrauenswürdiger, transparenter und vollständiger, auch wenn dies kein zwingender funktionaler Bestandteil für den Mietprozess ist.
+
+Decision was taken by: team/backpackerrent
+
+### Regarded options
+
+| Criterion | Ohne About Us und Kontakt | Mit About Us und Kontakt (gewählt) |
+|---|---|---|
+| **Seriosität** | Weniger Vertrauen bei Nutzern |  Erhöht Vertrauen und Seriosität |
+| **Nutzerkontakt** | Nutzer finden schwer Kontaktmöglichkeiten |  Klare, direkte Kontaktmöglichkeit |
+| **Personalisierung** | Unpersönlich |  Persönlicher, menschlicher Auftritt |
+| **Implementierungsaufwand** | Kein Aufwand |  Geringer Aufwand für großen Nutzen |
