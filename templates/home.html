@@ -13,9 +13,11 @@
 {% block content %}
 <section class="search-section">
   <ul class="tour-tabs">
-    <li class="tab {% if selected_type=='backpacker' %}active{% endif %}">
+    <!-- Ist selected_type auf "backpacker", wird die CSS-Klasse active hinzugefügt-->
+    <li class="tab {% if selected_type=='backpacker' %}active{% endif %}"> 
+    <!--  index-Route, aber mit dem Query-Parameter ?type=backpacker-->
       <a href="{{ url_for('index', type='backpacker') }}">Backpacker</a>
-    </li>
+    </li> <!-- Gleiche mit radtour-->
     <li class="tab {% if selected_type=='radtour' %}active{% endif %}">
       <a href="{{ url_for('index', type='radtour') }}">Radtour</a>
     </li>
@@ -23,7 +25,8 @@
 
   <form action="{{ url_for('index') }}" method="get">
     <input type="hidden" name="type" value="{{ selected_type }}">
-
+     
+    <!-- Region wählen-->
     <div class="search-bar">
       <div class="input-group">
         <label for="dest">Wohin</label>
@@ -40,6 +43,7 @@
         </select>
       </div>
 
+       <!-- Kategorie wählen-->
       <div class="input-group">
         <label for="category_filter">Kategorie</label>
         <select id="category_filter" name="category_filter">
@@ -54,18 +58,19 @@
           {% endfor %}
         </select>
       </div>
-
+       <!-- Startdatum wählen-->
       <div class="input-group">
         <label for="Startdatum">Start Date</label>
         <input id="start" name="start_date" type="date" value="{{ request.args.get('start_date','') }}">
 
       </div>
-
+      <!-- Enddatum wählen-->
       <div class="input-group">
         <label for="Enddatum">End Date</label>
         <input id="end" name="end_date" type="date" value="{{ request.args.get('end_date','') }}">
       </div>
 
+      <!-- Suchbutton-->
       <button type="submit" class="search-button" aria-label="Suchen">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
              stroke="#1e1e88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -74,7 +79,7 @@
         </svg>
       </button>
     </div>
-    <!-- /.search-bar -->
+    
 
     <!-- Preis-Slider -->
     <div class="price-range-wrapper">
@@ -101,29 +106,29 @@
   </form>
 </section>
 
-
+<!--Angebot hinzufügen Button-->
 <a href="{{ url_for('add_offer') }}" class="btn-add">Angebot hinzufügen</a>
 
 <section class="offers-section">
   <div class="offers-container">
-    {% if offers|length == 0 %}
+    {% if offers|length == 0 %} <!-- wenn noch keine Angebote vorhanden sind-->
   {% if selected_region_id or selected_category_id or start_date or end_date %}
     <p class="no-offers">Leider keine Angebote mit diesen Filtern gefunden.</p>
   {% else %}
     <p class="no-offers">Momentan sind keine Angebote vorhanden.</p>
   {% endif %}
-
+    <!-- wenn Angebote vorhanden sind-->
     {% else %}
       <div class="offers-grid">
         {% for offer in offers %}
-          <div class="offer-card">
+          <div class="offer-card"> <!-- Bild-->
             {% if offer.photo %}
               <img
                 src="{{ url_for('static', filename=offer.photo) }}"
                 alt="Foto: {{ offer.title }}"
                 class="offer-image"
               >
-            {% else %}
+            {% else %} <!-- wenn kein Bild hochgeladen wurde-->
               <div class="offer-placeholder">
                 <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
                      stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -133,15 +138,15 @@
                 </svg>
               </div>
             {% endif %}
-
+            <!--Titel--->
             <h3 class="offer-title">
               <a href="{{ url_for('angebot_details', offer_id=offer.offer_id) }}">
                 {{ offer.title }}
               </a>
-            </h3>
+            </h3> <!--Kategorie + Region-->
             <p class="offer-meta">
               {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
-            </p>
+            </p> <!--Preis-->
             <p class="offer-price">
               <span class="price-amount">
               {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €
@@ -208,18 +213,18 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-  const minInput = document.getElementById('min_price');
+<script> // Live Aktualisierung des Preis slider
+  const minInput = document.getElementById('min_price'); //https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
   const maxInput = document.getElementById('max_price');
   const minLabel = document.getElementById('price-min-label');
   const maxLabel = document.getElementById('price-max-label');
 
   function updateLabels() {
-    minLabel.innerText = `${minInput.value} €`;
+    minLabel.innerText = `${minInput.value} €`; // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
     maxLabel.innerText = `${maxInput.value} €`;
   }
 
-  minInput.addEventListener('input', () => {
+  minInput.addEventListener('input', () => { //https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
     if (parseInt(minInput.value) > parseInt(maxInput.value)) {
       minInput.value = maxInput.value;
     }
@@ -227,7 +232,7 @@
   });
 
   maxInput.addEventListener('input', () => {
-    if (parseInt(maxInput.value) < parseInt(minInput.value)) {
+    if (parseInt(maxInput.value) < parseInt(minInput.value)) { //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
       maxInput.value = minInput.value;
     }
     updateLabels();

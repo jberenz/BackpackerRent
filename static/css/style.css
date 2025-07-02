@@ -110,10 +110,11 @@ body {
 ==============================
 */
 .search-section {
-  background: #fef3ff;
-  border-top: 4px solid #A855F7;
-  padding: 40px 0;
+  background: #fef3ff;/* rosa Hintergrund*/
+  border-top: 4px solid #A855F7;  /* Lila Linie oben */
+  padding: 40px 0; /* Vertikales Padding */
 }
+/*Backpacker/Radtour Filter*/
 .tour-tabs {
   list-style: none;
   display: flex;
@@ -168,7 +169,7 @@ body {
   padding: 6px 4px;
   font-size: 16px;
 }
-.input-group select {
+.input-group select { /*Drop down Rahmen*/
   appearance: none;
   background-color: white;
   border: 1px solid #ccc;
@@ -181,6 +182,7 @@ body {
   background-repeat: no-repeat;
   background-position: right 8px center;
 }
+/*SuchKnopf*/
 .search-button {
   width: 56px;
   height: 56px;
@@ -194,27 +196,29 @@ body {
   cursor: pointer;
   margin-left: auto;
 }
-.search-button svg {
+.search-button svg {/*icon*/
   width: 28px;
   height: 28px;
   stroke: #1e1e88;
 }
-.price-range-wrapper {
-  max-width: 200px;           /* vorher evtl. 400px oder mehr */
-  margin: 1rem 0 2rem 18rem;  /* Position wie bisher */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+/*Preisrange*/
 
+.price-range-wrapper {
+  max-width: 200px; /* Maximale Breite des Preisbereichs */
+  margin: 1rem 0 2rem 18rem; /* Oben/seitlich/unten Abstand (insbesondere von links) */
+  display: flex;
+  flex-direction: column; /* Vertikale Anordnung */
+  align-items: flex-start; /* Linksbündig */
+}
 
 .price-range-wrapper label {
   font-size: 15px;
-  font-weight: 600;
-  color: #1e1e88;
-  margin-bottom: 0.25rem;
+  font-weight: 600;  /* Etwas fetter (halbfett) */
+  color: #1e1e88;  /* Dunkelblau */
+  margin-bottom: 0.25rem; /* Kleiner Abstand unterhalb des Labels */
 }
 
+/*Preis Range innerhalb des Container außerhalb der search section*/
 .slider-container {
   width: 100%;
   position: relative;
@@ -232,8 +236,9 @@ body {
   position: absolute;
 }
 
-/* WebKit Thumb */
-.slider-container input[type="range"]::-webkit-slider-thumb {
+/* ========== WebKit-Styling für Thumb (Schiebeknopf) ========== 
+Schiebepunkts („Thumb“) für verschiedene Browser-Engines: -webkit- (Chrome/Safari) und -moz- (Firefox)*/
+.slider-container input[type="range"]::-webkit-slider-thumb { /*https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-slider-thumb, https://developer.mozilla.org/en-US/docs/Web/CSS/::-moz-range-thumb, https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
   -webkit-appearance: none;
   height: 14px;
   width: 14px;
@@ -257,7 +262,7 @@ body {
   box-shadow: 0 0 0 1.5px #1e3a8a;
   cursor: pointer;
 }
-
+/* Preisanzeige unter der Range*/
 .price-values {
   width: 100%;
   display: flex;
@@ -268,37 +273,7 @@ body {
   margin-top: 0.4rem;
 }
 
-/*
-==============================
-= 5) Dynamische Filter auf der Startseite =
-==============================
-*/
-.filters {
-  max-width: 900px;
-  margin: 16px auto;
-  padding: 0 24px;
-}
-.filter-group {
-  display: none;
-  flex-wrap: wrap;
-  gap: 16px 24px;
-  margin-bottom: 24px;
-}
-.filter-group.active {
-  display: flex;
-}
-.filter-group label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  color: #2563EB;
-  cursor: pointer;
-}
-.filter-group input {
-  transform: scale(1.2);
-  cursor: pointer;
-}
+
 
 /*
 ==============================
@@ -308,8 +283,9 @@ body {
 
 .auth-wrapper {
   padding: 120px 24px 40px;
-  background-color: #fef3ff;
+  background-color: #fef3ff; /* hell-lila Hintergrund*/
 }
+/*Willkommensüberschrift*/
 .login-welcome {
   text-align: center;
   font-size: 32px;
@@ -317,6 +293,7 @@ body {
   color: #2563EB;
   margin-bottom: 24px;
 }
+/*Eingabefelder*/
 .auth-container {
   max-width: 600px;
   margin: 0 auto;
@@ -325,6 +302,7 @@ body {
   border-radius: 24px;
   padding: 32px;
 }
+/*Überschrift im Formular (z. B. "Registrieren" oder "Login")*/
 .auth-header {
   text-align: center;
   font-size: 24px;
@@ -332,43 +310,54 @@ body {
   color: #2563EB;
   margin-bottom: 24px;
 }
+/*Formularstruktur mit Grid*/
 .auth-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px 24px;
 }
 
-/* ——— Neu: E-Mail und Passwort über beide Spalten ——— */
+/* --E-Mail und Passwort-Felder--: sollen über beide Spalten gehen */
 .auth-form input[type="email"],
 .auth-form input[type="password"] {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Überspannt die gesamte Grid-Zeile */
 }
+
+/* Input-Gruppe: Label + Input senkrecht angeordnet */
 .auth-form .input-group {
   display: flex;
   flex-direction: column;
 }
+
+/* Label-Styling */
 .auth-form label {
   margin-bottom: 4px;
   color: #1e1e88;
   font-size: 14px;
 }
+
+/* Eingabefelder & Dropdowns */
 .auth-form input,
 .auth-form select {
   padding: 10px 12px;
   border: 2px solid #2563EB;
   border-radius: 8px;
   font-size: 16px;
-  outline: none;
+  outline: none; /* Verhindert Standard-Fokus-Rahmen */
 }
+
+/* Fokus-Effekt: weicher blauer Rahmen */
 .auth-form input:focus,
 .auth-form select:focus {
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.3);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
+
+/* Submit-Button */
 .auth-submit {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Über beide Grid-Spalten */
   justify-self: start;
   padding: 12px 32px;
-  background-color: #60A5FA;
+  background-color: #60A5FA; /* Hellblau */
   color: white;
   border: none;
   border-radius: 8px;
@@ -377,26 +366,34 @@ body {
   cursor: pointer;
   margin-top: 16px;
 }
+
+/* Hover-Farbe für Button */
 .auth-submit:hover {
   background-color: #2563EB;
 }
+
+/* Footer-Bereich unter dem Formular */
 .auth-footer {
   margin-top: 24px;
   text-align: center;
   font-size: 14px;
   color: #1e1e88;
 }
+
+/* Link im Footer */
 .auth-footer a {
   color: #2563EB;
   text-decoration: none;
   font-weight: 500;
 }
+
+/* Hover-Effekt für Link */
 .auth-footer a:hover {
   text-decoration: underline;
 }
 
 
-/* === Neuer Hinzufügen-Button === */
+/* === Neuer Hinzufügen-Button fest unten links auf der home seite === */
 .btn-add {
   position: fixed;
   bottom: 20px;
@@ -428,7 +425,7 @@ body {
   border-radius: 24px;
   padding: 32px;
 }
-.add-header {
+.add-header { /*Überschrift im Formular*/
   text-align: center;
   font-size: 24px;
   font-weight: bold;
@@ -441,18 +438,24 @@ body {
   display: flex;
   gap: 24px;
   margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-wrap: wrap;                        /* Damit es auf kleinen Geräten umbrechen kann */
 }
+
+/* Ganze Zeile nimmt 100 % der Breite ein */
 .add-row.full .add-col {
   width: 100%;
 }
+
+/* Halbe Zeile nimmt max. 48 % – dadurch 2 Felder nebeneinander */
 .add-row.half .add-col {
   max-width: 48%;
 }
+/*Einzelne Spalten und Felder im Formular*/
 .add-col {
-  flex: 1;
-  min-width: 200px;
+  flex: 1; /* Nimmt so viel Platz wie möglich ein */
+  min-width: 200px; /* Niemals kleiner als 200px */
 }
+/*Formular label*/
 .add-col label {
   display: block;
   margin-bottom: 6px;
