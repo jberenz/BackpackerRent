@@ -88,15 +88,15 @@ body {
 ==============================
 */
 .hero {
-  background: url("../images/mountains.jpeg") center/cover no-repeat;
-  height: 60vh;
+  background: url("../images/Hintergrund.jpg") center/cover no-repeat; /* https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E*/
+  height: 70vh;
   margin-top: 64px;
   position: relative;
 }
 .hero__content {
   position: absolute;
   bottom: 32px;
-  left: 48px;
+  left: 100px;
 }
 .hero__title {
   color: white;
