@@ -3,11 +3,11 @@
 
 {% block content %}
 <section class="add-section">
-  <div class="add-container"> <!-- Container für das Formular, visuell als zentrierte Box sichtbar. -->
+  <div class="add-container"> <!-- Container für das Formular, visuell als zentrierte Box sichtbar -->
     <h2 class="add-header">Jetzt mieten: <!-- Überschrift "Jetzt mieten" --> 
       {% if offer %}
         {{ offer.title }}  <!-- Wenn ein einzelnes offer existiert, wird dessen Titel angezeigt-->
-      {% elif offers %} <!-- Falls eine Liste offers existiert, werden deren Titel durch Kommas getrennt angezeigt.-->
+      {% elif offers %} <!-- Falls eine Liste offers existiert, werden deren Titel durch Kommas getrennt angezeigt-->
         {% for o in offers %}
           {{ o.title }}{% if not loop.last %}, {% endif %}
         {% endfor %}
@@ -15,18 +15,18 @@
     </h2> <!-- Schließt die Überschrift--> 
 
     <form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) if offer else url_for('mietseite') }}">
-<!--Erstellt ein Formular mit POST-Methode.  -->
-<!-- Wenn der Nutzer ein bestimmtes Angebot mietet, wird das Formular an die Route rental_form mit der passenden offer_id gesendet, 
-andernfalls bei mehreren Artikeln aus dem Warenkorb an die allgemeine Route mietseite (def mietseite()), um die Mietanfrage zu verarbeiten.--> 
+<!--Erstellt ein Formular mit POST-Methode  -->
+<!-- Wenn der Nutzer ein bestimmtes Angebot mietet, wird das Formular an die Route "mieten" mit der passenden offer_id gesendet, 
+andernfalls bei mehreren Artikeln aus dem Warenkorb an die Route "mieten" mietseite (def mietseite()), um die Mietanfrage zu verarbeiten--> 
 
       <!-- Zeitraum -->
       <div class="add-row half">
         <div class="add-col">
-          <label for="start_date">Startdatum</label> <!-- Erstes Datumfeld (Startdatum), Pflichtfeld. -->
+          <label for="start_date">Startdatum</label> <!-- Erstes Datumfeld (Startdatum), Pflichtfeld -->
           <input type="date" name="start_date" value="{{ start_date or '' }}" required>
         </div>
         <div class="add-col">
-          <label for="end_date">Enddatum</label> <!-- Zweites Datumfeld (Enddatum), Pflichtfeld. -->
+          <label for="end_date">Enddatum</label> <!-- Zweites Datumfeld (Enddatum), Pflichtfeld -->
 
           <input type="date" name="end_date" value="{{ end_date or '' }}" required>
         </div>
@@ -35,7 +35,7 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die allgemeine Route miet
       <!-- Adresse -->
       <div class="add-row full">
         <div class="add-col">
-          <label for="address">Lieferadresse</label> <!-- Eingabefeld für die Lieferadresse mit Platzhaltertext, Pflichtfeld. --> 
+          <label for="address">Lieferadresse</label> <!-- Eingabefeld für die Lieferadresse mit Platzhaltertext, Pflichtfeld --> 
          <input type="text" name="address" placeholder="Straße, PLZ, Ort" value="{{ address or '' }}" required>
         </div>
       </div>
@@ -43,7 +43,7 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die allgemeine Route miet
       <!-- Zahlungsinformationen -->
       <div class="add-row">
         <div class="add-col">
-          <label for="name_on_card">Name auf der Karte</label> <!-- Eingabefeld für den Namen auf der Kreditkarte, Pflichtfeld. -->
+          <label for="name_on_card">Name auf der Karte</label> <!-- Eingabefeld für den Namen auf der Kreditkarte, Pflichtfeld -->
          <input type="text" name="name_on_card" value="{{ name_on_card or '' }}" required>
         </div>
         <div class="add-col">
@@ -54,32 +54,32 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die allgemeine Route miet
 
       <div class="add-row">
         <div class="add-col" style="max-width: 100px;">
-          <label for="sec_code">Sec. Code</label> <!-- Eingabefeld für den Sicherheitscode (3-stellig, Pflichtfeld). -->
+          <label for="sec_code">Sec. Code</label> <!-- Eingabefeld für den Sicherheitscode (3-stellig, Pflichtfeld) -->
           <input type="text" name="sec_code" maxlength="3" pattern="\d{3}" value="{{ sec_code or '' }}" required>
         </div>
       </div>
 
       {% if total_price is defined %}
         <div style="margin-top:1rem; font-weight:bold; color:#2563EB;">
-         Gesamtpreis für {{ num_days }} {{ 'Nacht' if num_days == 1 else 'Nächte' }}: <!-- Zeigt den berechneten Gesamtpreis an, wenn total_price definiert ist, inklusive Nächte. -->
+         Gesamtpreis für {{ num_days }} {{ 'Nacht' if num_days == 1 else 'Nächte' }}: <!-- Zeigt den berechneten Gesamtpreis an, wenn total_price definiert ist, inklusive Nächte -->
           {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
         </div>
       {% endif %}
 
-      {% if total_price is defined %} <!-- Wenn total_price berechnet wurde, wird der Button „Jetzt Mieten“ angezeigt. -->
+      {% if total_price is defined %} <!-- Wenn total_price berechnet wurde, wird der Button „Jetzt Mieten“ angezeigt -->
         <div style="margin-top: 1.5rem;">
           <button type="submit" name="action" value="book" class="btn-create">Jetzt Mieten</button>
         </div>
       {% else %}
         <div style="margin-top: 1.5rem;">
-          <button type="submit" name="action" value="calculate" class="btn-create">Preis berechnen</button> <!-- Sonst wird der Button „Preis berechnen“ angezeigt. -->
+          <button type="submit" name="action" value="calculate" class="btn-create">Preis berechnen</button> <!-- Sonst wird der Button „Preis berechnen“ angezeigt -->
         </div>
       {% endif %}
     </form>
 
     <div style="margin-top: 2rem;">
-      <a href="{{ url_for('warenkorb') }}" style="color:#2563EB;">← Zurück zum Warenkorb</a> <!-- Fügt einen Link hinzu, um zurück zum Warenkorb zu gelangen. -->
+      <a href="{{ url_for('warenkorb') }}" style="color:#2563EB;">← Zurück zum Warenkorb</a> <!-- Fügt einen Link hinzu, um zurück zum Warenkorb zu gelangen -->
     </div>
   </div>
 </section>
-{% endblock %} <!-- Schließt den Container und den content Block ab. -->
+{% endblock %} <!-- Schließt den Container und den content Block ab -->

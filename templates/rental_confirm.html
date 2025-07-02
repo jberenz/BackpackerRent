@@ -1,47 +1,47 @@
-{% extends "base.html" %} <!--Dieses Template erbt von base.html und übernimmt Layout, Navigation und Grundstruktur. --> 
+{% extends "base.html" %} <!--Dieses Template erbt von base.html und übernimmt Layout, Navigation und Grundstruktur --> 
 {% block title %}Buchung bestätigt – Backpacker Rent{% endblock %} <!--Setzt den Seitentitel im Browser-Tab auf „Buchung bestätigt - Backpacker Rent“ --> 
 
 {% block content %}
 <section class="add-section">
-  <div class="add-container"> <!-- Erstellt einen strukturierten Container mit Padding und zentrierter Ausrichtung.--> 
-    <h2 class="add-header">🎉 Buchung erfolgreich!</h2> <!-- Überschrift mit Emoji, die dem Nutzer bestätigt, dass die Buchung erfolgreich abgeschlossen wurde.--> 
+  <div class="add-container"> <!-- Erstellt einen strukturierten Container mit Padding und zentrierter Ausrichtung--> 
+    <h2 class="add-header">🎉 Buchung erfolgreich!</h2> <!-- Überschrift mit Emoji, die dem Nutzer bestätigt, dass die Buchung erfolgreich abgeschlossen wurde--> 
 
     <div class="confirmation-details" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"> <!-- Weißer, abgerundeter Kasten mit leichtem Schatten zur Abhebung für die Buchungsdetails--> 
   {% if offers %}
-    <p><strong>Produkte:</strong></p> <!--Falls mehrere Artikel im Warenkorb gemietet wurden, wird eine Liste mit „Produkte:“ ausgegeben. -->
+    <p><strong>Produkte:</strong></p> <!--Falls mehrere Artikel im Warenkorb gemietet wurden, wird eine Liste mit „Produkte:“ ausgegeben -->
     <ul>
-      {% for offer in offers %} <!-- Für jedes Angebot wird eine Liste (<li>) erstellt.-->
+      {% for offer in offers %} <!-- Für jedes Angebot wird eine Liste (<li>) erstellt-->
         <li>
 {% set parts = [] %}
 {% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
-{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Erstellt eine leere Liste parts und fügt optional die Kategorie und Region hinzu, falls diese existieren.-->
+{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Erstellt eine leere Liste parts und fügt optional die Kategorie und Region hinzu, falls diese existieren-->
 {{ offer.title }}{% if parts %} ({{ parts | join(' · ') }}){% endif %}<br> <!-- Zeigt den Titel des Angebots an und falls vorhanden die Kategorie und Region-->
-          {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht <!-- Zeigt den Preis pro Nacht mit Komma als Dezimaltrennzeichen an.-->
+          {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht <!-- Zeigt den Preis pro Nacht mit Komma als Dezimaltrennzeichen an-->
         </li>
       {% endfor %}
     </ul>
   {% elif offer %}
-    <p><strong>Produkt:</strong> {{ offer.title }}</p> <!-- Zeigt „Produkt:“ und den Titel an, wenn nur ein Angebot gebucht wurde.-->
+    <p><strong>Produkt:</strong> {{ offer.title }}</p> <!-- Zeigt „Produkt:“ und den Titel an, wenn nur ein Angebot gebucht wurde-->
 {% set parts = [] %}
 {% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
-{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Fügt wieder optional Kategorie und Region hinzu und zeigt sie in Klammern an, falls vorhanden.-->
+{% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Fügt wieder optional Kategorie und Region hinzu und zeigt sie in Klammern an, falls vorhanden-->
 {% if parts %}
     <p>({{ parts | join(' · ') }})</p>
 {% endif %}
-    <p>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht</p> <!--Zeigt den Preis pro Nacht mit Komma an. -->
+    <p>{{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht</p> <!--Zeigt den Preis pro Nacht mit Komma an -->
   {% endif %}
 
-  <p><strong>Gesamtpreis:</strong> {{ ('%.2f'|format(total_price)).replace('.', ',') }} €</p> <!-- Zeigt den berechneten Gesamtpreis der Buchung mit Komma als Trennzeichen.-->
+  <p><strong>Gesamtpreis:</strong> {{ ('%.2f'|format(total_price)).replace('.', ',') }} €</p> <!-- Zeigt den berechneten Gesamtpreis der Buchung mit Komma als Trennzeichen-->
   <hr>
-<p><strong>Buchungszeitraum:</strong> <!-- Zeigt den Buchungszeitraum von Start- bis Enddatum an, umformatiert von YYYY-MM-DD zu DD.MM.YYYY.-->
+<p><strong>Buchungszeitraum:</strong> <!-- Zeigt den Buchungszeitraum von Start- bis Enddatum an, umformatiert von YYYY-MM-DD zu DD.MM.YYYY-->
     {{ start_date.split('-')[2] }}.{{ start_date.split('-')[1] }}.{{ start_date.split('-')[0] }}
     bis
     {{ end_date.split('-')[2] }}.{{ end_date.split('-')[1] }}.{{ end_date.split('-')[0] }}
 </p>
-  <p><strong>Lieferadresse:</strong> {{ address }}</p> <!-- Zeigt die Lieferadresse und den Namen auf der Karte an, die der Nutzer im Formular eingegeben hat.-->
+  <p><strong>Lieferadresse:</strong> {{ address }}</p> <!-- Zeigt die Lieferadresse und den Namen auf der Karte an, die der Nutzer im Formular eingegeben hat-->
   <p><strong>Name auf der Karte:</strong> {{ name_on_card }}</p> 
 </div>
 
   </div>
 </section>
-{% endblock %} <!-- Schließt den weißen Kasten, den Container und den content Block sauber ab.--> 
+{% endblock %} <!-- Schließt den weißen Kasten, den Container und den content Block sauber ab--> 
