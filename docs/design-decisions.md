@@ -184,39 +184,7 @@ Dadurch erfüllen wir aktuelle Sicherheitsstandards und sind gegen viele gängig
 
 ---
 
-
-## 06: Keine Verwendung von JavaScript für Hauptfunktionen
-
-### Meta
-
-Status  
-: **Decided**
-
-Updated  
-: 26-Jun-2025
-
-### Problem statement
-
-Sollen Kernfunktionen (z. B. Angebote erstellen/bearbeiten, mieten) auch ohne JavaScript funktionieren?  
-Ziel: Barrierefreiheit und Kompatibilität sicherstellen.
-
-### Decision
-
-Die Hauptfunktionen sind vollständig serverseitig umgesetzt. JS wird nur für Komfort-Features (z. B. dynamisches Nachladen von Features) genutzt.  
-Dadurch bleibt die Anwendung barrierefrei und funktioniert auch ohne aktiviertes JS.
-
-*Decision was taken by:* team/backpackerrent
-
-### Regarded options
-
-| Criterion | **Server-seitige Umsetzung (gewählt)** | Voll-JavaScript-Lösung |
-| --- | --- | --- |
-| **Barrierefreiheit** | ✔️ Hohe | ❌ Gering ohne JS |
-| **Komplexität** | ✔️ Einfacher | ❌ Komplexere Architektur |
-| **User Experience** | ❔ Weniger dynamisch | ✔️ Sehr dynamisch |
-
-
-## 07: Direkter Checkout mit „Sofort-Mieten“ 
+## 06: Direkter Checkout mit „Sofort-Mieten“ 
 
 ### Meta
 
@@ -255,9 +223,9 @@ Decision was taken by: team/backpackerrent
 | **Flexibilität** | Sammelbuchung + Einzelbuchung möglich | Nur Einzelbuchung |  Beides möglich |
 
 
-## 08: Datumsauswahl direkt im Rental Form
+## 07: Datumsauswahl direkt im Rental Form
 
-## Meta
+### Meta
 
 Status: **Decided**
 
@@ -297,7 +265,7 @@ Decision was taken by: team/backpackerrent
 | **Implementierungsaufwand** | Einfach, da Datum fix übergeben wird |  Einfach, nur zwei Felder im Template erforderlich |
 | **Flow-Unterbrechung** | Hoch (erneutes Laden oder Navigieren nötig) |  Keine Unterbrechung, direkt im Prozess anpassbar |
 
-## 09: Gebuchte und erstellte Angebote im Profil anzeigen
+## 08: Gebuchte und erstellte Angebote im Profil anzeigen
 
 ### Meta
 
@@ -335,51 +303,3 @@ Decision was taken by: team/backpackerrent
 | **Implementierungsaufwand** | Kein Aufwand |  Einfach durch Erweiterung der bestehenden Profilseite |
 | **Planbarkeit** | Nutzer kann keine Planungen auf Basis von Buchungen vornehmen |  Nutzer kann geplante Zeiträume nachvollziehen |
 
-## 10: About Us und Kontaktbereich auf der Startseite
-
-### Meta
-
-Status: **Decided**
-
-Updated
-: 25-Jun-2025
-
-### Problem statement
-
-Eine funktionale Plattform alleine reicht nicht aus, um Nutzer langfristig zu binden. Nutzer möchten wissen:
-
-- Wer steckt hinter der Plattform?
-- Wie kann ich die Betreiber kontaktieren, wenn ich Fragen oder Probleme habe?
-
-Ziel:
-
-- Seriosität und Vertrauen aufbauen.
-- Nutzer einen klaren Anlaufpunkt für Fragen und Support geben.
-- Die Plattform persönlicher und menschlicher wirken lassen.
-- Vollständigkeit der Seite sicherstellen, auch wenn es kein technisches Muss ist.
-
-### Decision
-
-Wir haben uns entschieden, einen „About Us“-Bereich und einen Kontaktbereich direkt auf der Startseite (home.html) zu integrieren.
-
-Der About Us-Bereich informiert Nutzer darüber:
-- Wer das Team ist (mit Namen),
-- welche Werte und Motivation hinter Backpacker Rent stehen (Nachhaltigkeit, eigene Erfahrung).
-- Dies vermittelt Persönlichkeit und Vertrauen.
-
-Der Kontaktbereich bietet:
-- Klare Kontaktmöglichkeiten (Adresse, E-Mail),
-- einen direkten Anlaufpunkt für Supportanfragen,
-- eine Möglichkeit, unkompliziert mit uns in Verbindung zu treten.
-- Dadurch wird die Seite vertrauenswürdiger, transparenter und vollständiger, auch wenn dies kein zwingender funktionaler Bestandteil für den Mietprozess ist.
-
-Decision was taken by: team/backpackerrent
-
-### Regarded options
-
-| Criterion | Ohne About Us und Kontakt | Mit About Us und Kontakt (gewählt) |
-|---|---|---|
-| **Seriosität** | Weniger Vertrauen bei Nutzern |  Erhöht Vertrauen und Seriosität |
-| **Nutzerkontakt** | Nutzer finden schwer Kontaktmöglichkeiten |  Klare, direkte Kontaktmöglichkeit |
-| **Personalisierung** | Unpersönlich |  Persönlicher, menschlicher Auftritt |
-| **Implementierungsaufwand** | Kein Aufwand |  Geringer Aufwand für großen Nutzen |

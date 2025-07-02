@@ -571,32 +571,51 @@ def edit_offer(offer_id):
                            regionen=regionen,
                            offer=offer,
                            features=feature_rows)
+
 @csrf.exempt
 @app.route("/add_to_cart/<int:offer_id>", methods=["POST"])
-def add_to_cart(offer_id):
-    cart = session.get("cart", [])
+def add_to_cart(offer_id): # Diese Route wird aufgerufen, wenn der Nutzer ein Produkt in den Warenkorb legen möchte
+    # Sie wird per POST aufgerufen, z.B. wenn der Nutzer auf der Produktseite auf "In den Warenkorb" klickt
     
-    # Füge nur hinzu, wenn nicht schon enthalten
-    if offer_id not in cart:
-        cart.append(offer_id)
-        session["cart"] = cart
-        flash("Zum Warenkorb hinzugefügt.", "success")
-    else:
-        flash("Dieses Produkt ist bereits im Warenkorb.", "info")
+    cart = session.get("cart", []) # Holt den aktuellen Warenkorb aus der Session
+    # Falls der Nutzer zum ersten Mal etwas hinzufügt, wird ein leerer Warenkorb (leere Liste) erstellt
+
+    if offer_id not in cart: # Wenn die offer_id noch nicht im Warenkorb ist:
+        cart.append(offer_id) # Fügt die offer_id dem Warenkorb hinzu
+        session["cart"] = cart  # Speichert den aktualisierten Warenkorb zurück in die Session -> bleibt drinne im Warenkorb 
+        flash("Zum Warenkorb hinzugefügt.", "success") # Zeigt oben eine grüne Erfolgsmeldung an, dass das Produkt hinzugefügt wurde.
+
+    else: # Wenn die offer_id bereits im Warenkorb enthalten ist:
+        flash("Dieses Produkt ist bereits im Warenkorb.", "info") # Zeigt eine blaue Info-Meldung an, dass das Produkt bereits vorhanden ist.
+
     
     return redirect(url_for("warenkorb"))
-
+    # Nach dem Hinzufügen wird der Nutzer zur Warenkorbseite weitergeleitet.
+    # In deiner `warenkorb.html` wird dann der aktuelle Warenkorb angezeigt,
+    # wo der Nutzer alle hinzugefügten Produkte mit Titel, Kategorie, Region und Preis pro Nacht sehen kann
+    # und dort auch die Möglichkeit hat, Produkte zu entfernen oder alle Produkte gleichzeitig zu mieten.
 
 @csrf.exempt
 @app.route("/warenkorb")
 def warenkorb():
+    # Diese Route zeigt dem Nutzer den aktuellen Warenkorb an (warenkorb.html),
+    # wenn er auf "Warenkorb" in der Navigation klickt
     cart = session.get("cart", [])
-    if not cart:
-        flash("Dein Warenkorb ist leer.", "info")
-        return render_template("warenkorb.html", offers=[])
+    # Holt den aktuellen Warenkorb aus der Session.
+    # Der Warenkorb enthält eine Liste mit offer_id's der hinzugefügten Produkte.
+    # Falls noch nichts im Warenkorb liegt, wird eine leere Liste zurückgegeben.
 
-    db = get_db_con()
-    placeholders = ','.join('?' for _ in cart)
+    if not cart: # Prüft, ob der Warenkorb leer ist
+        flash("Dein Warenkorb ist leer.", "info")
+         # Zeigt eine blaue Info-Meldung an, dass der Warenkorb leer ist.
+        return render_template("warenkorb.html", offers=[])
+        # Lädt die Seite warenkorb.html mit einem leeren offers-Array,
+        # wodurch in deiner `warenkorb.html` der Text angezeigt wird:
+        # "Dein Warenkorb ist leer."
+        # und keine Produktkarten angezeigt werden.
+
+    db = get_db_con() # Stellt eine Verbindung zur Datenbank her.
+    placeholders = ','.join('?' for _ in cart) # Diese Zeile erstellt genau so viele Fragezeichen wie Produkte im Warenkorb sind, damit die Datenbank alle auf einmal finden kann
     offers = db.execute(f"""
         SELECT o.*, c.category_name AS category, r.region_name AS region
         FROM offers o
@@ -604,17 +623,38 @@ def warenkorb():
         JOIN region   r ON o.region_id = r.region_id
         WHERE o.offer_id IN ({placeholders})
     """, cart).fetchall()
+    # Führt die SQL-Abfrage aus, um alle Produkte aus dem Warenkorb anhand ihrer offer_id abzurufe
+    # Holt dabei:
+    # - alle Spalten aus offers (inkl. Titel, Preis pro Nacht, etc.)
+    # - den Kategorienamen als "category"
+    # - den Regionsnamen als "region"
+    # Dies wird für die Anzeige in deiner `warenkorb.html` benötigt,
+    # um Titel, Kategorie, Region und Preis pro Nacht korrekt anzuzeigen
 
     return render_template("warenkorb.html", offers=offers)
+    # Rendert die Seite warenkorb.html mit den abgerufenen Angeboten (offers).
+    # In deiner `warenkorb.html` wird dann eine Liste von Produktkarten angezeigt:
+    #    - Titel
+    #    - Kategorie und Region
+    #    - Preis pro Nacht (mit Komma)
+    # Ein roter Button „Entfernen“ pro Produkt wird angezeigt, er es ermöglicht, das Produkt aus dem Warenkorb zu entfernen.
+    #  Unten wird ein Button „Alle Produkte jetzt mieten“ angezeigt, der den Nutzer zur Mietseite (/mieten) weiterleitet, um alle Produkte im Warenkorb gleichzeitig zu mieten.
 
-@app.route("/remove_from_cart/<int:offer_id>", methods=["POST"]) # Hier wird vom Warenkorb der Artikel gelöscht
-def remove_from_cart(offer_id):
-    cart = session.get("cart", [])
-    if offer_id in cart: # Prüft, ob die offer_id in der Liste ist.
-        cart.remove(offer_id) # Entfernt diese offer_id aus dem Warenkorb.
-        session["cart"] = cart
-        flash("Angebot aus dem Warenkorb entfernt.", "success")
+@csrf.exempt
+@app.route("/remove_from_cart/<int:offer_id>", methods=["POST"])
+ # Diese Route wird aufgerufen, wenn der Nutzer in der `warenkorb.html` auf den roten „Entfernen“-Button klickt
+ # Sie wird per POST aufgerufen, um sicherzustellen, dass der Nutzer aktiv geklickt hat
+
+def remove_from_cart(offer_id): # Funktion, um ein Produkt aus dem Warenkorb zu löschen
+    cart = session.get("cart", []) # holt den aktuellen Warenkorb des Nutzers, wenn er noch keinen hat, startet es mit einer leeren Liste
+
+    if offer_id in cart: # Prüft, ob die übergebene offer_id überhaupt im Warenkorb vorhanden ist
+       
+        cart.remove(offer_id) # Entfernt die offer_id aus dem Warenkorb
+        session["cart"] = cart # Speichert den aktualisierten Warenkorb wieder in der Session
+        flash("Angebot aus dem Warenkorb entfernt.", "success") # Zeigt oben eine grüne Erfolgsmeldung an, dass das Produkt entfernt wurde
     return redirect(url_for("warenkorb"))
+# Leitet den Nutzer zurück zur Warenkorbseite, damit er den aktuellen (aktualisierten) Warenkorb direkt sehen kann
 
 @csrf.exempt
  # Diese Route verarbeitet das Mieten mehrerer Angebote aus dem Warenkorb
