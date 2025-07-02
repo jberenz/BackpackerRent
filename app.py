@@ -296,13 +296,15 @@ def add_offer():
     return render_template("angebot_erstellen.html", categories=categories, regionen=regionen, features=features, selected_category_id=selected_category_id)
 
 @csrf.exempt
-@app.route("/mieten/<int:offer_id>", methods=["GET", "POST"])
+@app.route("/mieten/<int:offer_id>", methods=["GET", "POST"]) # Diese Route dient dazu, EIN einzelnes Angebot direkt zu mieten, 
+#ohne den Warenkorb zu nutzen, indem der Nutzer auf „Jetzt mieten“ auf der Produktseite klickt.
 def rental_form(offer_id):
-    if "user_id" not in session:
+    if "user_id" not in session: # # Wenn der Nutzer nicht eingeloggt ist, wird er zur Anmeldeseite weitergeleitet.
         flash("Bitte zuerst anmelden.", "warning")
         return redirect(url_for("anmelden"))
 
-    db = get_db_con()
+    db = get_db_con() 
+    # # Das angefragte Angebot aus der Datenbank abrufen inkl. Kategorie und Region
     offer = db.execute("""
         SELECT o.*, r.region_name, c.category_name
         FROM offers o
@@ -311,33 +313,34 @@ def rental_form(offer_id):
         WHERE o.offer_id = ?
     """, (offer_id,)).fetchone()
 
-    if not offer:
+    if not offer: # # Falls das Angebot nicht existiert, Fehlerseite 404 anzeigen.
         abort(404) #https://flask.palletsprojects.com/en/stable/api/#flask.abort
 
-    total_price = None
+    total_price = None # # Initialisierung von total_price und num_days, damit sie verfügbar sind, falls benötigt.
     num_days = None
 
-    if request.method == "POST":
-        action = request.form.get("action")
-        start = request.form["start_date"]
-        end = request.form["end_date"]
-        address = request.form.get("address")
-        name = request.form.get("name_on_card")
-        card = request.form.get("card_number")
-        sec = request.form.get("sec_code")
+    if request.method == "POST": #Wenn der Nutzer das Formular absendet (Button „Preis berechnen“ oder „Jetzt mieten“ in rental_form.html)
+        action = request.form.get("action") # „calculate“ oder „book“
+        start = request.form["start_date"] # Mietstart-Datum aus Formular
+        end = request.form["end_date"] # Mietende-Datum aus Formular 
+        address = request.form.get("address") # Lieferadresse
+        name = request.form.get("name_on_card") # Name auf der Karte
+        card = request.form.get("card_number") # Kartennummer
+        sec = request.form.get("sec_code") # Sicherheitscode
 
-        try:
+        try: # Die Datumsstrings aus dem Formular (z.B. „2025-07-05“) in echte datetime.date-Objekte umwandeln,
+            # um mit ihnen rechnen und vergleichen zu können.
             start_date = datetime.strptime(start, "%Y-%m-%d").date()
             end_date = datetime.strptime(end, "%Y-%m-%d").date()
         except ValueError:
-            flash("Ungültiges Datum", "danger")
+            flash("Ungültiges Datum", "danger")  # Bei ungültigem Datum zurück zur Formularseite
             return redirect(request.url)
 
-        if end_date <= start_date:
+        if end_date <= start_date: # Wenn das Enddatum nicht nach dem Startdatum liegt, Fehlermeldung anzeigen.
             flash("Enddatum muss nach dem Startdatum liegen.", "warning")
             return redirect(request.url)
 
-        # ✅ Konfliktprüfung
+        # "Konfliktprüfung" -> Prüfen, ob dieses Produkt im gewählten Zeitraum bereits gebucht ist.
         conflict = db.execute("""
             SELECT 1 FROM rentals
             WHERE offer_id = ?
@@ -345,32 +348,38 @@ def rental_form(offer_id):
             AND end_date >= ?
         """, (offer_id, end_date, start_date)).fetchone()
 
-        if conflict:
+        if conflict: # Falls das Produkt im gewählten Zeitraum nicht verfügbar ist, Fehlermeldung anzeigen.
             flash("Dieses Produkt ist im gewählten Zeitraum bereits gebucht.", "danger")
             return redirect(request.url)
 
-        num_days = (end_date - start_date).days
-        total_price = num_days * offer["price_per_night"]
+        num_days = (end_date - start_date).days  # Berechnung der Anzahl der gebuchten Nächte
+        total_price = num_days * offer["price_per_night"] # Berechnung des Gesamtpreises: Preis pro Nacht * Anzahl Nächte
 
-        if action == "book":
+        if action == "book": #Falls der Nutzer auf „Jetzt mieten“ klickt:
+            # # Buchung wird in der rentals-Tabelle gespeichert.
             db.execute("""
                 INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
                 VALUES (?, ?, ?, ?, ?)
             """, (offer_id, session["user_id"], start_date, end_date, total_price))
             db.commit()
 
-            return render_template("rental_confirm.html", offer=offer, start_date=start,
-                                   end_date=end, address=address, name_on_card=name,
-                                   total_price=total_price, num_days=num_days)
+            return render_template("rental_confirm.html", offer=offer, start_date=start, # Nach erfolgreicher Buchung wird die Bestätigungsseite rental_confirm.html angezeigt,
+                                   end_date=end, address=address, name_on_card=name, # auf der der Nutzer alle Daten nochmals sieht:
+                                   total_price=total_price, num_days=num_days) # # Titel, Kategorie, Region, Zeitraum, Adresse, Name auf der Karte, Preis
 
-        # Preis berechnen
+        # Falls der Nutzer auf „Preis berechnen“ klickt:
+        #rental_form.html wird erneut angezeigt, diesmal mit dem berechneten Gesamtpreis und allen eingegebenen Feldern vorausgefüllt.
+        # Der Button auf der Seite ändert sich jetzt von „Preis berechnen“ zu „Jetzt mieten“,
+        #  damit der Nutzer direkt im nächsten Schritt buchen kann.
         return render_template("rental_form.html", offer=offer,
                                start_date=start, end_date=end,
                                address=address, name_on_card=name,
                                card_number=card, sec_code=sec,
                                total_price=total_price, num_days=num_days)
 
-    return render_template("rental_form.html", offer=offer)
+    return render_template("rental_form.html", offer=offer) # Zeigt dem Nutzer das Mietformular (rental_form.html) für dieses Angebot an,
+# damit er Mietzeitraum, Adresse und Zahlungsdaten eingeben kann.
+
 
 
 @app.route("/profil")
@@ -608,51 +617,56 @@ def remove_from_cart(offer_id):
     return redirect(url_for("warenkorb"))
 @csrf.exempt
 
-@csrf.exempt
-@app.route("/mieten", methods=["GET", "POST"])
+@csrf.exempt # Diese Route verarbeitet das Mieten mehrerer Angebote aus dem Warenkorb.
+@app.route("/mieten", methods=["GET", "POST"]) # Sie erlaubt GET (Formularanzeige) und POST (Formularabsendung).
 def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, falls der Nutzer nicht ein spezifisches Angebot direkt mietet
-    if "user_id" not in session:
+    if "user_id" not in session: # Prüfen, ob der Nutzer eingeloggt ist. Ansonsten muss der Nutzer sich erstmal anmelden und wird dorthin geleitet 
         flash("Bitte zuerst anmelden.", "warning")
         return redirect(url_for("anmelden"))
 
-    cart = session.get("cart", [])
+    cart = session.get("cart", []) # Falls der Warenkorb leer ist, wird der Nutzer zurück zur Warenkorbseite geschickt.
     if not cart:
         flash("Dein Warenkorb ist leer.", "info")
         return redirect(url_for("warenkorb"))
 
-    db = get_db_con()
-    placeholders = ','.join(['?'] * len(cart))
-    offers = db.execute(f"""
-        SELECT o.*, r.region_name, c.category_name
+    db = get_db_con() # Verbindung zur Datenbank öffnen
+    placeholders = ','.join(['?'] * len(cart)) # Platzhalter für SQL-Abfrage vorbereiten, passend zur Anzahl der Produkte im Warenkorb
+    # Holt alle Angebote aus der Datenbank mit deren:
+    # Titel, Preis pro Nacht, Region (region_name), Kategorie (category_name)
+    # Diese Daten werden für die Anzeige in rental_form.html (für Formular) und rental_confirm.html (Bestätigung) benötigt.
+    offers = db.execute(f""" 
+        SELECT o.*, r.region_name, c.category_name 
         FROM offers o
         JOIN region r ON o.region_id = r.region_id
         JOIN category c ON o.category_id = c.category_id
         WHERE o.offer_id IN ({placeholders})
-    """, cart).fetchall()
+    """, cart).fetchall() # Alle Angebote aus dem Warenkorb inkl. Kategorie und Region aus der Datenbank abfragen
 
-    if request.method == "GET":
-        return render_template("rental_form.html", offers=offers)
+    if request.method == "GET": # Wenn die Seite per GET aufgerufen wird, wird das Mietformular angezeigt (rental_form.html)
+        return render_template("rental_form.html", offers=offers) # Der Nutzer kann hier den Mietzeitraum, Adresse und Zahlungsdaten eingeben.
+# offers=offers sorgt dafür, dass im Formular alle Artikel und Titel in der Überschrift angezeigt werden: „Jetzt mieten: Gaskocher, Zelt, Schlafsack …“
 
-    action = request.form.get("action", "calculate")
-    start = request.form.get("start_date", "")
-    end = request.form.get("end_date", "")
-    address = request.form.get("address", "")
-    name = request.form.get("name_on_card", "")
-    card = request.form.get("card_number", "")
-    sec = request.form.get("sec_code", "")
+# Formulardaten aus dem POST-Request auslesen
+    action = request.form.get("action", "calculate") # Button-Wert: „calculate“ oder „book“
+    start = request.form.get("start_date", "") # Mietbeginn
+    end = request.form.get("end_date", "") # Mietende
+    address = request.form.get("address", "") # Lieferadresse
+    name = request.form.get("name_on_card", "") # Name auf der Kreditkarte
+    card = request.form.get("card_number", "")  # Kreditkartennummer
+    sec = request.form.get("sec_code", "") # Sicherheitscode
 
-    try:
+    try: #Wandelt Datum von String in datetime.date um.
         start_date = datetime.strptime(start, "%Y-%m-%d").date()
         end_date = datetime.strptime(end, "%Y-%m-%d").date()
     except ValueError:
-        flash("Ungültiges Datum", "danger")
+        flash("Ungültiges Datum", "danger")  # Bei ungültigem Datum zurück zur Formularseite
         return redirect(request.url)
 
-    if end_date <= start_date:
+    if end_date <= start_date: # Enddatum muss nach dem Startdatum liegen
         flash("Enddatum muss nach dem Startdatum liegen.", "warning")
         return redirect(request.url)
 
-    # ✅ Konfliktprüfung für alle Angebote im Warenkorb
+    # Verfügbarkeitsprüfung: prüfen, ob jedes Produkt im gewünschten Zeitraum verfügbar ist
     for offer in offers:
         conflict = db.execute("""
             SELECT 1 FROM rentals
@@ -661,30 +675,35 @@ def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, f
             AND end_date >= ?
         """, (offer["offer_id"], end_date, start_date)).fetchone()
 
-        if conflict:
-            flash(f"Das Produkt '{offer['title']}' ist im gewählten Zeitraum nicht verfügbar.", "danger")
+        if conflict:  # Falls ein Produkt bereits in diesem Zeitraum gebucht ist, abbrechen
+            flash(f"Das Produkt '{offer['title']}' ist im gewählten Zeitraum nicht verfügbar.", "danger") #Falls Konflikt: Nutzer erhält einen Hinweis und kehrt zurück auf das Formular.
             return redirect(request.url)
 
-    num_days = (end_date - start_date).days
-    total_price = sum([num_days * offer["price_per_night"] for offer in offers])
+    num_days = (end_date - start_date).days # Berechnung der Mietdauer und des Gesamtpreises
+    total_price = sum([num_days * offer["price_per_night"] for offer in offers]) # Berechnet den Gesamtpreis als Summe (Tage x Preis pro Nacht) für alle Artikel im Warenkorb.
 
-    if action == "book":
+    if action == "book": # Wenn der Nutzer „Jetzt Mieten“ geklickt hat:
         for offer in offers:
-            einzelpreis = num_days * offer["price_per_night"]
-            db.execute("""
-                INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price)
+            einzelpreis = num_days * offer["price_per_night"] # Preis für dieses Produkt berechnen
+            # Buchung in der rentals-Tabelle speichern bzw. Für jedes Produkt wird ein Eintrag in der rentals-Tabelle erstellt.
+            # Speichert: offer_id, user_id, Zeitraum, Preis für dieses Produkt.
+            db.execute(""" 
+                INSERT INTO rentals (offer_id, user_id, start_date, end_date, total_price) 
                 VALUES (?, ?, ?, ?, ?)
             """, (offer["offer_id"], session["user_id"], start_date, end_date, einzelpreis))
-        db.commit()
+        db.commit() # Änderungen in der Datenbank speichern
 
-        session["cart"] = []  # Warenkorb leeren
+        session["cart"] = []  # Warenkorb nach erfolgreicher Buchung leeren
 
-        return render_template("rental_confirm.html", offers=offers, start_date=start,
-                               end_date=end, address=address, name_on_card=name,
+        return render_template("rental_confirm.html", offers=offers, start_date=start, # Nach erfolgreicher Buchung Bestätigungsseite anzeigen (rental_confirm.html)
+                               end_date=end, address=address, name_on_card=name,   # Diese zeigt alle Details: Produkte, Zeitraum, Adresse, Gesamtpreis.
                                total_price=total_price, num_days=num_days)
 
-    # Preis berechnen
-    return render_template("rental_form.html", offers=offers, start_date=start,
+# Wenn der Nutzer „Preis berechnen“ klickt:
+# Zeigt rental_form.html erneut an, diesmal mit dem berechneten Gesamtpreis und vorausgefüllten Feldern,
+# sodass der Nutzer im nächsten Schritt direkt buchen kann.
+# Der Button ändert sich jetzt zu „Jetzt Mieten“, sodass der Nutzer im nächsten Schritt buchen kann.
+    return render_template("rental_form.html", offers=offers, start_date=start, 
                            end_date=end, address=address, name_on_card=name,
                            card_number=card, sec_code=sec,
                            total_price=total_price, num_days=num_days)
