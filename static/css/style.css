@@ -677,6 +677,7 @@ Schiebepunkts („Thumb“) für verschiedene Browser-Engines: -webkit- (Chrome/
   align-items: center;
   gap: 16px;
   margin-bottom: 40px;
+   margin-left: 60px; 
 }
 .about-icon {
   width: 50px;
@@ -686,11 +687,15 @@ Schiebepunkts („Thumb“) für verschiedene Browser-Engines: -webkit- (Chrome/
   display: flex;
   flex-direction: column;
   gap: 40px;
+
 }
 .about-text {
   font-size: 18px;
   line-height: 1.8;
+  max-width: 1100px;   /* gleiche Breite wie die Bilder */
+  margin: 0 auto;     /* zentriert den Textblock */
 }
+
 .about-text h3 {
   font-size: 22px;
   color: #2563EB;
