@@ -15,7 +15,7 @@ nav_order: 1
 </details>
 
 ## The problem
-Reisende und Backpacker benötigen passende Ausrüstung für ihre Unternehmungen. Oft müssen sie teure Ausrüstung kaufen und während der gesamten Reise mit sich tragen - oder sie haben Schwierigkeiten, vor Ort geeignete Ausrüstung zu finden. Ob für eine Radtour, einen Roadtrip mit dem Auto, ein Camping-Abenteuer oder eine klassische Backpacking-Reise: Viele Reisende wünschen sich flexible, einfache Lösungen, um hochwertige Ausrüstung nur für den tatsächlichen Bedarf zu nutzen -> ohne hohe Anschaffungskosten.
+Reisende und Backpacker benötigen passende Ausrüstung für ihre Unternehmungen. Oft müssen sie teure Ausrüstung kaufen und während der gesamten Reise mit sich tragen - oder sie haben Schwierigkeiten, vor Ort geeignete Ausrüstung zu finden. Ob für eine Radtour, ein Camping-Abenteuer oder eine klassische Backpacking-Reise: Viele Reisende wünschen sich flexible, einfache Lösungen, um hochwertige Ausrüstung nur für den tatsächlichen Bedarf zu nutzen -> ohne hohe Anschaffungskosten.
 
 
 
@@ -36,7 +36,7 @@ Eine Webseite, auf der Nutzer lokal Reise-Equipment wie:
 ## Target user
 
 Reisende, Backpacker, Outdoor-Fans und minimalistische Abenteurer, die…
-- kurzfristig Ausrüstung benötigen
+- kurzfristig Ausrüstung benötigen und nicht extra teures Equipment kaufen wollen
 - evtl. kein eigenes Equipment transportieren möchten
 - bewusst konsumieren & nachhaltig reisen wollen
 

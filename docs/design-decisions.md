@@ -144,7 +144,48 @@ Wir verwenden Flask-WTF + WTForms, um deklarativ Formulare zu definieren und ser
 
 ---
 
-## 05: Keine Verwendung von JavaScript für Hauptfunktionen
+## 05: Passwort-Hashing mit Werkzeug statt Klartext
+
+### Meta
+
+**Status**  
+: **Decided**
+
+**Updated**  
+: 02-Jul-2025
+
+---
+
+### Problem statement
+
+Wie sollen Passwörter von Benutzer*innen gespeichert werden?  
+Ziel ist es, sichere Authentifizierung zu gewährleisten und Sicherheitslücken zu vermeiden, z. B. bei Datenbank-Leaks.
+
+---
+
+### Decision
+
+Statt Passwörter im Klartext zu speichern, werden sie beim Registrieren mit `generate_password_hash()` (aus `werkzeug.security`) gehasht.  
+Beim Login wird das eingegebene Passwort mit `check_password_hash()` validiert.  
+Dadurch erfüllen wir aktuelle Sicherheitsstandards und sind gegen viele gängige Angriffe geschützt (z. B. Credential Dumps oder SQL Leaks).
+
+*Decision was taken by:* team/backpackerrent
+
+---
+
+### Regarded options
+
+| Criterion             | **Hashing mit Werkzeug (gewählt)** | Klartextspeicherung       |
+|-----------------------|-------------------------------------|---------------------------|
+| **Sicherheit**         | ✔️ Sehr hoch                        | ❌ Kritisch unsicher       |
+| **Brute-Force-Schutz** | ✔️ Ja, Hash-Verfahren ist langsam   | ❌ Keine Verteidigung      |
+| **Best Practice**      | ✔️ Ja (Industriestandard)           | ❌ Veraltet / unsicher     |
+| **Implementierungsaufwand** | ✔️ Minimal                    | ✔️ Minimal                 |
+
+---
+
+
+## 06: Keine Verwendung von JavaScript für Hauptfunktionen
 
 ### Meta
 
@@ -175,7 +216,7 @@ Dadurch bleibt die Anwendung barrierefrei und funktioniert auch ohne aktiviertes
 | **User Experience** | ❔ Weniger dynamisch | ✔️ Sehr dynamisch |
 
 
-## 06: Direkter Checkout mit „Sofort-Mieten“ neben Warenkorb
+## 07: Direkter Checkout mit „Sofort-Mieten“ 
 
 ### Meta
 
@@ -214,7 +255,7 @@ Decision was taken by: team/backpackerrent
 | **Flexibilität** | Sammelbuchung + Einzelbuchung möglich | Nur Einzelbuchung |  Beides möglich |
 
 
-## 07: Datumsauswahl direkt im Rental Form
+## 08: Datumsauswahl direkt im Rental Form
 
 ## Meta
 
@@ -256,7 +297,7 @@ Decision was taken by: team/backpackerrent
 | **Implementierungsaufwand** | Einfach, da Datum fix übergeben wird |  Einfach, nur zwei Felder im Template erforderlich |
 | **Flow-Unterbrechung** | Hoch (erneutes Laden oder Navigieren nötig) |  Keine Unterbrechung, direkt im Prozess anpassbar |
 
-## 08: Gebuchte Angebote im Profil anzeigen
+## 09: Gebuchte und erstellte Angebote im Profil anzeigen
 
 ### Meta
 
@@ -266,21 +307,22 @@ Updated
 : 21-Jun-2025
 
 ### Problem statement
-Nach einer Buchung benötigen Nutzer einen klaren Ort, an dem sie ihre gebuchten Angebote jederzeit einsehen können, um:
+Nach einer Buchung/Erstellung benötigen Nutzer einen klaren Ort, an dem sie ihre Angebote jederzeit einsehen können, um:
 
 - den Überblick zu behalten, welche Produkte sie wann gebucht haben,
 - ihre Ausgaben nachzuverfolgen,
+- evl. eigene Angebote anzupassen
 
 Ziel:
 
-- Nutzerfreundlichkeit durch eine transparente Übersicht über eigene Buchungen.
-- Vermeidung von Verwirrung und Unsicherheit, ob eine Buchung erfolgreich war.
-- Zentrale Verwaltung aller Buchungen innerhalb des Profils, ohne separate Seiten oder E-Mails durchsuchen zu müssen.
+- Nutzerfreundlichkeit durch eine transparente Übersicht über eigene Buchungen
+- Vermeidung von Verwirrung und Unsicherheit, ob eine Buchung erfolgreich war
+- Zentrale Verwaltung aller Buchungen innerhalb des Profils
 
 ### Decision
-Wir haben uns entschieden, im Profilbereich eine eigene Kategorie „Gebuchte Angebote“ (section=booked) einzurichten, in der Nutzer alle ihre gebuchten Produkte inkl. Titel, Buchungszeitraum und Gesamtpreis sehen können.
+Wir haben uns entschieden, im Profilbereich eine eigene Kategorie „Gebuchte Angebote“ (section="booked") + „Eigene Angebote“ (section="own")einzurichten, in der Nutzer alle ihre Produkte inkl. Titel, Buchungszeitraum und Gesamtpreis bzw. Titel, Kategorie, Region und den Preis sehen können.
 
-Dazu nutzen wir das bereits bestehende profil.html-Template, erweitern dieses jedoch um eine dynamische Abfrage des section-Parameters und eine saubere Kartenansicht für gebuchte Angebote.
+Dazu nutzen wir das bereits bestehende profil.html-Template, erweitern dieses jedoch um eine dynamische Abfrage des section-Parameters und eine saubere Kartenansicht für gebuchte/erstellte Angebote.
 
 Decision was taken by: team/backpackerrent
 
@@ -293,7 +335,7 @@ Decision was taken by: team/backpackerrent
 | **Implementierungsaufwand** | Kein Aufwand |  Einfach durch Erweiterung der bestehenden Profilseite |
 | **Planbarkeit** | Nutzer kann keine Planungen auf Basis von Buchungen vornehmen |  Nutzer kann geplante Zeiträume nachvollziehen |
 
-## 09: About Us und Kontaktbereich auf der Startseite
+## 10: About Us und Kontaktbereich auf der Startseite
 
 ### Meta
 
