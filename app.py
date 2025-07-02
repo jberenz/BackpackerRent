@@ -606,7 +606,7 @@ def warenkorb():
     """, cart).fetchall()
 
     return render_template("warenkorb.html", offers=offers)
-@csrf.exempt
+
 @app.route("/remove_from_cart/<int:offer_id>", methods=["POST"]) # Hier wird vom Warenkorb der Artikel gelöscht
 def remove_from_cart(offer_id):
     cart = session.get("cart", [])
@@ -615,16 +615,16 @@ def remove_from_cart(offer_id):
         session["cart"] = cart
         flash("Angebot aus dem Warenkorb entfernt.", "success")
     return redirect(url_for("warenkorb"))
-@csrf.exempt
 
-@csrf.exempt # Diese Route verarbeitet das Mieten mehrerer Angebote aus dem Warenkorb.
-@app.route("/mieten", methods=["GET", "POST"]) # Sie erlaubt GET (Formularanzeige) und POST (Formularabsendung).
+@csrf.exempt
+ # Diese Route verarbeitet das Mieten mehrerer Angebote aus dem Warenkorb
+@app.route("/mieten", methods=["GET", "POST"]) # Sie erlaubt GET (Formularanzeige) und POST (Formularabsendung)
 def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, falls der Nutzer nicht ein spezifisches Angebot direkt mietet
     if "user_id" not in session: # Prüfen, ob der Nutzer eingeloggt ist. Ansonsten muss der Nutzer sich erstmal anmelden und wird dorthin geleitet 
         flash("Bitte zuerst anmelden.", "warning")
         return redirect(url_for("anmelden"))
 
-    cart = session.get("cart", []) # Falls der Warenkorb leer ist, wird der Nutzer zurück zur Warenkorbseite geschickt.
+    cart = session.get("cart", []) # Falls der Warenkorb leer ist, wird der Nutzer zurück zur Warenkorbseite geleitet
     if not cart:
         flash("Dein Warenkorb ist leer.", "info")
         return redirect(url_for("warenkorb"))
@@ -633,7 +633,7 @@ def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, f
     placeholders = ','.join(['?'] * len(cart)) # Platzhalter für SQL-Abfrage vorbereiten, passend zur Anzahl der Produkte im Warenkorb
     # Holt alle Angebote aus der Datenbank mit deren:
     # Titel, Preis pro Nacht, Region (region_name), Kategorie (category_name)
-    # Diese Daten werden für die Anzeige in rental_form.html (für Formular) und rental_confirm.html (Bestätigung) benötigt.
+    # Diese Daten werden für die Anzeige in rental_form.html (für Formular) und rental_confirm.html (Bestätigung) benötigt
     offers = db.execute(f""" 
         SELECT o.*, r.region_name, c.category_name 
         FROM offers o
@@ -643,10 +643,10 @@ def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, f
     """, cart).fetchall() # Alle Angebote aus dem Warenkorb inkl. Kategorie und Region aus der Datenbank abfragen
 
     if request.method == "GET": # Wenn die Seite per GET aufgerufen wird, wird das Mietformular angezeigt (rental_form.html)
-        return render_template("rental_form.html", offers=offers) # Der Nutzer kann hier den Mietzeitraum, Adresse und Zahlungsdaten eingeben.
-# offers=offers sorgt dafür, dass im Formular alle Artikel und Titel in der Überschrift angezeigt werden: „Jetzt mieten: Gaskocher, Zelt, Schlafsack …“
+        return render_template("rental_form.html", offers=offers) # Der Nutzer kann hier den Mietzeitraum, Adresse und Zahlungsdaten eingeben
+        # offers=offers sorgt dafür, dass im Formular alle Artikel und Titel in der Überschrift angezeigt werden: „Jetzt mieten: Gaskocher, Zelt, Schlafsack …“
 
-# Formulardaten aus dem POST-Request auslesen
+    # Formulardaten aus dem POST-Request auslesen
     action = request.form.get("action", "calculate") # Button-Wert: „calculate“ oder „book“
     start = request.form.get("start_date", "") # Mietbeginn
     end = request.form.get("end_date", "") # Mietende
@@ -662,7 +662,7 @@ def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, f
         flash("Ungültiges Datum", "danger")  # Bei ungültigem Datum zurück zur Formularseite
         return redirect(request.url)
 
-    if end_date <= start_date: # Enddatum muss nach dem Startdatum liegen
+    if end_date <= start_date: # Enddatum muss später oder gleichzeitig als  dem Startdatum liegen
         flash("Enddatum muss nach dem Startdatum liegen.", "warning")
         return redirect(request.url)
 
@@ -708,7 +708,7 @@ def mietseite(): # Hier werden mehrere Angebote aus dem Warenkorb verarbeitet, f
                            card_number=card, sec_code=sec,
                            total_price=total_price, num_days=num_days)
 
-@app.route('/features_for_category/<int:category_id>') # Route wird uafgerufen, wenn im Frontend eine Kategorie ausgewählt wurde
+@app.route('/features_for_category/<int:category_id>') # Route wird aufgerufen, wenn im Frontend eine Kategorie ausgewählt wurde
 def features_for_category(category_id):
     db = get_db_con()
     features = db.execute(
