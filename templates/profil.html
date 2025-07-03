@@ -159,6 +159,7 @@
                   </a>
                   <form action="{{ url_for('angebot_loeschen', offer_id=offer.offer_id) }}"
                         method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit"
                             class="btn-delete-offer"
                             onclick="return confirm('Wirklich löschen?');">

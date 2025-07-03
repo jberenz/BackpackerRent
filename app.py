@@ -295,7 +295,7 @@ def add_offer():
 
     return render_template("angebot_erstellen.html", categories=categories, regionen=regionen, features=features, selected_category_id=selected_category_id)
 
-@csrf.exempt
+
 @app.route("/mieten/<int:offer_id>", methods=["GET", "POST"]) # Diese Route dient dazu, EIN einzelnes Angebot direkt zu mieten, 
 #ohne den Warenkorb zu nutzen, indem der Nutzer auf „Jetzt mieten“ auf der Produktseite klickt
 def rental_form(offer_id):
@@ -480,7 +480,7 @@ def logout():
     flash("Du wurdest abgemeldet.", "success")
     return redirect(url_for("index"))
 
-@csrf.exempt
+
 @app.route("/angebot_loeschen/<int:offer_id>", methods=["POST"])
 @login_required
 def angebot_loeschen(offer_id):
@@ -502,7 +502,7 @@ def angebot_loeschen(offer_id):
     flash("Angebot erfolgreich gelöscht.", "success")
     return redirect(url_for("profil", section="own"))
 
-@csrf.exempt
+
 @app.route("/angebot_bearbeiten/<int:offer_id>", methods=["GET", "POST"])
 @login_required
 def edit_offer(offer_id):
