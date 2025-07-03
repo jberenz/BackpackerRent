@@ -1,6 +1,6 @@
-{% for f in features %}
+{% for f in features %} <!-- http://realpython.com/primer-on-jinja-templating/, https://jinja.palletsprojects.com/en/latest/templates/#for, https://flask.palletsprojects.com/en/latest/templating/-->
 <div class="feature-field">
   <label for="feature_{{ f.feature_id }}">{{ f.feature_name }}</label>
   <input type="text" id="feature_{{ f.feature_id }}" name="feature_{{ f.feature_id }}">
-</div>
-{% endfor %}
+</div><!-- die Schleife erzeugt für jedes Feature ein EIngabefeld in HTML-->
+{% endfor %}<!-- https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#for-->

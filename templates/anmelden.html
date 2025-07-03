@@ -7,6 +7,7 @@
   <div class="auth-container">
     <h2 class="auth-header">Anmelden</h2>
 
+    {# Auslesen und Anzeigen von Flash-Nachrichten – z. B. bei erfolgreicher Registrierung oder Fehlern #}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-messages">
@@ -17,23 +18,33 @@
       {% endif %}
     {% endwith %}
 
+    {# Falls zusätzlich ein Fehler über die Variable "error" übergeben wurde (z. B. falsches Passwort) #}
     {% if error %}
       <p style="color: red; text-align: center;">{{ error }}</p>
     {% endif %}
 
+    
     <form class="auth-form" action="{{ url_for('anmelden') }}" method="post">
+      {# CSRF-Token schützt vor Cross-Site Request Forgery-Angriffen #}
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      {# E-Mail-Feld #}
       <div class="input-group" style="grid-column: 1 / -1;">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" placeholder="Email" required>
       </div>
+
+      {# Passwort-Feld #}
       <div class="input-group" style="grid-column: 1 / -1;">
         <label for="password">Passwort</label>
         <input id="password" name="password" type="password" placeholder="Passwort" required>
       </div>
+
+      {# Absenden des Formulars #}
       <button type="submit" class="auth-submit">Weiter</button>
     </form>
 
+    {# Hinweis für neue Nutzer mit Link zur Registrierung #}
     <div class="auth-footer">
       Noch kein Konto? <a href="{{ url_for('registrieren') }}">Jetzt registrieren</a>
     </div>

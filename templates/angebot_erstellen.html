@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <!-- Button -->
+      <!-- Änderungen Speichern Button -->
       <button type="submit" class="btn-create">
         {% if offer %}Änderungen speichern{% else %}Angebot erstellen{% endif %}
       </button>
@@ -117,26 +117,33 @@
 
 {% block scripts %} <!-- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch, https://flask.palletsprojects.com/en/latest/patterns/javascript/ -->
 <script>
+// Lädt dynamisch die Features für eine gewählte Kategorie nach
 function loadFeatures(categoryId) {
+  // Wenn keine Kategorie ausgewählt ist, Features-Bereich leeren
   if (!categoryId) {
     document.getElementById('features').innerHTML = '';
     return;
   }
 
+  // Abruf der Feature-HTML für die gewählte Kategorie
   fetch('/features_for_category/' + categoryId)
     .then(response => {
+      // Fehlerbehandlung bei fehlgeschlagener Antwort
       if (!response.ok) {
         throw new Error('Features konnten nicht geladen werden');
       }
-      return response.text();
+      return response.text(); // HTML als Text zurückgeben
     })
     .then(html => {
+      // Features-Bereich im DOM mit dem geladenen HTML befüllen
       document.getElementById('features').innerHTML = html;
     })
     .catch(error => {
+      // Ausgabe bei Fehler im Abruf oder Serverfehler
       console.error('Fehler beim Laden der Features:', error);
     });
 }
 </script>
 {% endblock %}
+
 

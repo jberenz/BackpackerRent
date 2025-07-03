@@ -6,9 +6,11 @@
   <title>{% block title %}{% endblock %} – Backpacker Rent</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body> <!-- Kopfbereich der Website -->
   <header class="site-header">
     <div class="header-inner">
+
+      <!-- Logo mit Zelt-Icon -->
       <a href="{{ url_for('index') }}" class="logo">
         <!-- Zelt-Icon -->
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none"
@@ -19,6 +21,7 @@
         <span class="logo-text">Backpacker Rent</span>
       </a>
 
+      <!-- Hauptnavigation -->
       <nav class="main-nav">
         <ul>
           <li><a href="{{ url_for('index') }}">Home</a></li>
@@ -29,7 +32,7 @@
                About Us
             </a>
           </li>
-          <li>
+          <li> <!-- Anmeldelink, der je nach Seite aktiv markiert wird -->
             <a href="{{ url_for('anmelden', next=request.full_path) }}"
 
                class="nav-signin{% if request.endpoint == 'anmelden' %} active{% endif %}">
@@ -39,9 +42,10 @@
         </ul>
       </nav>
 
+       <!-- Rechter Bereich mit Symbol-Buttons -->
       <div class="header-actions">
         
-        <!-- Profil-Icon rechts -->
+        <!-- Warenkorb-Symbol mit Zähler -->
         <a href="{{ url_for('warenkorb') }}" class="icon-btn cart-btn" title="Warenkorb">
           🧺
           <span class="cart-count">
@@ -49,7 +53,7 @@
           </span>
         </a>
 
-        {% if session.user_id %}
+        {% if session.user_id %} <!-- Wenn eingeloggt: Profil-Icon -->
         <a href="{{ url_for('profil') }}" class="icon-btn profile-btn" title="Mein Profil">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -57,7 +61,7 @@
                   <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
                 </svg>
         </a>
-      {% else %}
+      {% else %}  <!-- Wenn nicht eingeloggt: Anmelde-Icon -->
         <a href="{{ url_for('anmelden') }}" class="icon-btn profile-btn" title="Anmelden">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                      stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -84,10 +88,12 @@
 
   {% block hero %}{% endblock %}
 
+  <!-- Hauptbereich für Seiteninhalt -->
   <main class="container">
     {% block content %}{% endblock %}
   </main>
 
+  <!-- Platz für individuelle JavaScript-Blöcke -->
   {% block scripts %}{% endblock %}
 </body>
 </html>
