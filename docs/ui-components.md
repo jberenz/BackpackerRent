@@ -10,25 +10,37 @@ nav_order: 99
 ## Bilder anzeigen
 
 ### Angebot – Startansicht
-![Angebot 1](assets/images/angebot.jpg)
+![Angebot 1](assets/images/Startseite.png)
 
 ### Angebot – Variante 2
-![Angebot 2](assets/images/angebot2.jpg)
+![Angebot 2](assets/images/Suchfunktion.png)
 
 ### Angebot – Variante 3
-![Angebot 3](assets/images/angebot3.jpg)
+![Angebot 3](assets/images/Angebotsansicht.png)
 
 ### Angebot – Variante 4
-![Angebot 4](assets/images/angebot7.jpeg)
+![Angebot 4](assets/images/Aboutus.png)
 
 ### Angebot – Variante 5
-![Angebot 5](assets/images/angebot8.jpeg)
+![Angebot 5](assets/images/Kontakt.png)
 
 ### Kontakt
-![Kontakt](assets/images/kontakt.jpg)
+![Kontakt](assets/images/Login.png)
 
 ### Login
-![Login](assets/images/login.jpg)
+![Login](assets/images/Registrieren.png)
 
 ### Registrierung
-![Register](assets/images/register.jpg)
+![Register](assets/images/Über_mich.png)
+
+### Registrierung
+![Register](assets/images/Profil_bearbeiten.png)
+
+### Registrierung
+![Register](assets/images/Eigene_Angebote.png)
+
+### Registrierung
+![Register](assets/images/Gebuchte_Angebote.png)
+
+### Registrierung
+![Register](assets/images/Angebot_erstellen.png)
