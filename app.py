@@ -37,7 +37,7 @@ os.makedirs(app.instance_path, exist_ok=True) # Erstellt notwendige Ordner (Uplo
 init_app(app)
 
 @csrf.exempt # nicht notwendig, weil Home Seite nichts zurückgibt (kein [POST]), aber kein Risiko es drin zu lassen
-@app.route("/")
+@app.route("/") #https://flask.palletsprojects.com/en/latest/quickstart/
 def index(): # View Funktion: enthält die Logik zum Laden und Filtern von Angeboten
     db = get_db_con() # Verbindung zur SQLite DB, gibt sqlite3.Connection-Objekt zurück ( instance/backpacker.sqlite)
 
