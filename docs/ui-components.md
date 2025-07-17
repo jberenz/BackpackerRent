@@ -9,58 +9,58 @@ nav_order: 99
 
 ## Bilder anzeigen
 
-### Angebot – Startansicht
+### Startansicht
 ![Angebot 1](assets/images/Startseite.png)
 
-### Angebot – Variante 2
+### Suchfunktion
 ![Angebot 2](assets/images/Suchfunktion.png)
 
-### Angebot – Variante 3
+### Angebotsansicht 
 ![Angebot 3](assets/images/Angebotsansicht.png)
 
-### Angebot – Variante 4
+### About Us
 ![Angebot 4](assets/images/Aboutus.png)
 
-### Angebot – Variante 5
+### Kontakt
 ![Angebot 5](assets/images/Kontakt.png)
 
-### Kontakt
+### Login
 ![Kontakt](assets/images/Login.png)
 
-### Login
+### Registrieren
 ![Login](assets/images/Registrieren.png)
 
-### Registrierung
+### Über mich
 ![Register](assets/images/Über_mich.png)
 
-### Registrierung
+### Profil bearbeiten 
 ![Register](assets/images/Profil_bearbeiten.png)
 
-### Registrierung
+### Eigene Angebote
 ![Register](assets/images/Eigene_Angebote.png)
 
-### Registrierung
+### Gebuchte Angebote 
 ![Register](assets/images/Gebuchte_Angebote.png)
 
-### Registrierung
+### Angebot erstellen
 ![Register](assets/images/Angebot_erstellen.png)
 
-### Registrierung
+### Angebot (Detail)
 ![Register](assets/images/Angebot_(Detail).png)
 
-### Registrierung
+### Jetzt mieten (Einzelangebot)
 ![Register](assets/images/Jetzt_mieten_(Einzelangebot).png)
 
-### Registrierung
+### Buchung erfolgreich (Sofort-Mieten)
 ![Register](assets/images/Buchung_erfolgreich_(Sofort-Mieten).png)
 
-### Registrierung
+### Jetzt mieten (Mehrere Angebote)
 ![Register](assets/images/Jetzt_mieten_(mehrere_Angebote).png)
 
-### Registrierung
+### Buchung erfolgreich (Mehrere Angebote)
 ![Register](assets/images/Buchung_erfolgreich_(Mehrere_Angebote).png)
 
-### Registrierung
+### Warenkorb 
 ![Register](assets/images/Warenkorb.png)
 
 
