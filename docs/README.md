@@ -196,7 +196,7 @@ Pallets Projects. (n.d.). Template Designer Documentation – If Statements. [on
 url_for
 Pallets Projects. (n.d.). Flask – API Reference: flask.url_for. [online] Verfügbar unter: https://flask.palletsprojects.com/en/latest/api/#flask.url_for (Zugriff am 13. Mai 2025).
 
-% set
+set
 Pallets Projects. (n.d.). Template Designer Documentation – {% set %} Statement. [online] Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#assignments (Zugriff am 13. Mai. 2025).
 
 section &< h1/2> 
