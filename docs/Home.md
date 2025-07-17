@@ -20,6 +20,11 @@ Matr.-Nr.
 Matr.-Nr.
 : 77212023030
 
+### Präsentation
+
+[ Zur Präsentation (PDF)](/BackpackerRent/docs/assets/pdfs/Full-Stack-Praesentation.pdf)
+
+
 ## Eidesstattliche Erklärung
 
 Die oben genannten Teammitglieder erklären an Eides statt:
