@@ -34,7 +34,7 @@ nav_order: 99
 ![Register](assets/images/Über_mich.png)
 
 ### Profil bearbeiten 
-![Register](assets/images/Profil_bearbeiten.png)
+![Register](assets/images/Profil-bearbeiten.png)
 
 ### Eigene Angebote
 ![Register](assets/images/Eigene_Angebote.png)
@@ -52,13 +52,13 @@ nav_order: 99
 ![Register](assets/images/Jetzt_mieten_(Einzelangebot).png)
 
 ### Buchung erfolgreich (Sofort-Mieten)
-![Register](assets/images/Buchung_erfolgreich_(Sofort-Mieten).png)
+![Register](assets/images/Buchung-erfolgreich-(Sofort-Mieten).png)
 
 ### Jetzt mieten (Mehrere Angebote)
 ![Register](assets/images/Jetzt_mieten_(mehrere_Angebote).png)
 
 ### Buchung erfolgreich (Mehrere Angebote)
-![Register](assets/images/Buchung_erfolgreich_(Mehrere_Angebote).png)
+![Register](assets/images/Buchung-erfolgreich-(Mehrere-Angebote).png)
 
 ### Warenkorb 
 ![Register](assets/images/Warenkorb.png)
