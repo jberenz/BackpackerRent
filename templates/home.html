@@ -47,7 +47,7 @@
       <div class="input-group">
         <label for="category_filter">Kategorie</label>
         <select id="category_filter" name="category_filter">
-          <option value="" disabled {{ not selected_category_id and 'selected' }}>
+          <option value="" disabled {{ not selected_category_id and 'selected' }}><!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/option#selected-->
             Alle Kategorien
           </option>
           {% for cat in categories %}
@@ -81,12 +81,12 @@
     </div>
     
 
-    <!-- Preis-Slider -->
+    <!-- Preis-Slider --> <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/range, https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes--> 
     <div class="price-range-wrapper">
       <label for="min_price">Preis (€)</label>
       <div class="slider-container">
         <input
-          type="range" id="min_price" name="min_price"
+          type="range" id="min_price" name="min_price"  
           min="0" max="50" step="1"
           value="{{ request.args.get('min_price', 0) }}"
         >
@@ -96,7 +96,7 @@
           value="{{ request.args.get('max_price', 50) }}"
         >
       </div>
-      <div class="price-values">
+      <div class="price-values"><!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span-->
         <span id="price-min-label">{{ request.args.get('min_price', 0) }} €</span>
         <span id="price-max-label">{{ request.args.get('max_price', 50) }} €</span>
       </div>
@@ -111,7 +111,7 @@
 
 <section class="offers-section">
   <div class="offers-container">
-    {% if offers|length == 0 %} <!-- wenn noch keine Angebote vorhanden sind-->
+    {% if offers|length == 0 %} <!-- wenn noch keine Angebote vorhanden sind, https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.length-->
   {% if selected_region_id or selected_category_id or start_date or end_date %}
     <p class="no-offers">Leider keine Angebote mit diesen Filtern gefunden.</p>
   {% else %}
@@ -129,11 +129,11 @@
                 class="offer-image"
               >
             {% else %} <!-- wenn kein Bild hochgeladen wurde-->
-              <div class="offer-placeholder">
+              <div class="offer-placeholder"> <!--https://icons.getbootstrap.com/icons/image/, https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/rect-->
                 <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
-                     stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><!--https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Fills_and_strokes-->
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <path d="M8 19l4-4 4 4"/>
+                  <path d="M8 19l4-4 4 4"/> <!--https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path-->
                   <path d="M12 15V9"/>
                 </svg>
               </div>
@@ -145,12 +145,12 @@
               </a>
             </h3> <!--Kategorie + Region-->
             <p class="offer-meta">
-              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}
+              {{ offer.category|capitalize }} &middot; {{ offer.region|capitalize }}<!--https://jinja.palletsprojects.com/en/stable/templates/#capitalize-->
             </p> <!--Preis-->
             <p class="offer-price">
               <span class="price-amount">
-              {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} €
-              </span>
+              {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} <!--https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.replace-->
+              </span><!--https://jinja.palletsprojects.com/en/latest/templates/#format-->
               <span class="price-unit">p.N.</span>
             </p>
 
@@ -185,8 +185,9 @@
           Bewusstsein für das, was wirklich zählt: <strong>die Natur, die wir bereisen</strong>.
         </p>
       </div>
-      <div class="about-images"> <!-- Container für die Bilder im About-Us-Bereich.--> 
+      <div class="about-images"> <!-- Container für die Bilder im About-Us-Bereich. https://flask.palletsprojects.com/en/latest/quickstart/#static-files, https://jinja.palletsprojects.com/en/stable/templates/#variables, https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img--> 
         <img src="{{ url_for('static', filename='images/Camping.jpg') }}" alt="Zelten am See"> <!-- Fügt ein Bild „tent.jpg“ aus dem Ordner static/images hinzu. https://unsplash.com/de/fotos/andere-gebrauchliche-namen-rentiere-in-europa-sowohl-mannchen-als-auch-weibchen-haben-geweihe-sie-sind-wandernd-und-kommen-in-tundraregionen-alaskas-nordkanadas-und-gronlands-vor-a793YmcvnxA --> 
+        <!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#alt-->
         <img src="{{ url_for('static', filename='images/Natur.jpg') }}" alt="Kuh auf Blumenwiese"> <!-- Fügt ein weiteres Bild „cow-field.jpg“ hinzu mit dem Alternativtext „Kuh auf Blumenwiese“. https://unsplash.com/de/fotos/ein-zelt-im-wald-bei-sonnenuntergang-a3e7yEtQxJs--> 
       </div>
     </div>

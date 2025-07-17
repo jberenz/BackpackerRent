@@ -1,5 +1,6 @@
-<!doctype html>
+<!doctype html><!--https://developer.mozilla.org/de/docs/Web/HTML/Reference/Elements/meta, https://jinja.palletsprojects.com/en/stable/templates/#template-inheritance-->
 <html lang="de">
+<!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a , https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Getting_started, https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav, https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#linking_to_an_element_on_the_same_page-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,6 +56,7 @@
 
         {% if session.user_id %} <!-- Wenn eingeloggt: Profil-Icon -->
         <a href="{{ url_for('profil') }}" class="icon-btn profile-btn" title="Mein Profil">
+          <!--https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Getting_started-->
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="8" r="4"/>
@@ -62,7 +64,7 @@
                 </svg>
         </a>
       {% else %}  <!-- Wenn nicht eingeloggt: Anmelde-Icon -->
-        <a href="{{ url_for('anmelden') }}" class="icon-btn profile-btn" title="Anmelden">
+        <a href="{{ url_for('anmelden') }}" class="icon-btn profile-btn" title="Anmelden"><!--https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/title-->
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
                      stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="8" r="4"/>
@@ -93,8 +95,7 @@
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Platz für individuelle JavaScript-Blöcke -->
-  {% block scripts %}{% endblock %}
+
 </body>
 </html>
 
