@@ -12,19 +12,26 @@
     <ul>
       {% for offer in offers %} <!-- Für jedes Angebot wird eine Liste (<li>) erstellt-->
         <li>
-{% set parts = [] %}
+{% set parts = [] %} <!-- ChatGPT von hier: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 --> 
 {% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
 {% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Erstellt eine leere Liste parts und fügt optional die Kategorie und Region hinzu, falls diese existieren-->
+<!-- ChatGPT bis hier: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 --> 
 {{ offer.title }}{% if parts %} ({{ parts | join(' · ') }}){% endif %}<br> <!-- Zeigt den Titel des Angebots an und falls vorhanden die Kategorie und Region-->
           {{ ('%.2f'|format(offer.price_per_night)).replace('.', ',') }} € pro Nacht <!-- Zeigt den Preis pro Nacht mit Komma als Dezimaltrennzeichen an-->
-        </li>
+        </li> <!-- https://www.datacamp.com/tutorial/python-list-methods?utm_cid=19589720821&utm_aid=157156375191&utm_campaign=230119_1-ps-other~dsa~tofu_2-b2c_3-emea_4-prc_5-na_6-na_7-le_8-pdsh-go_9-nb-e_10-na_11-na&utm_loc=9210691-&utm_mtd=-c&utm_kw=&utm_source=google&utm_medium=paid_search&utm_content=ps-other~emea-en~dsa~tofu~tutorial-python&gad_source=1&gad_campaignid=19589720821&gbraid=0AAAAADQ9WsF9jIZ-w2nqBtO1KKgpsD6G_&gclid=CjwKCAjwvuLDBhAOEiwAPtF0VkhN2WEQVacbm-3A5id9QBoYKndwCZasDpUr1XMSCiwa4ckwzAp9shoCA64QAvD_BwE--> 
+        <!-- https://jinja.palletsprojects.com/en/latest/templates/#format --> 
+        <!-- https://docs.python.org/3/library/stdtypes.html#list.append--> 
       {% endfor %}
     </ul>
   {% elif offer %}
     <p><strong>Produkt:</strong> {{ offer.title }}</p> <!-- Zeigt „Produkt:“ und den Titel an, wenn nur ein Angebot gebucht wurde-->
-{% set parts = [] %}
+{% set parts = [] %}  <!-- ChatGPT von hier: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 --> 
 {% if offer.category %}{% set _ = parts.append(offer.category) %}{% endif %}
 {% if offer.region %}{% set _ = parts.append(offer.region) %}{% endif %} <!-- Fügt wieder optional Kategorie und Region hinzu und zeigt sie in Klammern an, falls vorhanden-->
+<!-- ChatGPT bis hier: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 -->
+<!-- https://www.datacamp.com/tutorial/python-list-methods?utm_cid=19589720821&utm_aid=157156375191&utm_campaign=230119_1-ps-other~dsa~tofu_2-b2c_3-emea_4-prc_5-na_6-na_7-le_8-pdsh-go_9-nb-e_10-na_11-na&utm_loc=9210691-&utm_mtd=-c&utm_kw=&utm_source=google&utm_medium=paid_search&utm_content=ps-other~emea-en~dsa~tofu~tutorial-python&gad_source=1&gad_campaignid=19589720821&gbraid=0AAAAADQ9WsF9jIZ-w2nqBtO1KKgpsD6G_&gclid=CjwKCAjwvuLDBhAOEiwAPtF0VkhN2WEQVacbm-3A5id9QBoYKndwCZasDpUr1XMSCiwa4ckwzAp9shoCA64QAvD_BwE--> 
+ <!-- https://jinja.palletsprojects.com/en/latest/templates/#format --> 
+ <!-- https://docs.python.org/3/library/stdtypes.html#list.append--> 
 {% if parts %}
     <p>({{ parts | join(' · ') }})</p>
 {% endif %}
@@ -34,6 +41,7 @@
   <p><strong>Gesamtpreis:</strong> {{ ('%.2f'|format(total_price)).replace('.', ',') }} €</p> <!-- Zeigt den berechneten Gesamtpreis der Buchung mit Komma als Trennzeichen-->
   <hr>
 <p><strong>Buchungszeitraum:</strong> <!-- Zeigt den Buchungszeitraum von Start- bis Enddatum an, umformatiert von YYYY-MM-DD zu DD.MM.YYYY-->
+   <!-- https://docs.python.org/3/library/stdtypes.html#str.split-->
     {{ start_date.split('-')[2] }}.{{ start_date.split('-')[1] }}.{{ start_date.split('-')[0] }}
     bis
     {{ end_date.split('-')[2] }}.{{ end_date.split('-')[1] }}.{{ end_date.split('-')[0] }}
