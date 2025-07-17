@@ -190,7 +190,7 @@ Dadurch erfüllen wir aktuelle Sicherheitsstandards und sind gegen viele gängig
 
 Status: **Decided**
 
-Updated
+Updated  
 :21-Jun-2025
 
 ### Problem statement
@@ -213,15 +213,15 @@ Dadurch bieten wir beiden Nutzertypen (sofort buchen vs. sammeln) eine passende 
 
 Decision was taken by: team/backpackerrent
 
-
 ### Regarded options
 
 | Criterion | Nur Warenkorb | Nur Sofort-Mieten | Beide Optionen (Warenkorb und Sofort-Mieten) |
 |---|---|---|---|
-| **Usability** | Umständlich für Einzelbuchung | Kein Sammeln möglich |  Flexibel für beide Nutzergruppen |
-| **Implementierungsaufwand** | Einfach | Einfach |  Mittel (Routing und Logik für beide Pfade) |
-| **Flexibilität** | Sammelbuchung + Einzelbuchung möglich | Nur Einzelbuchung |  Beides möglich |
+| **Usability** | ❌ Umständlich für Einzelbuchung | ❌ Kein Sammeln möglich | ✔️ Flexibel für beide Nutzergruppen |
+| **Implementierungsaufwand** | ✔️ Einfach | ✔️ Einfach | ❌ Mittel (Routing und Logik für beide Pfade) |
+| **Flexibilität** | ✔️ Sammelbuchung + Einzelbuchung möglich | ❌ Nur Einzelbuchung | ✔️ Beides möglich |
 
+---
 
 ## 07: Datumsauswahl direkt im Rental Form
 
@@ -229,10 +229,10 @@ Decision was taken by: team/backpackerrent
 
 Status: **Decided**
 
-Updated
+Updated  
 : 01-Jul-2025
 
-### Problem statement
+### Problem statement  
 Wie ermöglichen wir es Nutzern, das Mietdatum individuell und spontan direkt beim Buchungsprozess anzupassen, ohne:
 
 - zurück zur Angebotsseite oder Warenkorb navigieren zu müssen,
@@ -245,7 +245,7 @@ Ziel:
 - Reduktion von Frustration durch unnötige Navigation.
 - Flexibilität bei kurzfristigen Planänderungen.
 
-### Decision
+### Decision  
 Wir haben uns entschieden, zwei Datumseingabefelder (Startdatum und Enddatum) direkt im rental_form.html zu integrieren, sodass Nutzer vor der Preisberechnung und Buchung das gewünschte Datum anpassen können.
 
 Dies ermöglicht es Nutzern, den Buchungszeitraum spontan zu ändern, ohne:
@@ -260,10 +260,12 @@ Decision was taken by: team/backpackerrent
 
 | Criterion | Datum vorher wählen | Datum im Rental Form (gewählt) |
 |---|---|---|
-| **Usability** | Nutzer muss zurück navigieren, wenn sich der Zeitraum ändert |  Nutzer kann Datum direkt im Buchungsprozess ändern |
-| **Flexibilität** | Datum ist fix und muss im Warenkorb oder Detail erneut angepasst werden |  Spontane Planänderung möglich ohne Navigation |
-| **Implementierungsaufwand** | Einfach, da Datum fix übergeben wird |  Einfach, nur zwei Felder im Template erforderlich |
-| **Flow-Unterbrechung** | Hoch (erneutes Laden oder Navigieren nötig) |  Keine Unterbrechung, direkt im Prozess anpassbar |
+| **Usability** | ❌ Nutzer muss zurück navigieren, wenn sich der Zeitraum ändert | ✔️ Nutzer kann Datum direkt im Buchungsprozess ändern |
+| **Flexibilität** | ❌ Datum ist fix und muss im Warenkorb oder Detail erneut angepasst werden | ✔️ Spontane Planänderung möglich ohne Navigation |
+| **Implementierungsaufwand** | ✔️ Einfach, da Datum fix übergeben wird | ✔️ Einfach, nur zwei Felder im Template erforderlich |
+| **Flow-Unterbrechung** | ❌ Hoch (erneutes Laden oder Navigieren nötig) | ✔️ Keine Unterbrechung, direkt im Prozess anpassbar |
+
+---
 
 ## 08: Gebuchte und erstellte Angebote im Profil anzeigen
 
@@ -271,10 +273,10 @@ Decision was taken by: team/backpackerrent
 
 Status: **Decided**
 
-Updated
+Updated  
 : 21-Jun-2025
 
-### Problem statement
+### Problem statement  
 Nach einer Buchung/Erstellung benötigen Nutzer einen klaren Ort, an dem sie ihre Angebote jederzeit einsehen können, um:
 
 - den Überblick zu behalten, welche Produkte sie wann gebucht haben,
@@ -287,8 +289,8 @@ Ziel:
 - Vermeidung von Verwirrung und Unsicherheit, ob eine Buchung erfolgreich war
 - Zentrale Verwaltung aller Buchungen innerhalb des Profils
 
-### Decision
-Wir haben uns entschieden, im Profilbereich eine eigene Kategorie „Gebuchte Angebote“ (section="booked") + „Eigene Angebote“ (section="own")einzurichten, in der Nutzer alle ihre Produkte inkl. Titel, Buchungszeitraum und Gesamtpreis bzw. Titel, Kategorie, Region und den Preis sehen können.
+### Decision  
+Wir haben uns entschieden, im Profilbereich eine eigene Kategorie „Gebuchte Angebote“ (section="booked") + „Eigene Angebote“ (section="own") einzurichten, in der Nutzer alle ihre Produkte inkl. Titel, Buchungszeitraum und Gesamtpreis bzw. Titel, Kategorie, Region und den Preis sehen können.
 
 Dazu nutzen wir das bereits bestehende profil.html-Template, erweitern dieses jedoch um eine dynamische Abfrage des section-Parameters und eine saubere Kartenansicht für gebuchte/erstellte Angebote.
 
@@ -298,8 +300,7 @@ Decision was taken by: team/backpackerrent
 
 | Criterion | Keine Übersicht im Profil | Übersicht „Gebuchte Angebote“ im Profil (gewählt) |
 |---|---|---|
-| **Usability** | Nutzer muss Buchungen anderweitig prüfen |  Nutzer sieht alle Buchungen direkt im Profil |
-| **Transparenz** | Keine Einsicht in Buchungshistorie |  Vollständige Übersicht über Buchungen vorhanden |
-| **Implementierungsaufwand** | Kein Aufwand |  Einfach durch Erweiterung der bestehenden Profilseite |
-| **Planbarkeit** | Nutzer kann keine Planungen auf Basis von Buchungen vornehmen |  Nutzer kann geplante Zeiträume nachvollziehen |
-
+| **Usability** | ❌ Nutzer muss Buchungen anderweitig prüfen | ✔️ Nutzer sieht alle Buchungen direkt im Profil |
+| **Transparenz** | ❌ Keine Einsicht in Buchungshistorie | ✔️ Vollständige Übersicht über Buchungen vorhanden |
+| **Implementierungsaufwand** | ✔️ Kein Aufwand | ✔️ Einfach durch Erweiterung der bestehenden Profilseite |
+| **Planbarkeit** | ❌ Nutzer kann keine Planungen auf Basis von Buchungen vornehmen | ✔️ Nutzer kann geplante Zeiträume nachvollziehen |
