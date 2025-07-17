@@ -10,20 +10,15 @@ Backpacker Rent ist eine Webseite, auf der Reisende Reiseausrüstung mieten und 
 
 ## Team members
 
-### Jelena Berenz
-
-Matr.-Nr.
-77212023030
-
 ### Panagiotis Tsangarakis
 
 Matr.-Nr.
 : 77212023098
 
-### Aleyna Nur Özdemir
+### Jelena Berenz
 
 Matr.-Nr.
-: 77212024903
+: 77212023030
 
 ## Eidesstattliche Erklärung
 

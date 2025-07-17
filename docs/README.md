@@ -1,6 +1,6 @@
 # 🏕 Backpacker Rent
 
-Contributors: Aleyna Nur Özdemir, Panagiotis Tsangarakis, Jelena Berenz
+Contributors: Panagiotis Tsangarakis, Jelena Berenz
 
 
 
@@ -10,7 +10,7 @@ Contributors: Aleyna Nur Özdemir, Panagiotis Tsangarakis, Jelena Berenz
 
 **How to run application**
 
-flask run
+- flask run
 
 **How to initialise development environment**
 
@@ -21,4 +21,4 @@ flask run
 **How to initialise database**
 
 - flask init-db 
--flask insert-sample
+- flask insert-sample
