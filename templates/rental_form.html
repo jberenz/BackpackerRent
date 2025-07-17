@@ -9,11 +9,12 @@
         {{ offer.title }}  <!-- Wenn ein einzelnes offer existiert, wird dessen Titel angezeigt-->
       {% elif offers %} <!-- Falls eine Liste offers existiert, werden deren Titel durch Kommas getrennt angezeigt-->
         {% for o in offers %}
-          {{ o.title }}{% if not loop.last %}, {% endif %}
+          {{ o.title }}{% if not loop.last %}, {% endif %} <!-- https://pushmetrics.io/learn/jinja/jinja-loops--> 
         {% endfor %}
       {% endif %}
     </h2> <!-- Schließt die Überschrift--> 
 
+<!-- https://flask.palletsprojects.com/en/latest/api/#flask.url_for--> 
     <form method="post" action="{{ url_for('rental_form', offer_id=offer.offer_id) if offer else url_for('mietseite') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <!--Erstellt ein Formular mit POST-Methode  -->
@@ -61,7 +62,7 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die Route "mieten" mietse
       </div>
 
       {% if total_price is defined %}
-        <div style="margin-top:1rem; font-weight:bold; color:#2563EB;">
+        <div style="margin-top:1rem; font-weight:bold; color:#2563EB;"> <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom--> 
          Gesamtpreis für {{ num_days }} {{ 'Nacht' if num_days == 1 else 'Nächte' }}: <!-- Zeigt den berechneten Gesamtpreis an, wenn total_price definiert ist, inklusive Nächte -->
           {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
         </div>
@@ -80,7 +81,7 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die Route "mieten" mietse
 
     <div style="margin-top: 2rem;">
       <a href="{{ url_for('warenkorb') }}" style="color:#2563EB;">← Zurück zum Warenkorb</a> <!-- Fügt einen Link hinzu, um zurück zum Warenkorb zu gelangen -->
-    </div>
+    </div> <!-- https://flask.palletsprojects.com/en/latest/api/#flask.url_for--> 
   </div>
 </section>
 {% endblock %} <!-- Schließt den Container und den content Block ab -->

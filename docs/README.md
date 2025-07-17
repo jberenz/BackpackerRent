@@ -169,6 +169,47 @@ MDN Web Docs (o. J.): Global attribute: title. Verfügbar unter: https://devel
 
 MDN Web Docs (o. J.): CSS Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 23. Juni 2025).
 
+# warenkorb.html, rental_form.html und rental_confirm.html 
 
+extends base.html
 
+Pallets Projects. (n.d.) Template Inheritance – Jinja Documentation (3.1.x). Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#template-inheritance (Zugriff am 20. Jun. 2025).
 
+format
+Pallets Projects. (n.d.). Template Designer Documentation – Jinja. [online] Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#format (Zugriff am 20. Jun. 2025).
+
+split
+Python Software Foundation. (n.d.). str.split – Python Standard Library. [online] Verfügbar unter: https://docs.python.org/3/library/stdtypes.html#str.split (Zugriff am 20. Jun. 2025).
+
+jinja loops
+Pushmetrics. (n.d.). Jinja Loops – Jinja Tutorial. [online] Verfügbar unter: https://pushmetrics.io/learn/jinja/jinja-loops (Zugriff am 20. Jun. 2025).
+
+append()
+DataCamp. (n.d.). Python List Methods – A Comprehensive Guide. [online] Verfügbar unter: https://www.datacamp.com/tutorial/python-list-methods (Zugriff am 20. Jun. 2025).
+
+append
+Python Software Foundation. (n.d.). list.append – Python Standard Library. [online] Verfügbar unter: https://docs.python.org/3/library/stdtypes.html#list.append (Zugriff am 13. Mai 2025).
+
+endif
+Pallets Projects. (n.d.). Template Designer Documentation – If Statements. [online] Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#if (Zugriff am 13. Mai 2025).
+
+url_for
+Pallets Projects. (n.d.). Flask – API Reference: flask.url_for. [online] Verfügbar unter: https://flask.palletsprojects.com/en/latest/api/#flask.url_for (Zugriff am 13. Mai 2025).
+
+% set
+Pallets Projects. (n.d.). Template Designer Documentation – {% set %} Statement. [online] Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#assignments (Zugriff am 13. Mai. 2025).
+
+section &< h1/2> 
+W3Schools (n.d.) HTML5 Semantic Elements. Verfügbar unter: https://www.w3schools.com/html/html5_semantic_elements.asp (Zugriff am: 27. Apr. 2025).
+
+a href
+Mozilla Developer Network (o.J.). <'a'>: The anchor element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a (Zugriff am 28. Jun. 2025).
+
+padding, border etc. 
+W3Schools (n.d.) CSS Buttons. Available at: https://www.w3schools.com/css/css3_buttons.asp (Zugriff am 23. Jun. 2025).
+
+margin-bottom
+Mozilla Developer Network (MDN) (n.d.) margin-bottom. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom (Zugriff am 27. Jun. 2025).
+
+select
+MDN Web Docs (o. J.): <'select'> – HTML: HyperText Markup Language | MDN. Mozilla. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select (Zugriff am 27. Jun. 2025).
