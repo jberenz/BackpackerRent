@@ -42,7 +42,7 @@ Dadurch bleiben wir flexibel bei neuen Kategorien und Features, und die Daten bl
 
 | Criterion | Eigene Spalten je Kategorie | JSON-Feld in `offers` | **Separate Features-Tabelle + Verknüpfung** |
 | --- | --- | --- | --- |
-| **Flexibilität** | ❌ Neue Spalten nötig | ✔️ Dynamisch | ✔️ Dynamisch | <!-- https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables -->
+| **Flexibilität** | ❌ Neue Spalten nötig | ✔️ Dynamisch | ✔️ Dynamisch | 
 | **SQL-Filterbarkeit** | ✔️ Einfach | ❌ Komplex (nur JSON-Funktionen) | ✔️ Einfach |
 | **Erweiterbarkeit** | ❌ Schema-Änderung nötig | ✔️ Ohne Schema-Änderung | ✔️ Ohne Schema-Änderung |
 | **Komplexität** | ✔️ Einfach | ❔ Mittel | ❌ Höher (mehr Tabellen) |
