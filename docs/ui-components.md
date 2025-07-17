@@ -44,3 +44,23 @@ nav_order: 99
 
 ### Registrierung
 ![Register](assets/images/Angebot_erstellen.png)
+
+### Registrierung
+![Register](assets/images/Angebot_(Detail).png)
+
+### Registrierung
+![Register](assets/images/Jetzt_mieten_(Einzelangebot).png)
+
+### Registrierung
+![Register](assets/images/Buchung_erfolgreich_(Sofort-Mieten).png)
+
+### Registrierung
+![Register](assets/images/Jetzt_mieten_(mehrere_Angebote).png)
+
+### Registrierung
+![Register](assets/images/Buchung_erfolgreich_(Mehrere_Angebote).png)
+
+### Registrierung
+![Register](assets/images/Warenkorb.png)
+
+
