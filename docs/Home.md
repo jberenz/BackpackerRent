@@ -22,7 +22,7 @@ Matr.-Nr.
 
 ### Präsentation
 
-[ Zur Präsentation (PDF)](/BackpackerRent/docs/assets/pdfs/Full-Stack-Praesentation.pdf)
+[ Zur Präsentation (PDF)](assets/images/Full-Stack-Praesentation.pdf)
 
 
 ## Eidesstattliche Erklärung
