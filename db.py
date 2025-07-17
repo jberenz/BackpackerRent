@@ -1,8 +1,8 @@
-import os
+import os  #https://docs.python.org/3/library/os.html 
 import sqlite3
 import click
 from flask import current_app, g
-
+#https://flask.palletsprojects.com/en/stable/appcontext/
 
 def get_db_con(pragma_foreign_keys: bool = True) -> sqlite3.Connection:
     """
