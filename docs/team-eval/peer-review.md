@@ -38,10 +38,14 @@ Für die Zukunft wünsche ich mir, dass Jelena ihre positive Energie, ihre Ziels
 
 **[Panagiotis Tsangarakis, Jelena Berenz] – Review Aleyna Nur Ö.**
 
+
 **My observation (Wahrnehmung)**
-Im Verlauf des Projekts hatte Aleyna wiederholt mit technischen oder organisatorischen Problemen zu tun, die sie oft als Grund dafür nannte, bestimmte Aufgaben nicht wie geplant übernehmen oder abschließen zu können. Leider kam es dadurch mehrfach zu Verzögerungen im Teamablauf. Es schien manchmal, als würde sie sich eher auf äußere Umstände berufen, statt aktiv nach Lösungen zu suchen oder frühzeitig um Unterstützung zu bitten. Das hat die Gesamtarbeit des Teams an einigen Stellen deutlich gebremst.
+Im Verlauf des Projekts hatte Aleyna wiederholt mit technischen oder organisatorischen Herausforderungen zu kämpfen, die sie daran hinderten, bestimmte Aufgaben wie geplant zu übernehmen oder abzuschließen. Das führte leider zu Verzögerungen im Teamablauf. Es machte zeitweise den Eindruck, dass sie eher auf äußere Umstände reagierte, anstatt frühzeitig Unterstützung einzuholen oder proaktiv nach Lösungen zu suchen. Das hat den Fortschritt im Team an einigen Stellen erschwert.
 
 **Effect on me (Wirkung)**
-Die wiederholten Ausfälle und Verzögerungen führten dazu, dass ich häufiger Aufgaben auffangen musste, um den Zeitplan nicht zu gefährden. Das war teilweise frustrierend, weil es zusätzlichen Druck erzeugt hat. Gleichzeitig war es aber auch eine Gelegenheit, meine eigene Organisation im Team weiter zu stärken. Die Zusammenarbeit mit Aleyna war im direkten Austausch freundlich, aber leider oft wenig verbindlich.
+Die wiederholten Ausfälle und Verzögerungen machten es notwendig, dass wir häufiger Aufgaben übernahm, um den Zeitplan einzuhalten. Das war mitunter herausfordernd und mit zusätzlichem Druck verbunden. Die Zusammenarbeit mit Aleyna war im persönlichen Kontakt stets freundlich, wenn auch teilweise wenig verbindlich.
+Die Aufgaben, die sie übernommen und abgeschlossen hat, erledigte sie jedoch stets mit Sorgfalt und Gewissenhaftigkeit.
+
+
 
 
