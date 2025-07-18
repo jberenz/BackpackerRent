@@ -27,16 +27,16 @@ nav_order: 1
 
 **Panagiotis Tsangarakis**
 
-- Python-Grundlagen erlernen und anwenden
-- Eigenständig Webanwendungen mit Python entwickeln
-- Umgang mit Datenbanken lernen & pflegen
-
+- Python-Grundlagen erlernen und anwenden – `achieved`
+- Eigenständig Webanwendungen mit Python entwickeln – `achieved`
+- Umgang mit Datenbanken lernen & pflegen – `achieved`
+- Teamfähigkeit durch aktives Feedback & Austausch stärken – `achieved`
 ---
 
 **Aleyna Nur Özdemir**
 
-- Python-Kenntnisse vertiefen
-- Bessere Teamkommunikation erleben und mitgestalten
-- Zusammenarbeit im Team als Stärke aufbauen
+- Python-Kenntnisse vertiefen – `not achieved`
+- Bessere Teamkommunikation erleben und mitgestalten – `not achieved`
+- Zusammenarbeit im Team als Stärke aufbauen – `not achieved`
 
 

@@ -25,7 +25,7 @@ Updated
 
 ### Goal
 
-Wir wollten herausfinden, wie lange Nutzer benötigen, um sich bei Backpacker Rent zu registrieren, ein Angebot zu erstellen und anschließend ein anderes Angebot zu mieten. Ziel war es zu überprüfen, ob der gesamte Ablauf reibungslos verläuft und welche potenziellen Hindernisse es dabei geben könnte.
+Wir wollten herausfinden, wie lange Nutzer benötigen, um sich bei Backpacker Rent zu registrieren, ein Angebot zu erstellen und anschließend ein Angebot zu mieten. Ziel war es zu überprüfen, ob der gesamte Ablauf reibungslos verläuft und welche potenziellen Hindernisse es dabei geben könnte.
 
 ### Method
 

@@ -54,7 +54,7 @@ Einige wichtige technische Aspekte für das Verständnis der Codebasis:
   - Buchungs-Logik prüft immer auf Terminüberschneidungen mit bestehenden Rentals.
   - Viele Aktionen (z. B. Angebote löschen/bearbeiten) sind zusätzlich gegen Missbrauch durch ID-Prüfungen geschützt (z. B. nur der Eigentümer darf löschen).
 
--**Datenmodell**
+- **Datenmodell**
   - Die Datenbank folgt einer klaren Normalisierung:
     - `users` enthält Nutzerdaten mit Region-Relation.
     - `offers` verknüpft Angebote mit User, Kategorie, Region.

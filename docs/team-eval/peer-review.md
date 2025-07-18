@@ -36,4 +36,12 @@ Durch Jelenas Engagement und ihren hohen Einsatz habe ich mich im Team motiviert
 **Tip for the future (Wunsch)**
 Für die Zukunft wünsche ich mir, dass Jelena ihre positive Energie, ihre Zielstrebigkeit und ihren Fleiß unbedingt beibehält, weil sie damit das Team sehr bereichert. Ich würde mir gleichzeitig wünschen, dass sie sich selbst kleine Pausen gönnt und den anderen Teammitgliedern auch mehr Verantwortung überlässt. So kann sie entspannter arbeiten und wir können als Team gemeinsam mehr Verantwortung tragen.
 
+**[Panagiotis Tsangarakis, Jelena Berenz] – Review Aleyna Nur Ö.**
+
+**My observation (Wahrnehmung)**
+Im Verlauf des Projekts hatte Aleyna wiederholt mit technischen oder organisatorischen Problemen zu tun, die sie oft als Grund dafür nannte, bestimmte Aufgaben nicht wie geplant übernehmen oder abschließen zu können. Leider kam es dadurch mehrfach zu Verzögerungen im Teamablauf. Es schien manchmal, als würde sie sich eher auf äußere Umstände berufen, statt aktiv nach Lösungen zu suchen oder frühzeitig um Unterstützung zu bitten. Das hat die Gesamtarbeit des Teams an einigen Stellen deutlich gebremst.
+
+**Effect on me (Wirkung)**
+Die wiederholten Ausfälle und Verzögerungen führten dazu, dass ich häufiger Aufgaben auffangen musste, um den Zeitplan nicht zu gefährden. Das war teilweise frustrierend, weil es zusätzlichen Druck erzeugt hat. Gleichzeitig war es aber auch eine Gelegenheit, meine eigene Organisation im Team weiter zu stärken. Die Zusammenarbeit mit Aleyna war im direkten Austausch freundlich, aber leider oft wenig verbindlich.
+
 
