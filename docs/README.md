@@ -187,16 +187,16 @@ MDN Web Docs (o. J.): <'input type="hidden"'> – HTML-Element. Verfügbar unt
 
 # _features.html
 
-Real Python (o. J.). A Primer on Jinja Templating. Verfügbar unter: http://realpython.com/primer-on-jinja-templating/ [Zugriff am 18. Juli 2025].
+Real Python (o. J.). A Primer on Jinja Templating. Verfügbar unter: http://realpython.com/primer-on-jinja-templating/ (Zugriff am 18. Juli 2025).
 
 
-Pallets Projects (2024). for – Template Designer Documentation (Jinja). Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#for [Zugriff am 18. Juli 2025].
+Pallets Projects (2024). for – Template Designer Documentation (Jinja). Verfügbar unter: https://jinja.palletsprojects.com/en/latest/templates/#for (Zugriff am 18. Juli 2025).
 
 
-Pallets Projects (2024). Templating with Jinja – Flask Documentation (2.3.x). Verfügbar unter: https://flask.palletsprojects.com/en/latest/templating/ [Zugriff am 18. Juli 2025].
+Pallets Projects (2024). Templating with Jinja – Flask Documentation (2.3.x). Verfügbar unter: https://flask.palletsprojects.com/en/latest/templating/ (Zugriff am 18. Juli 2025).
 
 
-Django Software Foundation (2024). The for tag – Built-in template tags and filters. Verfügbar unter: https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#for [Zugriff am 17. Juli 2025].
+Django Software Foundation (2024). The for tag – Built-in template tags and filters. Verfügbar unter: https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#for (Zugriff am 17. Juli 2025).
 
 
 # base.html
@@ -231,19 +231,19 @@ MDN Web Docs (o. J.): Global attribute: title. Verfügbar unter: https://devel
 
 MDN Web Docs (o. J.): CSS Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 23. Juni 2025).
 
-Mozilla Developer Network (o. J.). CSS-Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference [Zugriff am 18. Juli 2025].
+Mozilla Developer Network (o. J.). CSS-Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 18. Juli 2025).
 
 
-Unsplash (o. J.). Schneeberg unter Sternen – Foto von Lucas Wesney. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E [Zugriff am 18. Juli 2025].
+Unsplash (o. J.). Schneeberg unter Sternen – Foto von Lucas Wesney. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E (Zugriff am 18. Juli 2025).
 
 
-Mozilla Developer Network (o. J.). ::-webkit-slider-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-slider-thumb [Zugriff am 18. Juli 2025].
+Mozilla Developer Network (o. J.). ::-webkit-slider-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-slider-thumb (Zugriff am 18. Juli 2025).
 
 
-Mozilla Developer Network (o. J.). ::-moz-range-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-moz-range-thumb [Zugriff am 18. Juli 2025].
+Mozilla Developer Network (o. J.). ::-moz-range-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-moz-range-thumb (Zugriff am 18. Juli 2025).
 
 
-Coyier, C. (2019). Styling Cross-Browser Compatible Range Inputs with CSS. CSS-Tricks. Verfügbar unter: https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ [Zugriff am 18. Juli 2025].
+Coyier, C. (2019). Styling Cross-Browser Compatible Range Inputs with CSS. CSS-Tricks. Verfügbar unter: https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ (Zugriff am 18. Juli 2025).
 
 
 # warenkorb.html, rental_form.html und rental_confirm.html 
@@ -274,7 +274,7 @@ Pushmetrics. (o.J.). Jinja Loops – Jinja Tutorial. Verfügbar unter: https://p
 DataCamp. (o.J.). Python List Methods – A Comprehensive Guide. Verfügbar unter: https://www.datacamp.com/tutorial/python-list-methods (Zugriff am 20. Jun. 2025).
 
 
-OpenAI (2025). ChatGPT conversation: Backpacker Rent – HTML template analysis and citation advice. [online] Verfügbar unter: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 [Zugriff am 17 Juli 2025].
+OpenAI (2025). ChatGPT conversation: Backpacker Rent – HTML template analysis and citation advice. [online] Verfügbar unter: https://chatgpt.com/share/68793039-a8f8-8000-a793-97b628090852 (Zugriff am 17 Juli 2025).
 
 **append**
 
