@@ -106,7 +106,7 @@ body {
 }
 /*
 ==============================
-= 3) Such-Sektion mit Tabs (Home-Seite) =
+ Such-Sektion mit Tabs (Home-Seite) 
 ==============================
 */
 .search-section {
@@ -140,8 +140,8 @@ body {
 }
 
 /*
-= 4) Suchleiste + Preis-Range (Home-Seite) =
-==============================
+ Suchleiste + Preis-Range (Home-Seite) 
+
 */
 .search-bar {
   max-width: 900px;
@@ -514,7 +514,7 @@ Schiebepunkts („Thumb“) für verschiedene Browser-Engines: -webkit- (Chrome/
 
 /*
 ==============================
-= 8) Angebots-Karten auf der Startseite =
+ Angebots-Karten auf der Startseite 
 ==============================
 */
 .offers-section {

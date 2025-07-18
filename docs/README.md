@@ -1,4 +1,4 @@
-# sources
+# Sources
 
 Die folgenden Quellen sind auch an den entsprechenden Stellen im Sourcecode gekennzeichnet. Ebenso haben wir das im Rahmen der Lehrveranstaltung zur Verfügung gestellte fswd-app Repository als Quelle verwendet (https://github.com/hwrberlin/fswd-app.git).
 
@@ -82,6 +82,7 @@ WTForms (o. J.): Validators. In: WTForms-Dokumentation Version 3.0.x. Verfügb
 ## db.py
 
 Python Software Foundation (o. J.): os — Miscellaneous operating system interfaces. In: The Python Standard Library. Verfügbar unter: https://docs.python.org/3/library/os.html (Zugriff am 1. Juni 2025).
+
 
 ## HTML & CSS
 
@@ -226,8 +227,24 @@ MDN Web Docs (o. J.): Global attribute: title. Verfügbar unter: https://devel
 
 # style.css
 
+- bereits Vorkenntnisse in css aus früheren Modulen
 
 MDN Web Docs (o. J.): CSS Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 23. Juni 2025).
+
+Mozilla Developer Network (o. J.). CSS-Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference [Zugriff am 18. Juli 2025].
+
+
+Unsplash (o. J.). Schneeberg unter Sternen – Foto von Lucas Wesney. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E [Zugriff am 18. Juli 2025].
+
+
+Mozilla Developer Network (o. J.). ::-webkit-slider-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-slider-thumb [Zugriff am 18. Juli 2025].
+
+
+Mozilla Developer Network (o. J.). ::-moz-range-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-moz-range-thumb [Zugriff am 18. Juli 2025].
+
+
+Coyier, C. (2019). Styling Cross-Browser Compatible Range Inputs with CSS. CSS-Tricks. Verfügbar unter: https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ [Zugriff am 18. Juli 2025].
+
 
 # warenkorb.html, rental_form.html und rental_confirm.html 
 
