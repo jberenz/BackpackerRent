@@ -62,7 +62,7 @@ andernfalls bei mehreren Artikeln aus dem Warenkorb an die Route "mieten" mietse
       </div>
 
       {% if total_price is defined %}
-        <div style="margin-top:1rem; font-weight:bold; color:#2563EB;"> <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom--> 
+        <div style="margin-top:1rem; font-weight:bold; color:#2563EB;"> <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top--> 
          Gesamtpreis für {{ num_days }} {{ 'Nacht' if num_days == 1 else 'Nächte' }}: <!-- Zeigt den berechneten Gesamtpreis an, wenn total_price definiert ist, inklusive Nächte -->
           {{ ('%.2f'|format(total_price)).replace('.', ',') }} €
         </div>

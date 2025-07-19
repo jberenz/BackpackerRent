@@ -328,6 +328,11 @@ W3Schools (o.J.) CSS Buttons. Verfügbar unter: https://www.w3schools.com/css/cs
 
 Mozilla Developer Network (MDN) (o.J.) margin-bottom. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom (Zugriff am 27. Jun. 2025).
 
+**margin-top**
+
+Mozilla Developer Network (MDN) (o.J.) margin-bottom. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top (Zugriff  am 19. Jul. 2025).
+
+
 ## offer_details 
 
 - hat Aleyna übernommen
