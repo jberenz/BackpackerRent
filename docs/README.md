@@ -118,7 +118,18 @@ Unsplash (Rentiere): Stankevicius, N. (o. J.): Andere gebräuchliche Namen: Re
 Unsplash (Zelt): Karthikeyan, G. (o. J.): Ein Zelt im Wald bei Sonnenuntergang – Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/ein-zelt-im-wald-bei-sonnenuntergang-a3e7yEtQxJs (Zugriff am 5. Juli 2025).
 
 
+**Bild: wenn kein Bild für das Angebot angegeben wurde**
+
 Bootstrap Icons (o. J.): image icon. Verfügbar unter: https://icons.getbootstrap.com/icons/image/ (Zugriff am 17. Juli 2025).
+
+
+**Kontaktbereich Bild**
+
+The Autumn Fair (o. J.): Nachhaltigkeitsgrafik. Verfügbar unter: https://www.theautumnfair.com/en/useful-info/sustainability.html (Zugriff am: 19. Juli 2025).
+
+**Startseitenbild**
+
+Voros, B. (o. J.): Schneeberg unter Sternen. [Fotografie] Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E (Zugriff am: 19. Juli 2025)
 
 
 MDN Web Docs (o. J.): <'rect'> – SVG: Scalable Vector Graphics: MDN. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/rect (Zugriff am 5. Juli 2025).
