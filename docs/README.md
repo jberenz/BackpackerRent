@@ -46,13 +46,7 @@ Pallets Projects (o. J.): flask.Request.method. Flask-Dokumentation – API. V
 Python Software Foundation (o. J.): str.strip – Standard-Datentypen. In: The Python Standard Library. Verfügbar unter: https://docs.python.org/3/library/stdtypes.html#str.strip (Zugriff am: 20. Juni 2025).
 
 
-Pallets Projects (o. J.): werkzeug.security.check_password_hash. Werkzeug-Dokumentation – Utils. Verfügbar unter: https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash (Zugriff am: 13. Juni 2025).
-
-
 Pallets Projects (o. J.): flask.Request.form. Flask-Dokumentation – API. Verfügbar unter: https://flask.palletsprojects.com/en/stable/api/#flask.Request.form (Zugriff am: 15. Juni 2025).
-
-
-Pallets Projects (o. J.): werkzeug.security.generate_password_hash. Werkzeug-Dokumentation – Utils. Verfügbar unter: https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.generate_password_hash (Zugriff am: 15. Juni 2025).
 
 
 Pallets Projects (o. J.): flask.Request.files. Flask-Dokumentation – API. Verfügbar unter: https://flask.palletsprojects.com/en/stable/api/#flask.Request.files (Zugriff am: 13. Juni 2025).
@@ -72,6 +66,8 @@ Python Software Foundation (o. J.): Built-in Types – dict.clear. In: Python 
 
 Pallets Projects (o. J.): werkzeug.datastructures.MultiDict.get. In: Werkzeug-Dokumentation (stable). Verfügbar unter: https://werkzeug.palletsprojects.com/en/stable/datastructures/#werkzeug.datastructures.MultiDict.get (Zugriff am 10. Juni 2025).
 
+## forms.py
+
 
 WTForms (o. J.): DateField. In: WTForms-Dokumentation Version 3.0.x. Verfügbar unter: https://wtforms.readthedocs.io/en/3.0.x/fields/#wtforms.fields.DateField (Zugriff am 1. Juni 2025).
 
@@ -81,55 +77,25 @@ WTForms (o. J.): Validators. In: WTForms-Dokumentation Version 3.0.x. Verfügb
 
 ## db.py
 
+**Import**
+
 Python Software Foundation (o. J.): os — Miscellaneous operating system interfaces. In: The Python Standard Library. Verfügbar unter: https://docs.python.org/3/library/os.html (Zugriff am 1. Juni 2025).
+
+
+**The Application context**
+
+Pallets Projects (o. J.): The Application Context. Flask‑Dokumentation – API. Verfügbar unter: https://flask.palletsprojects.com/en/stable/appcontext/ (Zugriff am: 28. April 2025).
 
 
 ## HTML & CSS
 
 # home.html
 
-**Preisslider**
 
-MDN Web Docs (o. J.): Document.getElementById(). Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById (Zugriff am 3. Juni 2025).
-
-
-MDN Web Docs (o. J.): EventTarget.addEventListener(). Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener (Zugriff am 3. Juni 2025).
-
-
-MDN Web Docs (o. J.): Template literals. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals (Zugriff am 4. Juni 2025).
-
-
-MDN Web Docs (o. J.): parseInt() – JavaScript: MDN. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt (Zugriff am 6. Juni 2025).
-
-
-Jinja (o. J.): Template Designer Documentation – Variables. Verfügbar unter: https://jinja.palletsprojects.com/en/stable/templates/#variables (Zugriff am 14. Juni 2025).
-
-
-Flask (o. J.): Quickstart – Static Files. Verfügbar unter: https://flask.palletsprojects.com/en/latest/quickstart/#static-files (Zugriff am 14. Juni 2025).
+Flask (o. J.): Quickstart – Static Files. Verfügbar unter: https://flask.palletsprojects.com/en/latest/quickstart/#static-files (Zugriff am 8. Mai 2025).
 
 
 MDN Web Docs (o. J.): <'img'>: The Image Embed element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img (Zugriff am 14. Juni 2025).
-
-**Bilder im about us part**
- 
-Unsplash (Rentiere): Stankevicius, N. (o. J.): Andere gebräuchliche Namen: Rentiere – Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/andere-gebrauchliche-namen-rentiere-in-europa-sowohl-mannchen-als-auch-weibchen-haben-geweihe-sie-sind-wandernd-und-kommen-in-tundraregionen-alaskas-nordkanadas-und-gronlands-vor-a793YmcvnxA (Zugriff am 5. Juli 2025).
-
-
-Unsplash (Zelt): Karthikeyan, G. (o. J.): Ein Zelt im Wald bei Sonnenuntergang – Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/ein-zelt-im-wald-bei-sonnenuntergang-a3e7yEtQxJs (Zugriff am 5. Juli 2025).
-
-
-**Bild: wenn kein Bild für das Angebot angegeben wurde**
-
-Bootstrap Icons (o. J.): image icon. Verfügbar unter: https://icons.getbootstrap.com/icons/image/ (Zugriff am 17. Juli 2025).
-
-
-**Kontaktbereich Bild**
-
-The Autumn Fair (o. J.): Nachhaltigkeitsgrafik. Verfügbar unter: https://www.theautumnfair.com/en/useful-info/sustainability.html (Zugriff am: 19. Juli 2025).
-
-**Startseitenbild**
-
-Voros, B. (o. J.): Schneeberg unter Sternen. [Fotografie] Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E (Zugriff am: 19. Juli 2025)
 
 
 MDN Web Docs (o. J.): <'rect'> – SVG: Scalable Vector Graphics: MDN. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/rect (Zugriff am 5. Juli 2025).
@@ -157,6 +123,45 @@ MDN Web Docs (o. J.): <'input'>: Attributes. Verfügbar unter: https://develop
 
 
 Pallets Projects (o. J.): Templates – upper (Filter). Jinja Documentation (stable). Verfügbar unter: https://jinja.palletsprojects.com/en/stable/templates/#jinja-filters.upper (Zugriff am 14. Juni 2025).
+
+
+**Preisslider**
+
+MDN Web Docs (o. J.): Document.getElementById(). Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById (Zugriff am 3. Juni 2025).
+
+
+MDN Web Docs (o. J.): EventTarget.addEventListener(). Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener (Zugriff am 3. Juni 2025).
+
+
+MDN Web Docs (o. J.): Template literals. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals (Zugriff am 4. Juni 2025).
+
+
+MDN Web Docs (o. J.): parseInt() – JavaScript: MDN. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt (Zugriff am 6. Juni 2025).
+
+
+Jinja (o. J.): Template Designer Documentation – Variables. Verfügbar unter: https://jinja.palletsprojects.com/en/stable/templates/#variables (Zugriff am 14. Juni 2025).
+
+
+**Bilder im about us part**
+ 
+Unsplash (Rentiere): Stankevicius, N. (o. J.): Andere gebräuchliche Namen: Rentiere – Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/andere-gebrauchliche-namen-rentiere-in-europa-sowohl-mannchen-als-auch-weibchen-haben-geweihe-sie-sind-wandernd-und-kommen-in-tundraregionen-alaskas-nordkanadas-und-gronlands-vor-a793YmcvnxA (Zugriff am 5. Juli 2025).
+
+
+Unsplash (Zelt): Karthikeyan, G. (o. J.): Ein Zelt im Wald bei Sonnenuntergang – Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/ein-zelt-im-wald-bei-sonnenuntergang-a3e7yEtQxJs (Zugriff am 5. Juli 2025).
+
+
+**Bild: wenn kein Bild für das Angebot angegeben wurde**
+
+Bootstrap Icons (o. J.): image icon. Verfügbar unter: https://icons.getbootstrap.com/icons/image/ (Zugriff am 17. Juli 2025).
+
+
+**Kontaktbereich Bild**
+
+The Autumn Fair (o. J.): Nachhaltigkeitsgrafik. Verfügbar unter: https://www.theautumnfair.com/en/useful-info/sustainability.html (Zugriff am: 19. Juli 2025).
+
+**Startseitenbild**
+
+Voros, B. (o. J.): Schneeberg unter Sternen. [Fotografie] Unsplash. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E (Zugriff am: 19. Juli 2025)
 
 
 # angebot_erstellen.html
@@ -195,6 +200,13 @@ MDN Web Docs (o. J.): HTML-Attribut: required. Verfügbar unter: https://devel
 
 
 MDN Web Docs (o. J.): <'input type="hidden"'> – HTML-Element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/hidden (Zugriff am 28. Mai 2025).
+
+
+**password hashing**
+
+Pallets Projects (o. J.): werkzeug.security.generate_password_hash. Werkzeug-Dokumentation – Utils. Verfügbar unter: https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.generate_password_hash (Zugriff am: 15. Juni 2025).
+
+Pallets Projects (o. J.): werkzeug.security.check_password_hash. Werkzeug-Dokumentation – Utils. Verfügbar unter: https://werkzeug.palletsprojects.com/en/stable/utils/#werkzeug.security.check_password_hash (Zugriff am: 13. Juni 2025).
 
 # _features.html
 
@@ -243,9 +255,6 @@ MDN Web Docs (o. J.): Global attribute: title. Verfügbar unter: https://devel
 MDN Web Docs (o. J.): CSS Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 23. Juni 2025).
 
 Mozilla Developer Network (o. J.). CSS-Referenz. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference (Zugriff am 18. Juli 2025).
-
-
-Unsplash (o. J.). Schneeberg unter Sternen – Foto von Lucas Wesney. Verfügbar unter: https://unsplash.com/de/fotos/schneeberg-unter-sternen-phIFdC6lA4E (Zugriff am 18. Juli 2025).
 
 
 Mozilla Developer Network (o. J.). ::-webkit-slider-thumb – CSS pseudo-element. Verfügbar unter: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-slider-thumb (Zugriff am 18. Juli 2025).
